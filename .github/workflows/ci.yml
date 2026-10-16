@@ -47,7 +47,7 @@ jobs:
       - uses: actions/checkout@v7
         with:
           repository: Seb-GRAF/StableBar
-          ref: main
+          ref: feat/package-secrets
           path: stablebar
           persist-credentials: false
       - name: Build StableBar

@@ -1,0 +1,52 @@
+{
+  "tokens": {
+    "textMuted": { "light": "#6e6e73", "dark": "#a1a1a6" },
+    "track": { "light": "#1d1d1f26", "dark": "#f5f5f726" }
+  },
+  "popups": {
+    "battery-status": {
+      "style": { "width": 220, "spacing": 8 },
+      "layout": {
+        "type": "column",
+        "children": [
+          {
+            "type": "row",
+            "children": [
+              { "type": "text", "text": "State", "style": { "foreground": "@token.textMuted" } },
+              { "type": "field", "field": "state", "alignment": "trailing" }
+            ]
+          },
+          {
+            "type": "row", "hideWhenEmpty": "percent",
+            "children": [
+              { "type": "text", "text": "Charge", "style": { "foreground": "@token.textMuted" } },
+              { "type": "field", "field": "percent", "alignment": "trailing" },
+              { "type": "text", "text": "%", "style": { "width": 14 } }
+            ]
+          },
+          { "type": "progress", "source": "percent", "height": 4, "hideWhenEmpty": "percent", "style": { "background": "@token.track" } },
+          {
+            "type": "row", "hideWhenEmpty": "timeRemaining",
+            "children": [
+              { "type": "text", "text": "Time remaining", "style": { "foreground": "@token.textMuted" } },
+              { "type": "field", "field": "timeRemaining", "alignment": "trailing" },
+              { "type": "text", "text": "min", "style": { "width": 28 } }
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "widgets": [
+    {
+      "id": "battery-status", "type": "battery", "position": "right", "popupName": "battery-status",
+      "layout": {
+        "type": "row", "style": { "spacing": 4 },
+        "children": [
+          { "type": "symbol", "source": "icon" },
+          { "type": "field", "field": "text" }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "id": "catppuccin",
+  "name": "Catppuccin",
+  "version": "1.0.0",
+  "kind": "theme",
+  "entry": "config.json",
+  "description": "Soothing pastel colors from the Catppuccin palette, Latte in light and Mocha in dark.",
+  "author": "StableBar",
+  "repository": "https://github.com/Seb-GRAF/stablebar-packages"
+}

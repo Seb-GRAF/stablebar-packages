@@ -1,0 +1,116 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+# A newer push to a pull request replaces its older run. Runs on main finish, so every
+# commit on main is checked.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      # The version check compares each package with its version on the base branch.
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      # Packages' shell scripts end in .sh, so this finds them along with the repository's.
+      - name: ShellCheck
+        run: git ls-files -z '*.sh' | xargs -0 shellcheck
+      - name: Check versions
+        if: github.event_name == 'pull_request'
+        env:
+          BASE: ${{ github.event.pull_request.base.sha }}
+        run: ./scripts/check-versions.sh "$BASE"
+
+  # Checks every package against the newest StableBar, the version people install the store's
+  # packages into. A package that needs a newer StableBar than the current main fails here.
+  validate:
+    name: Validate
+    runs-on: macos-26
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/checkout@v7
+        with:
+          repository: Seb-GRAF/StableBar
+          ref: main
+          path: stablebar
+          persist-credentials: false
+      - name: Build StableBar
+        run: ./stablebar/scripts/build.sh
+      - name: Check packages
+        env:
+          STABLEBAR: ${{ github.workspace }}/stablebar/dist/StableBar.app/Contents/MacOS/StableBar
+        run: |
+          failed=0
+          for package in packages/*/; do
+            ./scripts/check-package.sh "$package" || failed=1
+          done
+          exit "$failed"
+
+  # Publishes the index and the archives of new versions as assets of the store release. The
+  # release is a prerelease so that GitHub doesn't show this data as the repository's latest
+  # release; the app reads it by its tag.
+  publish:
+    name: Publish
+    needs: [lint, validate]
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    # Two publishes would both read the same index and the later upload would drop the other's
+    # packages. A queued publish waits for the running one; a newer push replaces it, and its
+    # index lists every package anyway.
+    concurrency:
+      group: publish
+      cancel-in-progress: false
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - name: Download the current index
+        run: |
+          if gh release view store --repo "$GITHUB_REPOSITORY" > /dev/null 2>&1; then
+            gh release download store --repo "$GITHUB_REPOSITORY" --pattern index.json --dir previous
+          fi
+      - name: Build the index
+        run: |
+          if [[ -f previous/index.json ]]; then
+            ./scripts/build-index.sh previous/index.json
+          else
+            ./scripts/build-index.sh
+          fi
+      - name: Create the release
+        run: |
+          if ! gh release view store --repo "$GITHUB_REPOSITORY" > /dev/null 2>&1; then
+            gh release create store --repo "$GITHUB_REPOSITORY" --prerelease --target "$GITHUB_SHA" \
+              --title "Store" --notes "The packages index and the archive of each published version. Published by CI."
+          fi
+      # Without --clobber, an archive that already exists fails the upload instead of changing
+      # a version people have installed.
+      - name: Upload new archives
+        run: |
+          shopt -s nullglob
+          archives=(dist/*.tar.gz)
+          if (( ${#archives[@]} )); then
+            gh release upload store "${archives[@]}" --repo "$GITHUB_REPOSITORY"
+          fi
+      - name: Replace the index
+        run: gh release upload store dist/index.json --repo "$GITHUB_REPOSITORY" --clobber

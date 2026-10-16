@@ -1,0 +1,10 @@
+{
+  "id": "nord",
+  "name": "Nord",
+  "version": "1.0.0",
+  "kind": "theme",
+  "entry": "config.json",
+  "description": "Arctic, north-bluish colors from the Nord palette: Snow Storm in light, Polar Night in dark, Frost for the accent.",
+  "author": "StableBar",
+  "repository": "https://github.com/Seb-GRAF/stablebar-packages"
+}

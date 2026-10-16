@@ -1,0 +1,32 @@
+{
+  "tokens": {
+    "textMuted": { "light": "#6e6e73", "dark": "#a1a1a6" }
+  },
+  "popups": {
+    "network-speed": {
+      "style": { "width": 260, "spacing": 8 },
+      "layout": {
+        "type": "column",
+        "children": [
+          {
+            "type": "row",
+            "children": [
+              { "type": "text", "text": "Total", "style": { "foreground": "@token.textMuted" } },
+              { "type": "field", "field": "text", "alignment": "trailing" }
+            ]
+          },
+          {
+            "type": "row",
+            "children": [
+              { "type": "text", "text": "Interfaces", "style": { "foreground": "@token.textMuted" } },
+              { "type": "field", "field": "interface", "alignment": "trailing" }
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "widgets": [
+    { "id": "network-speed", "type": "network", "position": "right", "popupName": "network-speed" }
+  ]
+}

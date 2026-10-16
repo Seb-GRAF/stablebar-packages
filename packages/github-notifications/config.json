@@ -1,0 +1,47 @@
+{
+  "tokens": {
+    "textMuted": { "light": "#5f6773", "dark": "#9aa3b0" }
+  },
+  "widgets": [
+    {
+      "id": "github-notifications",
+      "type": "script",
+      "position": "right",
+      "command": "\"$PACKAGE_DIR/scripts/notifications.sh\"",
+      "interval": 300,
+      "icon": "bell",
+      "environment": { "GITHUB_TOKEN": "@setting.token" },
+      "popup": {
+        "style": { "width": 340, "paddingHorizontal": 18, "paddingVertical": 16, "spacing": 10 },
+        "layout": {
+          "type": "column",
+          "children": [
+            {
+              "type": "row",
+              "open": "https://github.com/notifications",
+              "children": [{ "type": "text", "text": "Notifications", "style": { "fontWeight": "bold", "fontSize": 15 } }]
+            },
+            { "type": "field", "field": "hint", "hideWhenEmpty": "hint", "style": { "foreground": "@token.textMuted" } },
+            {
+              "type": "list",
+              "source": "notifications",
+              "row": {
+                "type": "row",
+                "openField": "link",
+                "children": [
+                  {
+                    "type": "column",
+                    "children": [
+                      { "type": "field", "field": "repository", "style": { "fontSize": 11, "foreground": "@token.textMuted" } },
+                      { "type": "field", "field": "title" }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

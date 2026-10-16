@@ -1,0 +1,10 @@
+{
+  "id": "battery-status",
+  "name": "Battery status",
+  "version": "1.0.0",
+  "kind": "widgets",
+  "entry": "config.json",
+  "description": "The battery charge with a symbol for charging, in the bar, and a popup with the state and time remaining.",
+  "author": "StableBar",
+  "repository": "https://github.com/Seb-GRAF/stablebar-packages"
+}

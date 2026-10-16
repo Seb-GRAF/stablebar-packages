@@ -1,0 +1,37 @@
+{
+  "tokens": {
+    "textMuted": { "light": "#5f6773", "dark": "#9aa3b0" }
+  },
+  "widgets": [
+    {
+      "id": "homebrew-outdated",
+      "type": "script",
+      "position": "right",
+      "command": "\"$PACKAGE_DIR/scripts/outdated.sh\"",
+      "interval": 3600,
+      "timeout": 60,
+      "icon": "shippingbox",
+      "popup": {
+        "height": 320,
+        "style": { "width": 340, "paddingHorizontal": 18, "paddingVertical": 16, "spacing": 10 },
+        "layout": {
+          "type": "column",
+          "children": [
+            { "type": "field", "field": "summary", "style": { "fontWeight": "bold", "fontSize": 15 } },
+            {
+              "type": "list",
+              "source": "outdated",
+              "row": {
+                "type": "row",
+                "children": [
+                  { "type": "field", "field": "name" },
+                  { "type": "field", "field": "versions", "alignment": "trailing", "style": { "foreground": "@token.textMuted" } }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

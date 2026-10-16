@@ -1,0 +1,10 @@
+{
+  "id": "gruvbox",
+  "name": "Gruvbox",
+  "version": "1.0.0",
+  "kind": "theme",
+  "entry": "config.json",
+  "description": "Warm retro colors from the Gruvbox light and dark palettes.",
+  "author": "StableBar",
+  "repository": "https://github.com/Seb-GRAF/stablebar-packages"
+}

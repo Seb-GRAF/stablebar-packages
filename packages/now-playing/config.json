@@ -1,0 +1,38 @@
+{
+  "tokens": {
+    "text": { "light": "#1f2329", "dark": "#e6e9ef" },
+    "textMuted": { "light": "#5f6773", "dark": "#9aa3b0" }
+  },
+  "widgets": [
+    {
+      "id": "now-playing",
+      "type": "script",
+      "position": "left",
+      "command": "\"$PACKAGE_DIR/scripts/now-playing.sh\"",
+      "interval": 3,
+      "style": { "maxWidth": 220 },
+      "popup": {
+        "dismissOnAction": false,
+        "style": { "width": 280, "paddingHorizontal": 18, "paddingVertical": 16, "spacing": 6 },
+        "layout": {
+          "type": "column",
+          "children": [
+            { "type": "field", "field": "title", "style": { "fontWeight": "bold", "fontSize": 15 } },
+            { "type": "field", "field": "artist", "hideWhenEmpty": "artist", "style": { "foreground": "@token.text" } },
+            { "type": "field", "field": "album", "hideWhenEmpty": "album", "style": { "foreground": "@token.textMuted" } },
+            {
+              "type": "row",
+              "alignment": "center",
+              "style": { "spacing": 22, "paddingVertical": 8 },
+              "children": [
+                { "type": "symbol", "name": "backward.fill", "onClick": "\"$PACKAGE_DIR/scripts/control.sh\" \"previous track\"" },
+                { "type": "symbol", "source": "control", "onClick": "\"$PACKAGE_DIR/scripts/control.sh\" playpause" },
+                { "type": "symbol", "name": "forward.fill", "onClick": "\"$PACKAGE_DIR/scripts/control.sh\" \"next track\"" }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

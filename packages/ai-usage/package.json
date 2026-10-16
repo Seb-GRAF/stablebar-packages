@@ -1,0 +1,18 @@
+{
+  "id": "ai-usage",
+  "name": "AI usage",
+  "version": "1.2.0",
+  "description": "Shows your Claude Code and Codex limits in one widget, with reset countdowns and weekly pace, using the sign-ins those tools already keep.",
+  "author": "StableBar",
+  "repository": "https://github.com/Seb-GRAF/stablebar-packages",
+  "entry": "config.json",
+  "hosts": ["api.anthropic.com", "chatgpt.com"],
+  "settings": {
+    "providers": { "type": "string", "title": "Providers (claude, codex or both)", "default": "both" },
+    "claudeLimits": { "type": "string", "title": "Claude limits in the bar (session, weekly or both)", "default": "both" },
+    "codexLimits": { "type": "string", "title": "Codex limits in the bar (session, weekly or both)", "default": "both" },
+    "show": { "type": "string", "title": "Bar shows (meters, percent or both)", "default": "both" },
+    "usage": { "type": "string", "title": "Show usage as (left or used)", "default": "left" },
+    "interval": { "type": "number", "title": "Refresh every (seconds)", "default": 300 }
+  }
+}

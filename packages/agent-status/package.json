@@ -1,10 +1,10 @@
 {
   "id": "agent-status",
   "name": "Agent status",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Shows Claude Code waiting or finishing and Codex finishing. Add Claude's Notification, Stop and UserPromptSubmit hooks and Codex's notify command using this package's README.",
   "author": "StableBar",
   "repository": "https://github.com/Seb-GRAF/stablebar-packages",
   "entry": "config.json",
-  "requires": ["jq", "StableBar"]
+  "requires": ["jq"]
 }

@@ -32,4 +32,4 @@ printf '%s' "$payload" | jq \
   '{agent: $agent, project: .cwd, status: $status, bundle: $bundle}' > "$temporary"
 mv "$temporary" "$directory/$provider-$session.json"
 
-StableBar --config "$config" --trigger agent > /dev/null
+open -g -n -b org.stablebar.app --args --config "$config" --trigger agent

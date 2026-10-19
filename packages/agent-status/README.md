@@ -6,15 +6,15 @@ Click a row to bring the terminal or editor app forward, using the bundle ID inh
 the hook in `__CFBundleIdentifier`. It opens the app, not a particular tab. If that variable
 is absent, the row still shows the status but cannot open an app.
 
-Requires `jq` and `StableBar` on the PATH of both StableBar's login shell and the terminals
-running your agents. For the usual installation, add `/Applications/StableBar.app/Contents/MacOS`
-to PATH in your shell profile and restart StableBar and those terminals.
+Requires `jq` on the PATH of StableBar's login shell and the terminals running your agents.
+The hook uses macOS to find the installed StableBar app and send an event in the background.
+You do not need a `StableBar` command on PATH.
 
 ## Claude Code
 
 After installing and enabling the package, merge these entries into the `hooks` object in
 `~/.claude/settings.json`. Keep your existing hooks. The commands below use the default
-StableBar configuration and the installed version `1.0.0`:
+StableBar configuration and the installed version `1.0.1`:
 
 ```json
 {
@@ -25,7 +25,7 @@ StableBar configuration and the installed version `1.0.0`:
         "hooks": [
           {
             "type": "command",
-            "command": "\"$HOME/.config/stablebar/packages/agent-status/1.0.0/scripts/hook.sh\" claude \"$HOME/.config/stablebar/config.json\""
+            "command": "\"$HOME/.config/stablebar/packages/agent-status/1.0.1/scripts/hook.sh\" claude \"$HOME/.config/stablebar/config.json\""
           }
         ]
       }
@@ -35,7 +35,7 @@ StableBar configuration and the installed version `1.0.0`:
         "hooks": [
           {
             "type": "command",
-            "command": "\"$HOME/.config/stablebar/packages/agent-status/1.0.0/scripts/hook.sh\" claude \"$HOME/.config/stablebar/config.json\""
+            "command": "\"$HOME/.config/stablebar/packages/agent-status/1.0.1/scripts/hook.sh\" claude \"$HOME/.config/stablebar/config.json\""
           }
         ]
       }
@@ -45,7 +45,7 @@ StableBar configuration and the installed version `1.0.0`:
         "hooks": [
           {
             "type": "command",
-            "command": "\"$HOME/.config/stablebar/packages/agent-status/1.0.0/scripts/hook.sh\" claude \"$HOME/.config/stablebar/config.json\""
+            "command": "\"$HOME/.config/stablebar/packages/agent-status/1.0.1/scripts/hook.sh\" claude \"$HOME/.config/stablebar/config.json\""
           }
         ]
       }
@@ -65,7 +65,7 @@ directory; Codex's command array does not expand `$HOME`:
 
 ```toml
 notify = [
-  "/Users/you/.config/stablebar/packages/agent-status/1.0.0/scripts/hook.sh",
+  "/Users/you/.config/stablebar/packages/agent-status/1.0.1/scripts/hook.sh",
   "codex",
   "/Users/you/.config/stablebar/config.json"
 ]
@@ -81,13 +81,14 @@ or clear the status when another turn starts.
 ## Session files
 
 Each hook writes one JSON file in `agent-status/` beside the selected StableBar configuration,
-then runs `StableBar --config /path/to/config.json --trigger agent`. Files hold the latest
+then sends the `agent` event to that configuration through the installed app. Files hold the latest
 status even when StableBar coalesces events. The widget runs once at startup and then on
 `agent` events; it does not poll.
 
-Session files remain after an agent exits. Remove the corresponding file and trigger `agent`
-with the same `--config` path to clear an old session. No transcript or prompt is saved.
+Session files remain after an agent exits. Remove the corresponding file, then run
+`open -g -n -b org.stablebar.app --args --config /path/to/config.json --trigger agent`
+to clear an old session from the widget. No transcript or prompt is saved.
 
 For a different StableBar configuration, change both paths in the hook setup. Package files
-live in `packages/agent-status/1.0.0/` beside that configuration. Update the hook path when
+live in `packages/agent-status/1.0.1/` beside that configuration. Update the hook path when
 you install a new package version. Installing this package does not edit your agent settings.

@@ -1,0 +1,13 @@
+{
+  "id": "dev-servers",
+  "name": "Development servers",
+  "version": "1.0.0",
+  "description": "Lists your listening TCP ports and their processes, with actions to open localhost or stop a process.",
+  "author": "StableBar",
+  "repository": "https://github.com/Seb-GRAF/stablebar-packages",
+  "entry": "config.json",
+  "requires": ["jq"],
+  "settings": {
+    "ports": { "type": "string", "title": "Port range", "default": "3000-9999" }
+  }
+}

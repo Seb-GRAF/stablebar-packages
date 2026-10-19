@@ -1,0 +1,38 @@
+{
+  "tokens": {
+    "textMuted": { "light": "#5f6773", "dark": "#9aa3b0" }
+  },
+  "widgets": [
+    {
+      "id": "dock-badges",
+      "type": "script",
+      "position": "right",
+      "command": "\"$PACKAGE_DIR/scripts/badges.sh\"",
+      "interval": 10,
+      "icon": "app.badge",
+      "environment": { "APPS": "@setting.apps" },
+      "popup": {
+        "style": { "width": 280, "paddingHorizontal": 18, "paddingVertical": 16, "spacing": 10 },
+        "layout": {
+          "type": "column",
+          "children": [
+            { "type": "text", "text": "Dock badges", "style": { "fontWeight": "bold", "fontSize": 15 } },
+            { "type": "field", "field": "hint", "hideWhenEmpty": "hint", "style": { "foreground": "@token.textMuted" } },
+            {
+              "type": "list",
+              "source": "apps",
+              "row": {
+                "type": "row",
+                "openField": "bundle",
+                "children": [
+                  { "type": "field", "field": "app" },
+                  { "type": "field", "field": "badge", "alignment": "trailing", "style": { "width": 50, "foreground": "@token.textMuted" } }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

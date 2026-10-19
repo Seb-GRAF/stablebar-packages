@@ -1,0 +1,43 @@
+{
+  "tokens": {
+    "textMuted": { "light": "#5f6773", "dark": "#9aa3b0" }
+  },
+  "widgets": [
+    {
+      "id": "agent-status",
+      "type": "script",
+      "position": "right",
+      "command": "\"$PACKAGE_DIR/scripts/status.sh\"",
+      "interval": null,
+      "events": ["agent"],
+      "icon": "terminal",
+      "popup": {
+        "style": { "width": 340, "paddingHorizontal": 18, "paddingVertical": 16, "spacing": 10 },
+        "layout": {
+          "type": "column",
+          "children": [
+            { "type": "text", "text": "Agents", "style": { "fontWeight": "bold", "fontSize": 15 } },
+            { "type": "field", "field": "hint", "hideWhenEmpty": "hint", "style": { "foreground": "@token.textMuted" } },
+            {
+              "type": "list",
+              "source": "sessions",
+              "row": {
+                "type": "row",
+                "openField": "bundle",
+                "children": [
+                  {
+                    "type": "column",
+                    "children": [
+                      { "type": "field", "field": "project" },
+                      { "type": "field", "field": "detail", "style": { "fontSize": 11, "foreground": "@token.textMuted" } }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

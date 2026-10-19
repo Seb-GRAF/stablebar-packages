@@ -8,6 +8,12 @@ On every push to `main`, CI publishes the `store` release of this repository. It
 
 A published id and version never change, and their archives are never deleted. The index lists only each package's current version. A version you installed stays on your Mac until you remove it, so a configuration that pins it keeps working.
 
+## Notifications and development tools
+
+- [Dock badges](packages/dock-badges/README.md) totals unread badges from selected running apps.
+- [Agent status](packages/agent-status/README.md) shows Claude Code waiting or finishing and Codex finishing; follow its hook setup after installing.
+- [Development servers](packages/dev-servers/README.md) lists your listening ports, opens localhost and stops processes.
+
 ## Add or update a package
 
 Open a pull request that adds or changes one folder in `packages/`. The folder name equals the manifest `id`:

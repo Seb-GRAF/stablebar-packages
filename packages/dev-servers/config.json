@@ -1,0 +1,45 @@
+{
+  "tokens": {
+    "textMuted": { "light": "#5f6773", "dark": "#9aa3b0" }
+  },
+  "widgets": [
+    {
+      "id": "dev-servers",
+      "type": "script",
+      "position": "right",
+      "command": "\"$PACKAGE_DIR/scripts/servers.sh\"",
+      "interval": 5,
+      "icon": "server.rack",
+      "environment": { "PORTS": "@setting.ports" },
+      "popup": {
+        "dismissOnAction": false,
+        "style": { "width": 340, "paddingHorizontal": 18, "paddingVertical": 16, "spacing": 10 },
+        "layout": {
+          "type": "column",
+          "children": [
+            { "type": "text", "text": "Development servers", "style": { "fontWeight": "bold", "fontSize": 15 } },
+            { "type": "field", "field": "hint", "hideWhenEmpty": "hint", "style": { "foreground": "@token.textMuted" } },
+            {
+              "type": "list",
+              "source": "servers",
+              "row": {
+                "type": "row",
+                "children": [
+                  {
+                    "type": "column",
+                    "openField": "link",
+                    "children": [
+                      { "type": "field", "field": "address" },
+                      { "type": "field", "field": "process", "style": { "fontSize": 11, "foreground": "@token.textMuted" } }
+                    ]
+                  },
+                  { "type": "text", "text": "Stop", "onClickField": "stop", "style": { "width": 40 } }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

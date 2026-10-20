@@ -64,28 +64,23 @@ Build StableBar, then use its command line with a scratch configuration. Never r
 StableBar=path/to/StableBar.app/Contents/MacOS/StableBar
 scratch=$(mktemp -d)
 
-$StableBar --config "$scratch/config.json" --inspect-package packages/nord
-$StableBar --config "$scratch/config.json" --install-package packages/nord
+$StableBar --config "$scratch/config.json" --inspect-package packages/weather
+$StableBar --config "$scratch/config.json" --install-package packages/weather
 ```
 
-Enable the installed package in the scratch configuration and validate it. For a theme:
-
-```sh
-echo '{ "theme": { "id": "nord", "version": "1.0.0" } }' > "$scratch/config.json"
-$StableBar --validate "$scratch/config.json"
-```
-
-Any other package goes in `packages`:
+Enable the installed package in the scratch configuration and validate it:
 
 ```sh
 echo '{ "packages": [{ "id": "weather", "version": "1.0.0" }] }' > "$scratch/config.json"
 $StableBar --validate "$scratch/config.json"
 ```
 
+For a theme package, use `"theme": { "id": "your-theme", "version": "1.0.0" }` instead of `packages`. Rosé Pine, Everforest, Léman, Blueprint and Notch ship with StableBar and need no store installation.
+
 `scripts/check-package.sh` does all of this, after the file checks CI makes:
 
 ```sh
-STABLEBAR=path/to/StableBar.app/Contents/MacOS/StableBar scripts/check-package.sh packages/nord
+STABLEBAR=path/to/StableBar.app/Contents/MacOS/StableBar scripts/check-package.sh packages/weather
 ```
 
 Without `STABLEBAR`, it runs only the file checks.

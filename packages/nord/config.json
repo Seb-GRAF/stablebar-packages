@@ -7,8 +7,8 @@
     "accent": { "light": "#5e81ac", "dark": "#88c0d0" },
     "track": { "light": "#2e344026", "dark": "#eceff426" },
     "hairline": { "light": "#2e344033", "dark": "#eceff433" },
-    "warning": { "light": "#d08770", "dark": "#ebcb8b" },
-    "critical": { "light": "#bf616a", "dark": "#bf616a" }
+    "warning": { "light": "#bb5c3d", "dark": "#ebcb8b" },
+    "critical": { "light": "#bf616a", "dark": "#c8777f" }
   },
   "defaults": {
     "foreground": "@token.text",

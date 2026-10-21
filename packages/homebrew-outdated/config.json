@@ -8,7 +8,7 @@
       "type": "script",
       "position": "right",
       "command": "\"$PACKAGE_DIR/scripts/outdated.sh\"",
-      "interval": 3600,
+      "interval": "@setting.interval",
       "timeout": 60,
       "icon": "shippingbox",
       "popup": {

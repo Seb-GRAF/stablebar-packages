@@ -14,6 +14,12 @@ A published id and version never change, and their archives are never deleted. T
 - [Agent status](packages/agent-status/README.md) shows Claude Code waiting or finishing and Codex finishing; follow its hook setup after installing.
 - [Development servers](packages/dev-servers/README.md) lists your listening ports, opens localhost and stops processes.
 
+## Package settings
+
+Open **Settings → Packages**, select a package and choose **Settings**. System monitor, Network speed and Homebrew outdated expose their refresh interval. Calendar agenda exposes its lookahead and meeting warning times. Agent status can list all sessions or only those waiting for attention. Weather and AI usage use pickers for their supported display choices. Existing settings remain selected when updating.
+
+Battery and sound display controls are in the widget’s **Bar → Content → Display** inspector in current StableBar: icon and value, icon only, value only, meter or graph. Other packages retain their content settings, including date format, music title width, app names, port range and credentials.
+
 ## Add or update a package
 
 Open a pull request that adds or changes one folder in `packages/`. The folder name equals the manifest `id`:

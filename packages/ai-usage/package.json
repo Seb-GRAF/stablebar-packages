@@ -1,18 +1,18 @@
 {
   "id": "ai-usage",
   "name": "AI usage",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "Shows your Claude Code and Codex limits in one widget, with reset countdowns and weekly pace, using the sign-ins those tools already keep.",
   "author": "StableBar",
   "repository": "https://github.com/Seb-GRAF/stablebar-packages",
   "entry": "config.json",
   "hosts": ["api.anthropic.com", "chatgpt.com"],
   "settings": {
-    "providers": { "type": "string", "title": "Providers (claude, codex or both)", "default": "both" },
-    "claudeLimits": { "type": "string", "title": "Claude limits in the bar (session, weekly or both)", "default": "both" },
-    "codexLimits": { "type": "string", "title": "Codex limits in the bar (session, weekly or both)", "default": "both" },
-    "show": { "type": "string", "title": "Bar shows (meters, percent or both)", "default": "both" },
-    "usage": { "type": "string", "title": "Show usage as (left or used)", "default": "left" },
+    "providers": { "type": "string", "title": "Providers", "default": "both", "choices": ["claude", "codex", "both"] },
+    "claudeLimits": { "type": "string", "title": "Claude limits in the bar", "default": "both", "choices": ["session", "weekly", "both"] },
+    "codexLimits": { "type": "string", "title": "Codex limits in the bar", "default": "both", "choices": ["session", "weekly", "both"] },
+    "show": { "type": "string", "title": "Bar shows", "default": "both", "choices": ["meters", "percent", "both"] },
+    "usage": { "type": "string", "title": "Show usage as", "default": "left", "choices": ["left", "used"] },
     "interval": { "type": "number", "title": "Refresh every (seconds)", "default": 300 }
   }
 }

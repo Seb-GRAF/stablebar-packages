@@ -1,11 +1,16 @@
 {
   "id": "calendar-agenda",
   "name": "Calendar agenda",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "kind": "widgets",
   "entry": "config.json",
   "description": "The next meeting and its countdown in the bar, with today's agenda and a join link in a popup.",
   "author": "StableBar",
   "repository": "https://github.com/Seb-GRAF/stablebar-packages",
-  "permissions": ["calendars"]
+  "permissions": ["calendars"],
+  "settings": {
+    "lookahead": { "type": "number", "title": "Look ahead (hours)", "default": 24 },
+    "soon": { "type": "number", "title": "Upcoming meeting warning (minutes)", "default": 15 },
+    "now": { "type": "number", "title": "Meeting starting warning (minutes)", "default": 5 }
+  }
 }

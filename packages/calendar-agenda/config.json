@@ -3,6 +3,9 @@
     "textMuted": { "light": "#6e6e73", "dark": "#a1a1a6" },
     "surfaceRaised": { "light": "#ffffff", "dark": "#323438" }
   },
+  "providers": {
+    "calendar-agenda": { "type": "calendar", "lookahead": "@setting.lookahead", "soon": "@setting.soon", "now": "@setting.now" }
+  },
   "popups": {
     "calendar-agenda": {
       "style": { "width": 300, "spacing": 8 },
@@ -38,7 +41,7 @@
   },
   "widgets": [
     {
-      "id": "calendar-agenda", "type": "calendar", "position": "right", "popupName": "calendar-agenda",
+      "id": "calendar-agenda", "type": "provider", "provider": "calendar-agenda", "position": "right", "popupName": "calendar-agenda",
       "layout": {
         "type": "row", "style": { "spacing": 6 },
         "children": [

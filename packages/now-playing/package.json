@@ -1,14 +1,15 @@
 {
   "id": "now-playing",
   "name": "Now playing",
-  "version": "1.1.0",
-  "description": "Shows the playing or paused track from Music or Spotify with its artwork, and a popup with seeking, volume, shuffle, repeat and favorites.",
+  "version": "1.2.0",
+  "description": "Shows the playing or paused track from Music or Spotify with its artwork and a wave while it plays, and a popup with seeking, volume, shuffle, repeat and favorites.",
   "author": "StableBar",
   "repository": "https://github.com/Seb-GRAF/stablebar-packages",
+  "minimumVersion": "0.5.0",
   "entry": "config.json",
   "permissions": ["automation"],
   "hosts": ["i.scdn.co"],
   "settings": {
-    "barWidth": { "type": "number", "title": "Title width in the bar", "default": 160 }
+    "barWidth": { "type": "number", "title": "Maximum title width in the bar", "default": 160 }
   }
 }

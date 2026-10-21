@@ -130,6 +130,8 @@ function output(info) {
       album: info.album,
       line: info.artist ? `${info.title} — ${info.artist}` : info.title,
       control: info.playing ? 'pause.fill' : 'play.fill',
+      playing: info.playing ? '1' : '',
+      paused: info.playing ? '' : '1',
       source: info.player.name,
       app: info.player.id,
       appIcon: icon,
@@ -152,7 +154,6 @@ function output(info) {
     result.values.progress = position / info.duration
     result.targets.progress = info.playing ? Math.min(position + 1, info.duration) / info.duration : position / info.duration
   }
-  if (!info.playing) result.state = 'muted'
   return result
 }
 

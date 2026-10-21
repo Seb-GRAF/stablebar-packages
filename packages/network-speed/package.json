@@ -1,10 +1,13 @@
 {
   "id": "network-speed",
   "name": "Network speed",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "kind": "widgets",
   "entry": "config.json",
   "description": "Download and upload rates in the bar, with a popup naming the active network interfaces.",
   "author": "StableBar",
-  "repository": "https://github.com/Seb-GRAF/stablebar-packages"
+  "repository": "https://github.com/Seb-GRAF/stablebar-packages",
+  "settings": {
+    "interval": { "type": "number", "title": "Refresh every (seconds)", "default": 5 }
+  }
 }

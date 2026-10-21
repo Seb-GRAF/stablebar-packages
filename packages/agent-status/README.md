@@ -2,6 +2,7 @@
 
 Counts sessions waiting for permission or input, including finished turns. The widget uses
 the `warning` state when that count is nonzero. Its popup lists each project's latest status.
+In the package settings, choose **all** or **waiting** sessions; waiting includes finished turns and sessions that need input.
 Click a row to bring the terminal or editor app forward, using the bundle ID inherited by
 the hook in `__CFBundleIdentifier`. It opens the app, not a particular tab. If that variable
 is absent, the row still shows the status but cannot open an app.
@@ -14,7 +15,7 @@ You do not need a `StableBar` command on PATH.
 
 After installing and enabling the package, merge these entries into the `hooks` object in
 `~/.claude/settings.json`. Keep your existing hooks. The commands below use the default
-StableBar configuration and the installed version `1.0.1`:
+StableBar configuration and the installed version `1.0.2`:
 
 ```json
 {
@@ -25,7 +26,7 @@ StableBar configuration and the installed version `1.0.1`:
         "hooks": [
           {
             "type": "command",
-            "command": "\"$HOME/.config/stablebar/packages/agent-status/1.0.1/scripts/hook.sh\" claude \"$HOME/.config/stablebar/config.json\""
+            "command": "\"$HOME/.config/stablebar/packages/agent-status/1.0.2/scripts/hook.sh\" claude \"$HOME/.config/stablebar/config.json\""
           }
         ]
       }
@@ -35,7 +36,7 @@ StableBar configuration and the installed version `1.0.1`:
         "hooks": [
           {
             "type": "command",
-            "command": "\"$HOME/.config/stablebar/packages/agent-status/1.0.1/scripts/hook.sh\" claude \"$HOME/.config/stablebar/config.json\""
+            "command": "\"$HOME/.config/stablebar/packages/agent-status/1.0.2/scripts/hook.sh\" claude \"$HOME/.config/stablebar/config.json\""
           }
         ]
       }
@@ -45,7 +46,7 @@ StableBar configuration and the installed version `1.0.1`:
         "hooks": [
           {
             "type": "command",
-            "command": "\"$HOME/.config/stablebar/packages/agent-status/1.0.1/scripts/hook.sh\" claude \"$HOME/.config/stablebar/config.json\""
+            "command": "\"$HOME/.config/stablebar/packages/agent-status/1.0.2/scripts/hook.sh\" claude \"$HOME/.config/stablebar/config.json\""
           }
         ]
       }
@@ -65,7 +66,7 @@ directory; Codex's command array does not expand `$HOME`:
 
 ```toml
 notify = [
-  "/Users/you/.config/stablebar/packages/agent-status/1.0.1/scripts/hook.sh",
+  "/Users/you/.config/stablebar/packages/agent-status/1.0.2/scripts/hook.sh",
   "codex",
   "/Users/you/.config/stablebar/config.json"
 ]
@@ -90,5 +91,5 @@ Session files remain after an agent exits. Remove the corresponding file, then r
 to clear an old session from the widget. No transcript or prompt is saved.
 
 For a different StableBar configuration, change both paths in the hook setup. Package files
-live in `packages/agent-status/1.0.1/` beside that configuration. Update the hook path when
+live in `packages/agent-status/1.0.2/` beside that configuration. Update the hook path when
 you install a new package version. Installing this package does not edit your agent settings.

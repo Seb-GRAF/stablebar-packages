@@ -2,6 +2,9 @@
   "tokens": {
     "textMuted": { "light": "#6e6e73", "dark": "#a1a1a6" }
   },
+  "providers": {
+    "network-speed": { "type": "network", "interval": "@setting.interval" }
+  },
   "popups": {
     "network-speed": {
       "style": { "width": 260, "spacing": 8 },
@@ -27,6 +30,6 @@
     }
   },
   "widgets": [
-    { "id": "network-speed", "type": "network", "position": "right", "popupName": "network-speed" }
+    { "id": "network-speed", "type": "provider", "provider": "network-speed", "position": "right", "popupName": "network-speed" }
   ]
 }

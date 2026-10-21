@@ -5,7 +5,7 @@
     "track": { "light": "#1d1d1f26", "dark": "#f5f5f726" }
   },
   "providers": {
-    "system": { "type": "system", "interval": 2 }
+    "system": { "type": "system", "interval": "@setting.interval" }
   },
   "popups": {
     "system-monitor": {

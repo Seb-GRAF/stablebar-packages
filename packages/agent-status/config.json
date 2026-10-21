@@ -9,6 +9,7 @@
       "position": "right",
       "command": "\"$PACKAGE_DIR/scripts/status.sh\"",
       "interval": null,
+      "environment": { "SESSIONS": "@setting.sessions" },
       "events": ["agent"],
       "icon": "terminal",
       "popup": {

@@ -7,7 +7,7 @@ if (( ${#files[@]} )); then
   jq -s '.' "${files[@]}"
 else
   printf '[]\n'
-fi | jq '
+fi | jq --arg filter "$SESSIONS" '
   sort_by(.project, .agent) as $sessions |
   ([$sessions[] | select(.status != "Working")] | length) as $waiting |
   {
@@ -15,5 +15,5 @@ fi | jq '
     icon: "terminal",
     state: (if $waiting > 0 then "warning" else null end),
     fields: {hint: (if $sessions | length == 0 then "No sessions reported. Add the hooks in the package README." else "" end)},
-    lists: {sessions: [$sessions[] | {project, detail: "\(.agent) · \(.status)", bundle}]}
+    lists: {sessions: [$sessions[] | select($filter == "all" or .status != "Working") | {project, detail: "\(.agent) · \(.status)", bundle}]}
   }'

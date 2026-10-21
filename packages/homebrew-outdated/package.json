@@ -1,10 +1,13 @@
 {
   "id": "homebrew-outdated",
   "name": "Homebrew outdated",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Shows how many Homebrew formulae and casks are outdated, and lists them.",
   "author": "StableBar",
   "repository": "https://github.com/Seb-GRAF/stablebar-packages",
   "entry": "config.json",
-  "requires": ["brew"]
+  "requires": ["brew"],
+  "settings": {
+    "interval": { "type": "number", "title": "Refresh every (seconds)", "default": 3600 }
+  }
 }

@@ -1,11 +1,12 @@
 {
   "id": "agent-status",
   "name": "Agent status",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Shows Claude Code waiting or finishing and Codex finishing. Add Claude's Notification, Stop and UserPromptSubmit hooks and Codex's notify command using this package's README.",
   "author": "StableBar",
   "repository": "https://github.com/Seb-GRAF/stablebar-packages",
   "entry": "config.json",
+  "screenshot": "preview.png",
   "requires": ["jq"],
   "settings": {
     "sessions": { "type": "string", "title": "Sessions in the popup", "choices": ["all", "waiting"], "default": "all", "description": "Waiting includes finished turns and sessions that need input." }

@@ -1,11 +1,12 @@
 {
   "id": "github-notifications",
   "name": "GitHub notifications",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Shows your unread GitHub notification count and lists the latest ones, each opening on GitHub.",
   "author": "StableBar",
   "repository": "https://github.com/Seb-GRAF/stablebar-packages",
   "entry": "config.json",
+  "screenshot": "preview.png",
   "hosts": ["api.github.com"],
   "settings": {
     "token": { "type": "secret", "title": "GitHub token" }

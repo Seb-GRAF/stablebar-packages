@@ -14,6 +14,10 @@ A published id and version never change, and their archives are never deleted. T
 - [Agent status](packages/agent-status/README.md) shows Claude Code waiting or finishing and Codex finishing; follow its hook setup after installing.
 - [Development servers](packages/dev-servers/README.md) lists your listening ports, opens localhost and stops processes.
 
+## Package previews
+
+Every package in this collection includes a preview of its bar content, rendered with sample data. Previews show what the package displays without running its commands or connecting to its services. Your selected theme controls how it looks on your bar. StableBar shows these images in package details and, in versions with list previews, directly in Installed and Store.
+
 ## Package settings
 
 Open **Settings → Packages**, select a package and choose **Settings**. System monitor, Network speed and Homebrew outdated expose their refresh interval. Calendar agenda exposes its lookahead and meeting warning times. Agent status can list all sessions or only those waiting for attention. Weather and AI usage use pickers for their supported display choices. Existing settings remain selected when updating.

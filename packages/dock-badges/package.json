@@ -1,11 +1,12 @@
 {
   "id": "dock-badges",
   "name": "Dock badges",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Shows the total unread count from running apps' Dock badges, with a popup that opens each app.",
   "author": "StableBar",
   "repository": "https://github.com/Seb-GRAF/stablebar-packages",
   "entry": "config.json",
+  "screenshot": "preview.png",
   "requires": ["jq"],
   "settings": {
     "apps": { "type": "string", "title": "App names (comma-separated)", "default": "Mail,Slack,Messages,Microsoft Teams" }

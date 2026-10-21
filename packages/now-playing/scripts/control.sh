@@ -4,9 +4,15 @@
 # back and forward skip 15 seconds; quieter and louder change the player's volume by 10.
 set -e
 
-target=""
+# Control the playing player, else the paused one. With only one player open, skip asking
+# for its state, so the click reaches it sooner.
+open=""
 for app in Music Spotify; do
-  [ "$(osascript -e "application \"$app\" is running")" = true ] || continue
+  if pgrep -xq "$app"; then open="$open $app"; fi
+done
+target=""
+for app in $open; do
+  if [ "$open" = " $app" ]; then target=$app; break; fi
   case $(osascript -e "tell application \"$app\" to player state as text") in
     playing) target=$app; break ;;
     paused) [ -n "$target" ] || target=$app ;;

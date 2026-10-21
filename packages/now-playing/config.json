@@ -150,7 +150,6 @@
                   "type": "symbol",
                   "source": "control",
                   "alignment": "center",
-                  "transition": "fade",
                   "onClick": "\"$PACKAGE_DIR/scripts/control.sh\" playpause",
                   "style": {
                     "width": 42,

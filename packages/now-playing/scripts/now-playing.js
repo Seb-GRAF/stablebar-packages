@@ -168,9 +168,21 @@ function refresh() {
   emit()
 }
 
+// The notification already says whether the player plays or paused: show that at once,
+// then read the rest.
+function changed(notification) {
+  const player = players.find((candidate) => candidate.notification === notification.name.js)
+  const state = (ObjC.deepUnwrap(notification.userInfo) || {})['Player State']
+  if (current && current.player === player && (state === 'Playing' || state === 'Paused')) {
+    current.playing = state === 'Playing'
+    emit()
+  }
+  refresh()
+}
+
 ObjC.registerSubclass({
   name: 'NowPlayingObserver',
-  methods: { 'changed:': { types: ['void', ['id']], implementation: () => refresh() } },
+  methods: { 'changed:': { types: ['void', ['id']], implementation: (notification) => changed(notification) } },
 })
 const observer = $.NowPlayingObserver.alloc.init
 for (const player of players) {

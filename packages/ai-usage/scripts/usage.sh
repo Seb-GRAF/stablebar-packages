@@ -21,6 +21,7 @@ duration() {
 
 weekly_pace() {
   elapsed=$((604800 - $2))
+  [ "$elapsed" -gt 0 ] || elapsed=0
   delta=$(awk -v used="$1" -v elapsed="$elapsed" 'BEGIN { printf "%.0f", used - elapsed / 6048 }')
   if [ "$delta" -lt -2 ]; then
     printf '%d%% in reserve' $((-delta))

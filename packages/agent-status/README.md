@@ -15,7 +15,7 @@ You do not need a `StableBar` command on PATH.
 
 After installing and enabling the package, merge these entries into the `hooks` object in
 `~/.claude/settings.json`. Keep your existing hooks. The commands below use the default
-StableBar configuration and the installed version `1.0.2`:
+StableBar configuration and the installed version `1.0.3`:
 
 ```json
 {
@@ -26,7 +26,7 @@ StableBar configuration and the installed version `1.0.2`:
         "hooks": [
           {
             "type": "command",
-            "command": "\"$HOME/.config/stablebar/packages/agent-status/1.0.2/scripts/hook.sh\" claude \"$HOME/.config/stablebar/config.json\""
+            "command": "\"$HOME/.config/stablebar/packages/agent-status/1.0.3/scripts/hook.sh\" claude \"$HOME/.config/stablebar/config.json\""
           }
         ]
       }
@@ -36,7 +36,7 @@ StableBar configuration and the installed version `1.0.2`:
         "hooks": [
           {
             "type": "command",
-            "command": "\"$HOME/.config/stablebar/packages/agent-status/1.0.2/scripts/hook.sh\" claude \"$HOME/.config/stablebar/config.json\""
+            "command": "\"$HOME/.config/stablebar/packages/agent-status/1.0.3/scripts/hook.sh\" claude \"$HOME/.config/stablebar/config.json\""
           }
         ]
       }
@@ -46,7 +46,7 @@ StableBar configuration and the installed version `1.0.2`:
         "hooks": [
           {
             "type": "command",
-            "command": "\"$HOME/.config/stablebar/packages/agent-status/1.0.2/scripts/hook.sh\" claude \"$HOME/.config/stablebar/config.json\""
+            "command": "\"$HOME/.config/stablebar/packages/agent-status/1.0.3/scripts/hook.sh\" claude \"$HOME/.config/stablebar/config.json\""
           }
         ]
       }
@@ -66,7 +66,7 @@ directory; Codex's command array does not expand `$HOME`:
 
 ```toml
 notify = [
-  "/Users/you/.config/stablebar/packages/agent-status/1.0.2/scripts/hook.sh",
+  "/Users/you/.config/stablebar/packages/agent-status/1.0.3/scripts/hook.sh",
   "codex",
   "/Users/you/.config/stablebar/config.json"
 ]
@@ -91,5 +91,5 @@ Session files remain after an agent exits. Remove the corresponding file, then r
 to clear an old session from the widget. No transcript or prompt is saved.
 
 For a different StableBar configuration, change both paths in the hook setup. Package files
-live in `packages/agent-status/1.0.2/` beside that configuration. Update the hook path when
+live in `packages/agent-status/1.0.3/` beside that configuration. Update the hook path when
 you install a new package version. Installing this package does not edit your agent settings.

@@ -27,8 +27,7 @@
         "children": [
           { "type": "image", "source": "artwork", "fit": "fill", "style": { "width": 16, "height": 16, "cornerRadius": 3 } },
           { "type": "field", "field": "line", "scrollSpeed": 20, "transition": "fade", "style": { "maxWidth": "@setting.barWidth" } },
-          { "type": "symbol", "name": "waveform", "effect": "variableColor", "hideWhenEmpty": "playing", "style": { "iconSize": 12 } },
-          { "type": "symbol", "name": "waveform", "hideWhenEmpty": "paused", "style": { "iconSize": 12 } }
+          { "type": "equalizer", "source": "playing" }
         ]
       },
       "popup": {

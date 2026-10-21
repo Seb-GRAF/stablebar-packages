@@ -131,7 +131,6 @@ function output(info) {
       line: info.artist ? `${info.title} — ${info.artist}` : info.title,
       control: info.playing ? 'pause.fill' : 'play.fill',
       playing: info.playing ? '1' : '',
-      paused: info.playing ? '' : '1',
       source: info.player.name,
       app: info.player.id,
       appIcon: icon,

@@ -2,7 +2,7 @@
   "id": "now-playing",
   "name": "Now playing",
   "version": "1.2.0",
-  "description": "Shows the playing or paused track from Music or Spotify with its artwork and a wave while it plays, and a popup with seeking, volume, shuffle, repeat and favorites.",
+  "description": "Shows the playing or paused track from Music or Spotify with its artwork and bouncing bars while it plays, and a popup with seeking, volume, shuffle, repeat and favorites.",
   "author": "StableBar",
   "repository": "https://github.com/Seb-GRAF/stablebar-packages",
   "minimumVersion": "0.5.0",

@@ -1,0 +1,13 @@
+# Reviews are requested from these people automatically; none are required.
+# The last matching pattern takes precedence.
+
+*                @Seb-GRAF
+
+# CI, publishing and agent tooling
+/.github/        @M4n0x @Seb-GRAF
+/.agents/        @M4n0x @Seb-GRAF
+/.claude/        @M4n0x @Seb-GRAF
+/scripts/        @M4n0x @Seb-GRAF
+/AGENTS.md       @M4n0x @Seb-GRAF
+/CLAUDE.md       @M4n0x @Seb-GRAF
+/CONTRIBUTING.md @M4n0x @Seb-GRAF

@@ -1,0 +1,52 @@
+name: Package bug
+description: A store package shows something wrong, stops updating or fails to install.
+labels:
+  - bug
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Search [open and closed issues](https://github.com/Seb-GRAF/stablebar-packages/issues?q=is%3Aissue) first, and keep the report to one problem. Redact tokens, keys and personal details from output and logs. If the problem is in StableBar rather than one package, report it in [StableBar's issues](https://github.com/Seb-GRAF/StableBar/issues).
+
+  - type: input
+    id: package
+    attributes:
+      label: Package and version
+      description: Shown in **Settings → Packages** on the package's page.
+      placeholder: Weather 1.0.2
+    validations:
+      required: true
+
+  - type: textarea
+    id: what-happens
+    attributes:
+      label: What happens
+      description: What you see, including any error text.
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected
+      description: What should happen instead.
+    validations:
+      required: true
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Finder shows the StableBar version under Get Info for StableBar.app.
+      value: |
+        StableBar:
+        macOS:
+        Package settings you changed:
+    validations:
+      required: true
+
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence
+      description: What **Settings → Status** shows for the widget, and any error text or logs. Drag screenshots in here.

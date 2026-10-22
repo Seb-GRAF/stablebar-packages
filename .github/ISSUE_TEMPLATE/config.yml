@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: StableBar bug or feature
+    url: https://github.com/Seb-GRAF/StableBar/issues/new/choose
+    about: Problems with StableBar itself, its built-in widgets or Settings belong in StableBar's repository.
+  - name: Harmful package
+    url: https://github.com/Seb-GRAF/stablebar-packages/security/advisories/new
+    about: Report a package that does something it doesn't declare, privately.

@@ -1,12 +1,12 @@
 {
   "id": "system-monitor",
   "name": "System monitor",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "kind": "widgets",
   "entry": "config.json",
   "screenshot": "preview.png",
   "description": "CPU in the bar, in warning colors when your Mac is under strain, with a popup of CPU and memory details and the apps using the most memory or CPU, which you can quit.",
-  "author": "StableBar",
+  "author": "Seb-GRAF",
   "repository": "https://github.com/Seb-GRAF/stablebar-packages",
   "minimumVersion": "0.6.0",
   "settings": {

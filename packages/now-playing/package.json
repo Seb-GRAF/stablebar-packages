@@ -1,9 +1,9 @@
 {
   "id": "now-playing",
   "name": "Now playing",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "Shows the playing or paused track from Music or Spotify with its artwork and bouncing bars while it plays, and a popup with seeking, volume, shuffle, repeat and favorites.",
-  "author": "StableBar",
+  "author": "Seb-GRAF",
   "repository": "https://github.com/Seb-GRAF/stablebar-packages",
   "minimumVersion": "0.5.0",
   "entry": "config.json",

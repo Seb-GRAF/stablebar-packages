@@ -1,12 +1,12 @@
 {
   "id": "calendar-agenda",
   "name": "Calendar agenda",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "kind": "widgets",
   "entry": "config.json",
   "screenshot": "preview.png",
   "description": "The next meeting and its countdown in the bar, with today's agenda and a join link in a popup.",
-  "author": "StableBar",
+  "author": "Seb-GRAF",
   "repository": "https://github.com/Seb-GRAF/stablebar-packages",
   "permissions": ["calendars"],
   "settings": {

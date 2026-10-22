@@ -1,9 +1,9 @@
 {
   "id": "homebrew-outdated",
   "name": "Homebrew outdated",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Shows how many Homebrew formulae and casks are outdated, and lists them.",
-  "author": "StableBar",
+  "author": "Seb-GRAF",
   "repository": "https://github.com/Seb-GRAF/stablebar-packages",
   "entry": "config.json",
   "screenshot": "preview.png",

@@ -20,7 +20,7 @@ Besides `id`, `name`, `version`, `entry` and `settings`, the store reads these m
 | --- | --- |
 | `kind` | `theme` or `widgets`. Leave it out for a package that runs commands. |
 | `description` | One sentence for the store, the review and the package list in the README. |
-| `author` | A person, organization or handle. |
+| `author` | Your GitHub username, the account that opens the pull request adding the package. |
 | `repository` | The `https` URL of the package's source. |
 | `screenshot` | Path inside the package to a PNG or JPEG. |
 | `minimumVersion` | The oldest StableBar version that can run it, such as `0.6.0`. |

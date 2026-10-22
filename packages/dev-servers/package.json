@@ -1,9 +1,9 @@
 {
   "id": "dev-servers",
   "name": "Development servers",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Lists your listening TCP ports and their processes, with actions to open localhost or stop a process.",
-  "author": "StableBar",
+  "author": "Seb-GRAF",
   "repository": "https://github.com/Seb-GRAF/stablebar-packages",
   "entry": "config.json",
   "screenshot": "preview.png",

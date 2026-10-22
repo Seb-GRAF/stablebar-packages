@@ -1,0 +1,31 @@
+name: Package request
+description: A widget or theme you would like in the store.
+labels:
+  - enhancement
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Check the [packages](https://github.com/Seb-GRAF/stablebar-packages#packages) and StableBar's [built-in widgets](https://github.com/Seb-GRAF/StableBar/blob/main/docs/widgets.md) first. Search [open and closed issues](https://github.com/Seb-GRAF/stablebar-packages/issues?q=is%3Aissue) too.
+
+  - type: textarea
+    id: what
+    attributes:
+      label: What it shows
+      description: What you want to see in the bar and its popup, and what clicking it should do.
+    validations:
+      required: true
+
+  - type: textarea
+    id: source
+    attributes:
+      label: Where the data comes from
+      description: The app, service, command-line tool or file that has it, with links.
+    validations:
+      required: true
+
+  - type: textarea
+    id: related
+    attributes:
+      label: Related
+      description: Packages, widgets or issues you found, and how this differs.

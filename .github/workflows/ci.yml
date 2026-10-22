@@ -28,6 +28,10 @@ jobs:
       # Packages' shell scripts end in .sh, so this finds them along with the repository's.
       - name: ShellCheck
         run: git ls-files -z '*.sh' | xargs -0 shellcheck
+      - name: Check the package list
+        run: |
+          ./scripts/update-readme.sh
+          git diff --exit-code README.md || { echo "Run scripts/update-readme.sh and commit README.md" >&2; exit 1; }
       - name: Check versions
         if: github.event_name == 'pull_request'
         env:

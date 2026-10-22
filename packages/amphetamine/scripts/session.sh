@@ -1,12 +1,12 @@
 #!/bin/sh
 set -e
 
-if [ "$(osascript -e 'application "Amphetamine" is running')" = false ]; then
-  printf '{"text":"Off","icon":"pill","fields":{"status":"Amphetamine is not running"}}\n'
-  exit 0
-fi
+duration=$("$PACKAGE_DIR/scripts/duration.sh")
 
-remaining=$(osascript -e 'tell application "Amphetamine" to session time remaining')
+remaining=-3
+if [ "$(osascript -e 'application "Amphetamine" is running')" = true ]; then
+  remaining=$(osascript -e 'tell application "Amphetamine" to session time remaining')
+fi
 icon=pill.fill
 case $remaining in
   -3) text=Off; icon=pill; status="No active session" ;;
@@ -16,8 +16,14 @@ case $remaining in
   *)
     minutes=$(((remaining + 59) / 60))
     text="${minutes}m"
-    status="Keeping awake for $minutes more minutes"
+    status="$minutes min remaining"
     ;;
 esac
 
-printf '{"text":"%s","icon":"%s","fields":{"status":"%s"}}\n' "$text" "$icon" "$status"
+[ "$BAR_DISPLAY" = icon ] && text=""
+action=""
+if [ "$CLICK_ACTION" = toggle ]; then
+  action=",\"onClick\":\"\\\"\$PACKAGE_DIR/scripts/control.sh\\\" toggle\""
+fi
+printf '{"text":"%s","icon":"%s","values":{"duration":%s},"fields":{"status":"%s","timedLabel":"Keep awake for %s min","durationLabel":"%sm"}%s}\n' \
+  "$text" "$icon" "$duration" "$status" "$duration" "$duration" "$action"

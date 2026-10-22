@@ -1,10 +1,17 @@
 {
   "id": "amphetamine",
   "name": "Amphetamine",
-  "version": "1.0.0",
-  "description": "Shows your Amphetamine session and remaining time, with controls to keep your Mac awake or end the session.",
+  "version": "1.1.0",
+  "description": "Toggle Amphetamine from the bar, adjust its timer with an inline hover slider, and see the time remaining.",
   "author": "StableBar",
   "repository": "https://github.com/Seb-GRAF/stablebar-packages",
   "entry": "config.json",
-  "permissions": ["automation"]
+  "minimumVersion": "0.6.0-beta.20261022084539.263",
+  "permissions": ["automation"],
+  "settings": {
+    "duration": {"type": "string", "title": "Default session (minutes)", "default": "60", "choices": ["15", "30", "60", "120", "240"]},
+    "displaySleep": {"type": "string", "title": "Display sleep during sessions", "default": "allow", "choices": ["allow", "prevent"]},
+    "barDisplay": {"type": "string", "title": "Bar display", "default": "status", "choices": ["status", "icon"]},
+    "clickAction": {"type": "string", "title": "Click the bar widget to", "default": "toggle", "choices": ["toggle", "controls"]}
+  }
 }

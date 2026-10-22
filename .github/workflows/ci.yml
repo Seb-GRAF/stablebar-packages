@@ -54,7 +54,7 @@ jobs:
         run: ./stablebar/scripts/build.sh
       - name: Check packages
         env:
-          STABLEBAR: ${{ github.workspace }}/stablebar/dist/StableBar.app/Contents/MacOS/StableBar
+          STABLEBAR: ${{ github.workspace }}/stablebar/.build/release/StableBar
         run: |
           failed=0
           for package in packages/*/; do

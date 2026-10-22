@@ -37,7 +37,7 @@ From the command line, `StableBar --install-package weather` installs a package 
 | <img src="packages/homebrew-outdated/preview.png" width="260" alt=""> | **[Homebrew outdated](packages/homebrew-outdated)**<br>Shows how many Homebrew formulae and casks are outdated, and lists them. | Runs commands<br>Needs brew |
 | <img src="packages/network-speed/preview.png" width="260" alt=""> | **[Network speed](packages/network-speed)**<br>Download and upload rates in the bar, with a popup naming the active network interfaces. | No commands |
 | <img src="packages/now-playing/preview.png" width="260" alt=""> | **[Now playing](packages/now-playing)**<br>Shows the playing or paused track from Music or Spotify with its artwork and bouncing bars while it plays, and a popup with seeking, volume, shuffle, repeat and favorites. | Runs commands<br>Permissions: automation<br>Contacts i.scdn.co |
-| <img src="packages/system-monitor/preview.png" width="260" alt=""> | **[System monitor](packages/system-monitor)**<br>CPU and memory in the bar, with a popup that graphs CPU and opens Activity Monitor. | No commands |
+| <img src="packages/system-monitor/preview.png" width="260" alt=""> | **[System monitor](packages/system-monitor)**<br>CPU in the bar, in warning colors when your Mac is under strain, with a popup of CPU and memory details and the apps using the most memory or CPU, which you can quit. | No commands |
 | <img src="packages/weather/preview.png" width="260" alt=""> | **[Weather](packages/weather)**<br>Shows the current temperature and conditions from wttr.in, with feels-like, humidity, wind and today's high and low. | Runs commands<br>Contacts wttr.in |
 <!-- /packages -->
 

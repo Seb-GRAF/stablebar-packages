@@ -1,0 +1,4 @@
+interface:
+  display_name: "Review package"
+  short_description: "Read a store package's commands against what it declares"
+  default_prompt: "Use $review-package to review this store pull request and say whether it is ready to merge."

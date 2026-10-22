@@ -101,10 +101,16 @@ if [ "$PROVIDERS" != codex ]; then
     echo "Claude Code's sign-in has expired. Open Claude Code to renew it." >&2
     exit 1
   fi
-  json=$(curl -fsS --max-time 12 \
+  if json=$(curl -fsS --max-time 12 \
     -H "Authorization: Bearer $token" \
     -H "anthropic-beta: oauth-2025-04-20" \
-    "https://api.anthropic.com/api/oauth/usage")
+    "https://api.anthropic.com/api/oauth/usage"); then
+    printf '%s' "$json" > "$CONFIG_DIR/ai-usage-claude.json"
+  elif [ -f "$CONFIG_DIR/ai-usage-claude.json" ]; then
+    json=$(cat "$CONFIG_DIR/ai-usage-claude.json")
+  else
+    exit 1
+  fi
 
   total=$(read_json limits)
   i=0

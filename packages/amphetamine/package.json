@@ -1,9 +1,9 @@
 {
   "id": "amphetamine",
   "name": "Amphetamine",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Toggle Amphetamine from the bar, adjust its timer with an inline hover slider, and see the time remaining.",
-  "author": "StableBar",
+  "author": "Seb-GRAF",
   "repository": "https://github.com/Seb-GRAF/stablebar-packages",
   "entry": "config.json",
   "minimumVersion": "0.6.0-beta.20261022084539.263",

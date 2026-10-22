@@ -1,9 +1,9 @@
 {
   "id": "weather",
   "name": "Weather",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Shows the current temperature and conditions from wttr.in, with feels-like, humidity, wind and today's high and low.",
-  "author": "StableBar",
+  "author": "Seb-GRAF",
   "repository": "https://github.com/Seb-GRAF/stablebar-packages",
   "entry": "config.json",
   "screenshot": "preview.png",

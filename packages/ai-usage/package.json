@@ -1,9 +1,9 @@
 {
   "id": "ai-usage",
   "name": "AI usage",
-  "version": "1.2.4",
+  "version": "1.2.5",
   "description": "Shows your Claude Code and Codex limits in one widget, with reset countdowns and weekly pace, using the sign-ins those tools already keep.",
-  "author": "StableBar",
+  "author": "Seb-GRAF",
   "repository": "https://github.com/Seb-GRAF/stablebar-packages",
   "entry": "config.json",
   "screenshot": "preview.png",

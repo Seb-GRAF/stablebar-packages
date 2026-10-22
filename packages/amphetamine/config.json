@@ -1,0 +1,26 @@
+{
+  "widgets": [
+    {
+      "id": "amphetamine",
+      "type": "script",
+      "position": "right",
+      "command": "\"$PACKAGE_DIR/scripts/session.sh\"",
+      "interval": 5,
+      "tooltip": "Amphetamine session controls",
+      "popup": {
+        "dismissOnAction": false,
+        "style": { "width": 260, "paddingHorizontal": 18, "paddingVertical": 16, "spacing": 10 },
+        "layout": {
+          "type": "column",
+          "children": [
+            { "type": "text", "text": "Amphetamine", "style": { "fontWeight": "bold", "fontSize": 15 } },
+            { "type": "field", "field": "status" },
+            { "type": "text", "text": "Keep awake for 1 hour", "onClick": "\"$PACKAGE_DIR/scripts/control.sh\" hour" },
+            { "type": "text", "text": "Keep awake indefinitely", "onClick": "\"$PACKAGE_DIR/scripts/control.sh\" indefinitely" },
+            { "type": "text", "text": "End session", "onClick": "\"$PACKAGE_DIR/scripts/control.sh\" stop" }
+          ]
+        }
+      }
+    }
+  ]
+}

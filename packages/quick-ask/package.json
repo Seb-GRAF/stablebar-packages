@@ -1,0 +1,19 @@
+{
+  "id": "quick-ask",
+  "name": "Quick ask",
+  "version": "1.0.0",
+  "description": "Ask Claude Code or Codex from the bar. Choose the model and effort, follow up, retry, and drag the chat anywhere to keep it on screen. Needs claude or codex signed in.",
+  "author": "Seb-GRAF",
+  "repository": "https://github.com/Seb-GRAF/stablebar-packages",
+  "entry": "config.json",
+  "screenshot": "preview.png",
+  "minimumVersion": "0.7.0",
+  "requires": [
+    "jq"
+  ],
+  "hosts": [
+    "api.anthropic.com",
+    "chatgpt.com",
+    "api.openai.com"
+  ]
+}

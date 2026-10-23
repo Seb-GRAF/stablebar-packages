@@ -22,23 +22,20 @@ From the command line, `StableBar --install-package weather` installs a package 
 
 ## Packages
 
+Clock & date, Battery, System monitor, Network and Calendar now ship with StableBar Essentials. [Update StableBar](https://github.com/Seb-GRAF/StableBar/releases/latest) to turn existing Store versions into built-in widgets automatically, keeping your settings and placement.
+
 <!-- packages -->
 | Preview | Package | Access |
 | --- | --- | --- |
 | <img src="packages/agent-status/preview.png" width="260" alt=""> | **[Agent status](packages/agent-status)**<br>Shows Claude Code waiting or finishing and Codex finishing. Add Claude's Notification, Stop and UserPromptSubmit hooks and Codex's notify command using this package's README. | Runs commands<br>Needs jq |
 | <img src="packages/ai-usage/preview.png" width="260" alt=""> | **[AI usage](packages/ai-usage)**<br>Shows your Claude Code and Codex limits in one widget, with reset countdowns and weekly pace, using the sign-ins those tools already keep. | Runs commands<br>Contacts api.anthropic.com, chatgpt.com |
 |  | **[Amphetamine](packages/amphetamine)**<br>Toggle Amphetamine from the bar, adjust its timer with an inline hover slider, and see the time remaining. | Runs commands<br>Permissions: automation |
-| <img src="packages/battery-status/preview.png" width="260" alt=""> | **[Battery status](packages/battery-status)**<br>The battery charge with a symbol for charging, in the bar, and a popup with the state and time remaining. | No commands |
-| <img src="packages/calendar-agenda/preview.png" width="260" alt=""> | **[Calendar agenda](packages/calendar-agenda)**<br>The next meeting and its countdown in the bar, with today's agenda and a join link in a popup. | No commands<br>Permissions: calendars |
-| <img src="packages/date/preview.png" width="260" alt=""> | **[Date](packages/date)**<br>Today's date in the bar, which opens Calendar when clicked. | No commands |
 | <img src="packages/dev-servers/preview.png" width="260" alt=""> | **[Development servers](packages/dev-servers)**<br>Lists your listening TCP ports and their processes, with actions to open localhost or stop a process. | Runs commands<br>Needs jq |
 | <img src="packages/dock-badges/preview.png" width="260" alt=""> | **[Dock badges](packages/dock-badges)**<br>Shows the total unread count from running apps' Dock badges, with a popup that opens each app. | Runs commands<br>Needs jq |
 | <img src="packages/github-notifications/preview.png" width="260" alt=""> | **[GitHub notifications](packages/github-notifications)**<br>Shows your unread GitHub notification count and lists the latest ones, each opening on GitHub. | Runs commands<br>Contacts api.github.com |
 | <img src="packages/homebrew-outdated/preview.png" width="260" alt=""> | **[Homebrew outdated](packages/homebrew-outdated)**<br>Shows how many Homebrew formulae and casks are outdated, and lists them. | Runs commands<br>Needs brew |
-| <img src="packages/network-speed/preview.png" width="260" alt=""> | **[Network speed](packages/network-speed)**<br>Download and upload rates in the bar, with a popup naming the active network interfaces. | No commands |
 | <img src="packages/now-playing/preview.png" width="260" alt=""> | **[Now playing](packages/now-playing)**<br>Shows the playing or paused track from Music or Spotify with its artwork and bouncing bars while it plays, and a popup with seeking, volume, shuffle, repeat and favorites. | Runs commands<br>Permissions: automation<br>Contacts i.scdn.co |
 | <img src="packages/quick-ask/preview.png" width="260" alt=""> | **[Quick ask](packages/quick-ask)**<br>Ask Claude Code or Codex from the bar. Choose the model and effort, follow up, retry, and drag the chat anywhere to keep it on screen. Needs claude or codex signed in. | Runs commands<br>Needs jq<br>Contacts api.anthropic.com, chatgpt.com, api.openai.com |
-| <img src="packages/system-monitor/preview.png" width="260" alt=""> | **[System monitor](packages/system-monitor)**<br>CPU in the bar, in warning colors when your Mac is under strain, with a popup of CPU and memory details and the apps using the most memory or CPU, which you can quit. | No commands |
 | <img src="packages/weather/preview.png" width="260" alt=""> | **[Weather](packages/weather)**<br>Shows the current temperature and conditions from wttr.in, with feels-like, humidity, wind and today's high and low. | Runs commands<br>Contacts wttr.in |
 <!-- /packages -->
 

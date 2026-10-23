@@ -1,0 +1,316 @@
+{
+  "tokens": {
+    "textMuted": {
+      "light": "#5f6773",
+      "dark": "#9aa3b0"
+    },
+    "pill": {
+      "light": "#0000000d",
+      "dark": "#ffffff12"
+    },
+    "pillHover": {
+      "light": "#0000001f",
+      "dark": "#ffffff26"
+    }
+  },
+  "widgets": [
+    {
+      "id": "quick-ask",
+      "type": "script",
+      "position": "right",
+      "command": "\"$PACKAGE_DIR/scripts/status.sh\"",
+      "interval": null,
+      "events": [
+        "quick-ask"
+      ],
+      "icon": "sparkles",
+      "popup": {
+        "pinnable": true,
+        "dismissOnAction": false,
+        "animation": {
+          "curve": "snappy",
+          "duration": 0.35
+        },
+        "style": {
+          "width": 440,
+          "paddingHorizontal": 14,
+          "paddingVertical": 12,
+          "spacing": 10
+        },
+        "layout": {
+          "type": "column",
+          "children": [
+            {
+              "type": "chooser",
+              "title": "Agent, model and effort",
+              "source": "agent",
+              "groupsSource": "agents",
+              "optionsSource": "models",
+              "levelsSource": "efforts",
+              "onChange": "\"$PACKAGE_DIR/scripts/ask.sh\" choose",
+              "style": {
+                "paddingTrailing": 52
+              }
+            },
+            {
+              "type": "column",
+              "hideWhenEmpty": "chat",
+              "style": {
+                "spacing": 10
+              },
+              "children": [
+                {
+                  "type": "field",
+                  "field": "hint",
+                  "wrap": true,
+                  "hideWhenEmpty": "hint",
+                  "style": {
+                    "foreground": "@token.textMuted"
+                  }
+                },
+                {
+                  "type": "field",
+                  "field": "transcript",
+                  "wrap": true,
+                  "markdown": true,
+                  "maxHeight": 380,
+                  "hideWhenEmpty": "transcript"
+                },
+                {
+                  "type": "row",
+                  "hideWhenEmpty": "status",
+                  "style": {
+                    "spacing": 6
+                  },
+                  "children": [
+                    {
+                      "type": "symbol",
+                      "name": "sparkles",
+                      "style": {
+                        "foreground": "@token.textMuted",
+                        "iconSize": 12,
+                        "width": 16
+                      }
+                    },
+                    {
+                      "type": "field",
+                      "field": "status",
+                      "shimmer": true
+                    }
+                  ]
+                },
+                {
+                  "type": "field",
+                  "field": "thoughts",
+                  "wrap": true,
+                  "maxHeight": 72,
+                  "hideWhenEmpty": "thoughts",
+                  "style": {
+                    "foreground": "@token.textMuted",
+                    "fontSize": 11
+                  }
+                },
+                {
+                  "type": "row",
+                  "style": {
+                    "spacing": 6
+                  },
+                  "children": [
+                    {
+                      "type": "button",
+                      "title": "Stop",
+                      "onClick": "\"$PACKAGE_DIR/scripts/ask.sh\" stop",
+                      "style": {
+                        "background": "@token.pill",
+                        "hoverBackground": "@token.pillHover",
+                        "cornerRadius": 7,
+                        "paddingVertical": 4,
+                        "fontSize": 12
+                      },
+                      "hideWhenEmpty": "running"
+                    },
+                    {
+                      "type": "button",
+                      "title": "Retry",
+                      "onClick": "\"$PACKAGE_DIR/scripts/ask.sh\" retry",
+                      "style": {
+                        "background": "@token.pill",
+                        "hoverBackground": "@token.pillHover",
+                        "cornerRadius": 7,
+                        "paddingVertical": 4,
+                        "fontSize": 12
+                      },
+                      "hideWhenEmpty": "idle"
+                    },
+                    {
+                      "type": "button",
+                      "title": "Copy",
+                      "onClick": "\"$PACKAGE_DIR/scripts/ask.sh\" copy",
+                      "style": {
+                        "background": "@token.pill",
+                        "hoverBackground": "@token.pillHover",
+                        "cornerRadius": 7,
+                        "paddingVertical": 4,
+                        "fontSize": 12
+                      },
+                      "hideWhenEmpty": "copyable"
+                    },
+                    {
+                      "type": "button",
+                      "title": "New chat",
+                      "onClick": "\"$PACKAGE_DIR/scripts/ask.sh\" new",
+                      "style": {
+                        "background": "@token.pill",
+                        "hoverBackground": "@token.pillHover",
+                        "cornerRadius": 7,
+                        "paddingVertical": 4,
+                        "fontSize": 12
+                      },
+                      "hideWhenEmpty": "idle"
+                    },
+                    {
+                      "type": "button",
+                      "title": "History",
+                      "onClick": "\"$PACKAGE_DIR/scripts/ask.sh\" view history",
+                      "style": {
+                        "background": "@token.pill",
+                        "hoverBackground": "@token.pillHover",
+                        "cornerRadius": 7,
+                        "paddingVertical": 4,
+                        "fontSize": 12
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "input",
+                  "title": "Question",
+                  "placeholder": "Ask anything, or follow up",
+                  "autofocus": true,
+                  "onSubmit": "\"$PACKAGE_DIR/scripts/ask.sh\" question"
+                }
+              ]
+            },
+            {
+              "type": "column",
+              "hideWhenEmpty": "history",
+              "style": {
+                "spacing": 8
+              },
+              "children": [
+                {
+                  "type": "row",
+                  "style": {
+                    "spacing": 6
+                  },
+                  "children": [
+                    {
+                      "type": "button",
+                      "title": "Back to chat",
+                      "onClick": "\"$PACKAGE_DIR/scripts/ask.sh\" view chat",
+                      "style": {
+                        "background": "@token.pill",
+                        "hoverBackground": "@token.pillHover",
+                        "cornerRadius": 7,
+                        "paddingVertical": 4,
+                        "fontSize": 12
+                      }
+                    },
+                    {
+                      "type": "button",
+                      "title": "Clear history",
+                      "onClick": "\"$PACKAGE_DIR/scripts/ask.sh\" clear",
+                      "style": {
+                        "background": "@token.pill",
+                        "hoverBackground": "@token.pillHover",
+                        "cornerRadius": 7,
+                        "paddingVertical": 4,
+                        "fontSize": 12
+                      },
+                      "hideWhenEmpty": "hasHistory"
+                    }
+                  ]
+                },
+                {
+                  "type": "field",
+                  "field": "noHistory",
+                  "wrap": true,
+                  "hideWhenEmpty": "noHistory",
+                  "style": {
+                    "foreground": "@token.textMuted"
+                  }
+                },
+                {
+                  "type": "list",
+                  "source": "history",
+                  "row": {
+                    "type": "row",
+                    "style": {
+                      "spacing": 4,
+                      "paddingHorizontal": 8,
+                      "paddingVertical": 6,
+                      "cornerRadius": 8,
+                      "hoverBackground": "@token.pill"
+                    },
+                    "children": [
+                      {
+                        "type": "column",
+                        "onClickField": "open",
+                        "style": {
+                          "spacing": 2
+                        },
+                        "children": [
+                          {
+                            "type": "field",
+                            "field": "title",
+                            "style": {
+                              "fontWeight": "semibold"
+                            }
+                          },
+                          {
+                            "type": "field",
+                            "field": "detail",
+                            "style": {
+                              "foreground": "@token.textMuted",
+                              "fontSize": 11
+                            }
+                          }
+                        ]
+                      },
+                      {
+                        "type": "symbol",
+                        "name": "arrow.clockwise",
+                        "onClickField": "replay",
+                        "alignment": "center",
+                        "style": {
+                          "width": 26,
+                          "height": 26,
+                          "cornerRadius": 6,
+                          "iconSize": 11,
+                          "hoverBackground": "@token.pillHover"
+                        }
+                      },
+                      {
+                        "type": "symbol",
+                        "name": "trash",
+                        "onClickField": "delete",
+                        "alignment": "center",
+                        "style": {
+                          "width": 26,
+                          "height": 26,
+                          "cornerRadius": 6,
+                          "iconSize": 11,
+                          "hoverBackground": "@token.pillHover"
+                        }
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

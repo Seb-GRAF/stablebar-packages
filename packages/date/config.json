@@ -1,5 +1,0 @@
-{
-  "widgets": [
-    { "id": "date", "type": "clock", "position": "right", "format": "@setting.format", "open": "com.apple.iCal" }
-  ]
-}

@@ -39,9 +39,16 @@ jobs:
         env:
           BASE: ${{ github.event.pull_request.base.sha }}
         run: ./scripts/check-versions.sh "$BASE"
+      - name: Check one package per pull request
+        if: github.event_name == 'pull_request'
+        env:
+          BASE: ${{ github.event.pull_request.base.sha }}
+        run: ./scripts/check-one-package.sh "$BASE"
 
-  # Checks every package against the newest StableBar, the version people install the store's
-  # packages into. A package that needs a newer StableBar than the current main fails here.
+  # Checks every package against the newest StableBar and against its latest release, the version
+  # most people install the store's packages into. A package that needs a newer StableBar than the
+  # current main fails here, and one that needs a newer one than the release has to say so in
+  # minimumVersion.
   validate:
     name: Validate
     runs-on: macos-26
@@ -58,9 +65,15 @@ jobs:
           persist-credentials: false
       - name: Build StableBar
         run: ./stablebar/scripts/build.sh
+      - name: Download the latest StableBar release
+        run: |
+          curl -fsSL --retry 3 -o "$RUNNER_TEMP/StableBar.dmg" https://github.com/Seb-GRAF/StableBar/releases/latest/download/StableBar.dmg
+          mkdir "$RUNNER_TEMP/release"
+          hdiutil attach -nobrowse -readonly -mountpoint "$RUNNER_TEMP/release" "$RUNNER_TEMP/StableBar.dmg"
       - name: Check packages
         env:
           STABLEBAR: ${{ github.workspace }}/stablebar/.build/release/StableBar
+          STABLEBAR_RELEASE: ${{ runner.temp }}/release/StableBar.app/Contents/MacOS/StableBar
         run: |
           failed=0
           for package in packages/*/; do

@@ -20,7 +20,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      # The version check compares each package with its version on the base branch.
+      # The version check compares each package with every version it had on the base branch.
       - uses: actions/checkout@v7
         with:
           fetch-depth: 0
@@ -32,6 +32,8 @@ jobs:
         run: |
           ./scripts/update-readme.sh
           git diff --exit-code README.md || { echo "Run scripts/update-readme.sh and commit README.md" >&2; exit 1; }
+      - name: Test the scripts
+        run: ./scripts/test.sh
       - name: Check versions
         if: github.event_name == 'pull_request'
         env:
@@ -86,22 +88,49 @@ jobs:
     env:
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
+      # Re-running a failed publish after main moved on would list older versions than the newer
+      # run published, so only main's newest commit publishes.
+      - name: Skip superseded pushes
+        id: current
+        run: |
+          newest=$(gh api "repos/$GITHUB_REPOSITORY/commits/main" --jq .sha)
+          if [[ $newest == "$GITHUB_SHA" ]]; then
+            echo "publish=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "Skipping: main has moved on, and its own run publishes every package."
+          fi
       - uses: actions/checkout@v7
+        if: steps.current.outputs.publish
         with:
           persist-credentials: false
-      - name: Download the current index
+      # Also downloads the archives of the packages' current versions that are already on the
+      # release. A publish that failed after uploading them, or before replacing a lost index, left
+      # them out of the index; build-index.sh lists them again instead of building new ones.
+      - name: Download the current index and archives
+        if: steps.current.outputs.publish
         run: |
-          if gh release view store --repo "$GITHUB_REPOSITORY" > /dev/null 2>&1; then
-            gh release download store --repo "$GITHUB_REPOSITORY" --pattern index.json --dir previous
+          mkdir -p previous/archives
+          if assets=$(gh release view store --repo "$GITHUB_REPOSITORY" --json assets --jq '.assets[].name' 2> /dev/null); then
+            if grep -qxF index.json <<< "$assets"; then
+              gh release download store --repo "$GITHUB_REPOSITORY" --pattern index.json --dir previous
+            fi
+            for manifest in packages/*/package.json; do
+              archive=$(jq -r '"\(.id)-\(.version).tar.gz"' "$manifest")
+              if grep -qxF "$archive" <<< "$assets"; then
+                gh release download store --repo "$GITHUB_REPOSITORY" --pattern "$archive" --dir previous/archives
+              fi
+            done
           fi
       - name: Build the index
+        if: steps.current.outputs.publish
         run: |
           if [[ -f previous/index.json ]]; then
-            ./scripts/build-index.sh previous/index.json
+            ./scripts/build-index.sh previous/index.json previous/archives
           else
-            ./scripts/build-index.sh
+            ./scripts/build-index.sh "" previous/archives
           fi
       - name: Create the release
+        if: steps.current.outputs.publish
         run: |
           if ! gh release view store --repo "$GITHUB_REPOSITORY" > /dev/null 2>&1; then
             gh release create store --repo "$GITHUB_REPOSITORY" --prerelease --target "$GITHUB_SHA" \
@@ -110,11 +139,20 @@ jobs:
       # Without --clobber, an archive that already exists fails the upload instead of changing
       # a version people have installed.
       - name: Upload new archives
+        if: steps.current.outputs.publish
         run: |
           shopt -s nullglob
           archives=(dist/*.tar.gz)
           if (( ${#archives[@]} )); then
             gh release upload store "${archives[@]}" --repo "$GITHUB_REPOSITORY"
           fi
+      # --clobber deletes the old index before uploading the new one, so a failed upload is tried
+      # again. If it still fails, re-running the job rebuilds the index from the archives.
       - name: Replace the index
-        run: gh release upload store dist/index.json --repo "$GITHUB_REPOSITORY" --clobber
+        if: steps.current.outputs.publish
+        run: |
+          for attempt in 1 2 3; do
+            gh release upload store dist/index.json --repo "$GITHUB_REPOSITORY" --clobber && exit 0
+            sleep $((attempt * 10))
+          done
+          exit 1

@@ -30,17 +30,17 @@ Besides `id`, `name`, `version`, `entry` and `settings`, the store reads these m
 
 Declare everything the package uses. A maintainer compares `requires`, `permissions` and `hosts` with the code, and people read them in the README and in StableBar before adding a package.
 
-CI validates packages against StableBar's `main`. If a package uses something that no stable release has yet, set `minimumVersion` so older versions refuse it instead of failing on your bar.
+CI validates packages against StableBar's `main` and against its latest release. If a package uses something that the latest release doesn't have yet, set `minimumVersion` above that release, so older versions refuse it instead of failing on people's bars. CI fails until you do.
 
 Add a `README.md` to the folder when the package needs setup outside StableBar, such as the hooks [Agent status](packages/agent-status/README.md) asks for.
 
 ### Preview
 
-`screenshot` points to a preview of what the package shows in the bar. StableBar shows it in Store and on the package page, and the README shows it in the package list. Match the existing previews: 520 × 144 pixels, the widget centered on a plain background, with sample data and nothing personal.
+`screenshot` points to a preview of what the package shows in the bar. StableBar shows it in Store and on the package page, and the README shows it in the package list. Match the existing previews: 520 × 144 pixels, the widget centered on a plain background, with sample data and nothing personal. CI checks that the preview is a PNG or JPEG inside the package, of that size.
 
 ### Files
 
-Keep packages small and readable. Files can be at most 1 MiB. Binaries are not accepted; images must be `.png`, `.jpg` or `.jpeg`. A file other than JSON can't have a line over 300 characters, so minified code is rejected. Symlinks are rejected, and an executable file starts with a shebang. Shell scripts end in `.sh` and pass [ShellCheck](https://www.shellcheck.net), so they use `sh` or `bash`.
+Keep packages small and readable. Files can be at most 1 MiB. Binaries are not accepted; images must be `.png`, `.jpg` or `.jpeg`. A file other than JSON can't have a line over 300 characters, so minified code is rejected. Symlinks are rejected, and an executable file starts with a shebang. Shell scripts end in `.sh` and pass [ShellCheck](https://www.shellcheck.net), so they use `sh` or `bash`. CI rejects a shell script with another name, which ShellCheck would miss.
 
 ### Versions
 
@@ -64,13 +64,13 @@ Build StableBar with its `./scripts/build.sh`, then check the package against it
 STABLEBAR=path/to/StableBar.app/Contents/MacOS/StableBar ./scripts/check-package.sh packages/weather
 ```
 
-This runs the file checks, then inspects the package, installs it into a scratch configuration and validates that configuration with the package turned on. Without `STABLEBAR`, it runs only the file checks.
+This runs the file checks, then inspects the package, installs it into a scratch configuration and validates that configuration with the package turned on. Without `STABLEBAR`, it runs only the file checks. To also check it against a StableBar release, as CI does with the latest one, set `STABLEBAR_RELEASE` to the binary inside that release's app, such as `/Applications/StableBar.app/Contents/MacOS/StableBar`.
 
 To try the package on your own bar, install it from its folder in **Settings → Packages → Open a folder…**. Give any other StableBar command `--config` with a scratch file: without it, the command changes your own configuration.
 
 ## How we work
 
-1. **One package per pull request.** Changes to CI, scripts or these guides get their own.
+1. **One package per pull request.** Changes to CI, scripts or these guides get their own. CI fails a pull request that changes several packages, or a package and anything besides README.md.
 2. **Branch and open a pull request.** Nobody pushes to `main`, since every push to `main` publishes. Fill in the template: what the package does, what changed, the access it needs and how you tested it. Upload screenshots of the widget and its popup to the pull request.
 3. **Title it in [Conventional Commits](https://www.conventionalcommits.org) and plain words,** such as `feat: add a Weather package` or `fix: keep Weather working without a location`. Link the issue it closes, if there is one.
 4. **Wait for CI.** `Lint` and `Validate` must pass.
@@ -82,8 +82,8 @@ Package ideas and bugs in a package go in [issues](https://github.com/Seb-GRAF/s
 
 On every pull request and push to `main`:
 
-- **Lint:** ShellCheck on every `.sh` file, the package list in the README, `scripts/test.sh`, which tests the version check and the index on scratch repositories, and on pull requests `scripts/check-versions.sh`, which requires every package that changed to raise its version above every version it had.
-- **Validate:** builds the current StableBar `main` and runs `scripts/check-package.sh` on every package: the folder name matches the `id`, the file rules above, `--inspect-package`, `--install-package` into a scratch configuration, and `--validate` with the package enabled.
+- **Lint:** ShellCheck on every `.sh` file, the package list in the README, `scripts/test.sh`, which tests the scripts on scratch repositories and packages, and on pull requests `scripts/check-versions.sh`, which requires every package that changed to raise its version above every version it had, and `scripts/check-one-package.sh`, which allows one package per pull request.
+- **Validate:** builds the current StableBar `main`, downloads its latest release, and runs `scripts/check-package.sh` on every package: the folder name matches the `id`, the file rules and the preview above, then `--inspect-package`, `--install-package` into a scratch configuration, and `--validate` with the package enabled, with `main` and with the release. The release may refuse a package whose `minimumVersion` is above it.
 - **Publish:** on `main` only, after both. `scripts/build-index.sh` writes `index.json` and a `<id>-<version>.tar.gz` archive for each new version, and uploads them to the `store` prerelease. A version already in the index keeps its archive and checksum. A version whose archive is already on the release but not in the index, because a publish failed halfway, is listed with that archive when it holds the same files; a publish that fails can be re-run. StableBar reads the index at `https://github.com/Seb-GRAF/stablebar-packages/releases/download/store/index.json`.
 
 ## Agent skills

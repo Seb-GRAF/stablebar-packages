@@ -16,6 +16,7 @@ This repository is the store for [StableBar](https://github.com/Seb-GRAF/StableB
 - Settings reach scripts through `environment` and are quoted in the script, never pasted into a command string.
 - Run `./scripts/update-readme.sh` after changing a name, description, preview or what a package declares, and commit `README.md`.
 - Replace the preview when what the package shows in the bar changes.
+- `suggestions.json` lists the packages StableBar's setup suggests for tools and apps it finds. Add a package to it only when the developer asks, and remove a package from it before removing the package. `scripts/check-suggestions.sh` checks it.
 
 ## Verify
 

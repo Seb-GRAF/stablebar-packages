@@ -1,6 +1,6 @@
 #!/bin/bash
-# Tests check-versions.sh, check-one-package.sh, build-index.sh and check-package.sh on scratch
-# repositories and packages, which it deletes afterwards.
+# Tests check-versions.sh, build-index.sh, check-one-package.sh, check-suggestions.sh and
+# check-package.sh on scratch repositories and packages, which it deletes afterwards.
 set -euo pipefail
 unset STABLEBAR STABLEBAR_RELEASE
 
@@ -130,13 +130,19 @@ uses_the_published_archive() {
   index "" published && [[ ! -e dist/weather-1.0.0.tar.gz && $(entry weather sha256) == $(sha256 published/weather-1.0.0.tar.gz) ]]
 }
 
+copies_the_suggestions() {
+  index && jq -e '.suggestions == [{"when": {"tools": ["curl"]}, "packages": ["weather"]}]' dist/index.json > /dev/null
+}
+
 repository
 package weather 1.0.0 first
+echo '[{"when": {"tools": ["curl"]}, "packages": ["weather"]}]' > suggestions.json
 mkdir previous published
 echo '{"packages": [{"id": "weather", "version": "1.0.0", "archive": "weather-1.0.0.tar.gz", "sha256": "kept"}]}' > previous/index.json
 
 check pass "index: a version in the previous index keeps its entry" keeps_the_indexed_entry
 check pass "index: a new version gets an archive" archives_a_new_version
+check pass "index: it lists the setup suggestions" copies_the_suggestions
 
 # A publish that uploaded the archive but failed to replace the index, or an index that was lost.
 # Building the archive again gives other bytes, so the files are compared, not the archives.
@@ -177,6 +183,44 @@ mkdir -p scripts .github
 echo "echo checked" > scripts/check.sh
 echo "name: CI" > .github/ci.yml
 pull_request check-one-package.sh pass "CI and scripts without a package"
+
+# check-suggestions.sh: the shape of suggestions.json, and that each package it suggests works as
+# soon as it's added.
+suggested() {
+  local extra=${2:-'{}'}
+  mkdir -p "packages/$1"
+  jq -n --arg id "$1" --argjson extra "$extra" '{id: $id, name: $id, version: "1.0.0", screenshot: "preview.png"} + $extra' > "packages/$1/package.json"
+  touch "packages/$1/preview.png"
+}
+
+suggestions() {
+  local expected=$1 name=$2
+  printf '%s\n' "$3" > suggestions.json
+  check "$expected" "suggestions: $name" "$scripts/check-suggestions.sh"
+}
+
+repository
+suggested weather '{"settings": {"city": {"type": "string", "default": "Lausanne"}}}'
+suggested clock
+suggestions pass "packages suggested for tools and apps" \
+  '[{"when": {"tools": ["curl"], "apps": ["com.apple.weather"]}, "packages": ["weather"]}, {"when": {"apps": ["com.apple.clock"]}, "packages": ["clock"]}]'
+suggestions "fail:isn't valid JSON" "invalid JSON" '[{"when": '
+suggestions "fail:must be a list of suggestions" "not a list" '{"when": {"tools": ["curl"]}, "packages": ["weather"]}'
+suggestions 'fail:suggestion 1 has an unknown key "package"' "an unknown key" '[{"when": {"tools": ["curl"]}, "package": ["weather"]}]'
+suggestions "fail:must list package IDs, each once" "a package listed twice" '[{"when": {"tools": ["curl"]}, "packages": ["weather", "weather"]}]'
+suggestions 'fail:"when" needs "tools" or "apps"' "nothing to find" '[{"when": {}, "packages": ["weather"]}]'
+suggestions "fail:must list command names" "a path as a tool" '[{"when": {"tools": ["/usr/bin/curl"]}, "packages": ["weather"]}]'
+suggestions "fail:must list bundle IDs" "an app without a bundle ID" '[{"when": {"apps": ["Weather"]}, "packages": ["weather"]}]'
+suggestions "fail:radio isn't a package in packages/" "a package that doesn't exist" '[{"when": {"tools": ["curl"]}, "packages": ["radio"]}]'
+
+rm packages/clock/preview.png
+suggestions "fail:clock has no preview" "a package without a preview" '[{"when": {"tools": ["date"]}, "packages": ["clock"]}]'
+
+suggested clock '{"kind": "theme"}'
+suggestions "fail:clock is a theme" "a theme" '[{"when": {"tools": ["date"]}, "packages": ["clock"]}]'
+
+suggested clock '{"settings": {"zone": {"type": "string"}}}'
+suggestions "fail:the setting zone has no default" "a setting without a default" '[{"when": {"tools": ["date"]}, "packages": ["clock"]}]'
 
 # check-package.sh: the file rules, then StableBar's checks with the binaries in STABLEBAR and
 # STABLEBAR_RELEASE, here stand-ins that print a message and fail when given one.

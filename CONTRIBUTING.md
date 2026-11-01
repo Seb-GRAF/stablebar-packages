@@ -44,7 +44,7 @@ Keep packages small and readable. Files can be at most 1 MiB. Binaries are not a
 
 ### Versions
 
-Any change to a package needs a new `version`, even a fix to its description or preview. CI rejects a pull request that changes a package and keeps its version, because published versions are never replaced. A fix raises the patch version, such as 1.0.1 → 1.0.2; anything new raises the minor version, such as 1.0.2 → 1.1.0.
+Any change to a package needs a new `version`, even a fix to its description or preview. Published versions are never replaced, and StableBar offers only a higher version as an update, so CI rejects a pull request that changes a package without raising its version above every version it had. That includes a revert, and a retired package that comes back. A fix raises the patch version, such as 1.0.1 → 1.0.2; anything new raises the minor version, such as 1.0.2 → 1.1.0.
 
 ### The package list
 
@@ -82,9 +82,9 @@ Package ideas and bugs in a package go in [issues](https://github.com/Seb-GRAF/s
 
 On every pull request and push to `main`:
 
-- **Lint:** ShellCheck on every `.sh` file, the package list in the README, and on pull requests `scripts/check-versions.sh`, which requires a new version for every package that changed.
+- **Lint:** ShellCheck on every `.sh` file, the package list in the README, `scripts/test.sh`, which tests the version check and the index on scratch repositories, and on pull requests `scripts/check-versions.sh`, which requires every package that changed to raise its version above every version it had.
 - **Validate:** builds the current StableBar `main` and runs `scripts/check-package.sh` on every package: the folder name matches the `id`, the file rules above, `--inspect-package`, `--install-package` into a scratch configuration, and `--validate` with the package enabled.
-- **Publish:** on `main` only, after both. `scripts/build-index.sh` writes `index.json` and a `<id>-<version>.tar.gz` archive for each new version, and uploads them to the `store` prerelease. A version already in the index keeps its archive and checksum. StableBar reads the index at `https://github.com/Seb-GRAF/stablebar-packages/releases/download/store/index.json`.
+- **Publish:** on `main` only, after both. `scripts/build-index.sh` writes `index.json` and a `<id>-<version>.tar.gz` archive for each new version, and uploads them to the `store` prerelease. A version already in the index keeps its archive and checksum. A version whose archive is already on the release but not in the index, because a publish failed halfway, is listed with that archive when it holds the same files; a publish that fails can be re-run. StableBar reads the index at `https://github.com/Seb-GRAF/stablebar-packages/releases/download/store/index.json`.
 
 ## Agent skills
 

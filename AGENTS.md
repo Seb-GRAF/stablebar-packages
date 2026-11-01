@@ -10,7 +10,7 @@ This repository is the store for [StableBar](https://github.com/Seb-GRAF/StableB
 
 ## Change a package
 
-- Any change needs a new `version`; published versions are never replaced.
+- Any change needs a higher `version` than the package ever had, a revert too; published versions are never replaced.
 - Declare what the code uses. Every tool beyond what macOS ships goes in `requires`, every host it contacts in `hosts`, every macOS permission in `permissions`.
 - CI validates against StableBar `main`, not a release. If the package uses a StableBar feature that no stable release has, set `minimumVersion`.
 - Settings reach scripts through `environment` and are quoted in the script, never pasted into a command string.

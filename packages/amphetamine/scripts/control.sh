@@ -18,7 +18,7 @@ on run argv
     else
       set sessionDuration to item 2 of argv as integer
       set sessionInterval to minutes
-      if action is "indefinitely" then
+      if action is "indefinitely" or sessionDuration is 0 then
         set sessionDuration to 0
         set sessionInterval to 0
       end if

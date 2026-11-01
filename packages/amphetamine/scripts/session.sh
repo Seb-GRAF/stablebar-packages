@@ -20,10 +20,17 @@ case $remaining in
     ;;
 esac
 
+# The slider's end stop past 240 sends 0: keep awake indefinitely.
+if [ "$duration" = 0 ]; then
+  durationLabel="∞"; timedLabel="Keep awake indefinitely"; timedIcon=infinity
+else
+  durationLabel="${duration}m"; timedLabel="Keep awake for $duration min"; timedIcon=timer
+fi
+
 [ "$BAR_DISPLAY" = icon ] && text=""
 action=""
 if [ "$CLICK_ACTION" = toggle ]; then
   action=",\"onClick\":\"\\\"\$PACKAGE_DIR/scripts/control.sh\\\" toggle\""
 fi
-printf '{"text":"%s","icon":"%s","values":{"duration":%s},"fields":{"status":"%s","timedLabel":"Keep awake for %s min","durationLabel":"%sm"}%s}\n' \
-  "$text" "$icon" "$duration" "$status" "$duration" "$duration" "$action"
+printf '{"text":"%s","icon":"%s","values":{"duration":%s},"fields":{"status":"%s","timedLabel":"%s","timedIcon":"%s","durationLabel":"%s"}%s}\n' \
+  "$text" "$icon" "$duration" "$status" "$timedLabel" "$timedIcon" "$durationLabel" "$action"

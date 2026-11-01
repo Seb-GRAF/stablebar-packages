@@ -2,11 +2,14 @@
 
 Shows the current Amphetamine session in your bar: Off, Awake, or the minutes remaining. Click the icon or text to start the selected duration, or end an active session.
 
-Hover to reveal the inline duration slider, like StableBar’s volume control. The slider selects 15–240 minutes in 15-minute steps. Releasing it during an active session restarts the timer at that duration; otherwise it sets the duration for your next session.
+Hover to reveal the inline duration slider, like StableBar’s volume control. The slider selects
+15–240 minutes in 15-minute steps. Past a notch at its end, ∞ keeps the Mac awake indefinitely.
+Releasing it during an active session restarts the session with that choice; otherwise it sets the
+choice for your next session.
 
-Set click behavior to **controls** to open the popup, which also offers an indefinite session and an end-session button.
+Set click behavior to **controls** to open the popup, with the same slider, a button that starts the chosen session and an end-session button.
 
-Requires StableBar **0.6.0-beta.20261022084539.263** or later. Use the beta update channel to get inline controls.
+Requires StableBar **0.10.0-beta.20261101132945.557** or later, the first with a slider stop past its range. Use the beta update channel until a stable release has it.
 
 Install and open the Amphetamine app before using this package. Allow StableBar to control Amphetamine when macOS asks for Automation access.
 

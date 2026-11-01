@@ -42,6 +42,7 @@
               "min": 15,
               "max": 240,
               "step": 15,
+              "endStop": {"value": 0, "label": "∞"},
               "onChange": "\"$PACKAGE_DIR/scripts/control.sh\" duration",
               "style": {"paddingHorizontal": 8, "paddingVertical": 6}
             },
@@ -56,20 +57,7 @@
                 "cornerRadius": 8,
                 "hoverBackground": "@token.surfaceRaised"
               },
-              "children": [{"type": "symbol", "name": "timer", "style": {"width": 18}}, {"type": "field", "field": "timedLabel"}]
-            },
-            {
-              "type": "row",
-              "onClick": "\"$PACKAGE_DIR/scripts/control.sh\" indefinitely",
-              "animation": {"curve": "easeOut", "duration": 0.22},
-              "style": {
-                "paddingHorizontal": 8,
-                "paddingVertical": 9,
-                "spacing": 10,
-                "cornerRadius": 8,
-                "hoverBackground": "@token.surfaceRaised"
-              },
-              "children": [{"type": "symbol", "name": "infinity", "style": {"width": 18}}, {"type": "text", "text": "Keep awake indefinitely"}]
+              "children": [{"type": "symbol", "source": "timedIcon", "style": {"width": 18}}, {"type": "field", "field": "timedLabel"}]
             },
             {
               "type": "row",
@@ -98,10 +86,11 @@
             "min": 15,
             "max": 240,
             "step": 15,
+            "endStop": {"value": 0, "label": "∞"},
             "onChange": "\"$PACKAGE_DIR/scripts/control.sh\" duration",
             "style": {"width": 104}
           },
-          {"type": "field", "field": "durationLabel", "style": {"width": 38}}
+          {"type": "field", "field": "durationLabel", "alignment": "center", "style": {"width": 38}}
         ]
       }
     }

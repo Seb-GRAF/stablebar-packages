@@ -90,10 +90,44 @@ add_provider() {
   bottom=""
 }
 
-if [ "$PROVIDERS" != codex ]; then
+# With both providers, the widget shows the ones signed in on this Mac. A provider chosen alone must be.
+show_claude=false
+show_codex=false
+[ "$PROVIDERS" = codex ] || show_claude=true
+[ "$PROVIDERS" = claude ] || show_codex=true
+
+if $show_claude; then
+  status=0
+  credentials=$(security find-generic-password -s "Claude Code-credentials" -w 2>/dev/null) || status=$?
+  # 44: the Keychain has no Claude Code sign-in.
+  if [ "$status" = 44 ] && [ "$PROVIDERS" = both ]; then
+    show_claude=false
+  elif [ "$status" = 44 ]; then
+    echo "Claude Code isn't signed in on this Mac. Sign in to Claude Code to see its limits." >&2
+    exit 1
+  elif [ "$status" != 0 ]; then
+    echo "StableBar couldn't read Claude Code's sign-in from the Keychain." >&2
+    exit 1
+  fi
+fi
+
+if $show_codex && [ ! -f "$HOME/.codex/auth.json" ]; then
+  if [ "$PROVIDERS" != both ]; then
+    echo "Codex isn't signed in on this Mac. Sign in to Codex to see its limits." >&2
+    exit 1
+  fi
+  show_codex=false
+fi
+
+if ! $show_claude && ! $show_codex; then
+  echo "Neither Claude Code nor Codex is signed in on this Mac." >&2
+  exit 1
+fi
+
+if $show_claude; then
   provider=Claude
   limits=$CLAUDE_LIMITS
-  json=$(security find-generic-password -s "Claude Code-credentials" -w)
+  json=$credentials
   token=$(read_json claudeAiOauth.accessToken)
   plan=$(read_json claudeAiOauth.subscriptionType)
   expires=$(read_json claudeAiOauth.expiresAt)
@@ -140,7 +174,7 @@ if [ "$PROVIDERS" != codex ]; then
   add_provider claude
 fi
 
-if [ "$PROVIDERS" != claude ]; then
+if $show_codex; then
   provider=Codex
   limits=$CODEX_LIMITS
   json=$(cat "$HOME/.codex/auth.json")

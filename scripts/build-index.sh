@@ -65,4 +65,6 @@ for dir in packages/*/; do
       } | with_entries(select(.value != null))' "$dir/package.json")
   fi
   echo "$entry"
-done | jq -s '{packages: sort_by(.id)}' > dist/index.json
+# StableBar's setup reads "suggestions" to offer packages for tools and apps it finds on the Mac.
+# Versions that don't know the key ignore it.
+done | jq -s --slurpfile suggestions suggestions.json '{packages: sort_by(.id), suggestions: $suggestions[0]}' > dist/index.json

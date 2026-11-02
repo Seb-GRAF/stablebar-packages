@@ -1,0 +1,4 @@
+[
+  { "when": { "tools": ["claude", "codex"] }, "packages": ["ai-usage", "quick-ask"] },
+  { "when": { "tools": ["brew"] }, "packages": ["homebrew-outdated"] }
+]

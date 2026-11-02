@@ -32,6 +32,8 @@ jobs:
         run: |
           ./scripts/update-readme.sh
           git diff --exit-code README.md || { echo "Run scripts/update-readme.sh and commit README.md" >&2; exit 1; }
+      - name: Check the setup suggestions
+        run: ./scripts/check-suggestions.sh
       - name: Test the scripts
         run: ./scripts/test.sh
       - name: Check versions

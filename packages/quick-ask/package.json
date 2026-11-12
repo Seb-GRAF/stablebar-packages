@@ -1,13 +1,13 @@
 {
   "id": "quick-ask",
   "name": "Quick ask",
-  "version": "1.0.0",
-  "description": "Ask Claude Code or Codex from the bar. Choose the model and effort, follow up, retry, and drag the chat anywhere to keep it on screen. Needs claude or codex signed in.",
+  "version": "1.2.0",
+  "description": "Ask Claude Code or Codex from the bar in a quick chat. Choose the model and effort, follow up, copy or retry an answer, and drag the chat anywhere to keep it on screen. Needs claude or codex signed in.",
   "author": "Seb-GRAF",
   "repository": "https://github.com/Seb-GRAF/stablebar-packages",
   "entry": "config.json",
   "screenshot": "preview.png",
-  "minimumVersion": "0.7.0",
+  "minimumVersion": "0.14.0",
   "requires": [
     "jq"
   ],
@@ -15,5 +15,20 @@
     "api.anthropic.com",
     "chatgpt.com",
     "api.openai.com"
-  ]
+  ],
+  "settings": {
+    "newChatAfter": {
+      "type": "string",
+      "title": "New chat after, in minutes",
+      "description": "How long the popup stays closed before it opens on a new chat. Earlier chats stay in History.",
+      "choices": [
+        "5",
+        "15",
+        "30",
+        "60",
+        "Never"
+      ],
+      "default": "15"
+    }
+  }
 }

@@ -18,8 +18,8 @@ refresh() {
 }
 
 turn() { jq -r --arg key "$1" '.turns[-1][$key] // ""' "$conversation"; }
-agent=$(jq -r .agent "$conversation")
-question=$(turn question)
+agent=$(turn agent)
+prompt=$(turn prompt)
 model=$(turn model)
 effort=$(turn effort)
 resume=$(turn resume)
@@ -36,7 +36,7 @@ case $agent in
       arguments+=(--effort "$effort" --thinking-display summarized)
     fi
     if [[ -n $resume ]]; then arguments+=(--resume "$resume" --fork-session); fi
-    claude "${arguments[@]}" -- "$question" > "$running/stream.jsonl" 2> "$running/error" &
+    claude "${arguments[@]}" -- "$prompt" > "$running/stream.jsonl" 2> "$running/error" &
     ;;
   codex)
     arguments=(exec)
@@ -45,7 +45,7 @@ case $agent in
     if [[ -n $model ]]; then arguments+=(-m "$model"); fi
     if [[ -n $effort ]]; then arguments+=(-c "model_reasoning_effort=\"$effort\""); fi
     if [[ -n $resume ]]; then arguments+=("$resume"); fi
-    codex "${arguments[@]}" -- "$question" > "$running/stream.jsonl" 2> "$running/error" &
+    codex "${arguments[@]}" -- "$prompt" > "$running/stream.jsonl" 2> "$running/error" &
     ;;
 esac
 worker=$!
@@ -72,7 +72,6 @@ fi
 temporary=$(mktemp "$directory/conversations/.conversation.XXXXXX")
 jq --argjson result "$result" --argjson stopped "$stopped" '
   .turns[-1] += {answer: $result.answer, thinking: $result.thinking, session: $result.session, error: $result.error, stopped: $stopped}
-  | .session = $result.session
 ' "$conversation" > "$temporary" && mv "$temporary" "$conversation"
 rm -rf "$running"
 refresh

@@ -27,7 +27,6 @@ def chosen: select(. != null and . != "");
    + [{key: "codex:", value: "Default"}] | from_entries) as $modelTitles
 | ($conversation.turns // []) as $turns
 | ($live != null) as $running
-| ($turns | last // {}) as $last
 | {
   text: "",
   icon: (if $running then "ellipsis.bubble.fill" else "sparkles" end),
@@ -35,27 +34,30 @@ def chosen: select(. != null and . != "");
     agent: ($settings.agent // "claude"),
     chat: (if $view == "history" then "" else "1" end),
     history: (if $view == "history" then "1" else "" end),
-    hint: (if $conversation == null then "Ask anything. Questions after the first follow up on the answer; drag the popup to keep the chat on screen." else "" end),
-    transcript: ($turns | to_entries | map(
-      .key as $index
-      | .value
-      | (if $running and $index == ($turns | length) - 1 then $live else . end) as $answer
-      | "**\(.question)**"
-        + (if ($answer.answer // "") == "" then "" else "\n\n" + $answer.answer end)
-        + (if ($answer.error // "") == "" then "" else "\n\n_Couldn’t answer: \($answer.error)_" end)
-        + (if .stopped == true then "\n\n_Stopped._" else "" end)
-    ) | join("\n\n\n")),
-    status: (if $running then
-      names[$conversation.agent] + (if ($live.answer // "") == "" then (if $conversation.agent == "claude" then " is thinking…" else " is working…" end) else " is writing…" end)
-      else "" end),
-    thoughts: (if $running and ($live.answer // "") == "" then ($live.thinking // "" | if length > 600 then "…" + .[-600:] else . end) else "" end),
+    conversation: (if $conversation == null then "" else "1" end),
     running: (if $running then "1" else "" end),
-    idle: (if $conversation != null and ($running | not) then "1" else "" end),
-    copyable: (if ($running | not) and ($last.answer // "") != "" then "1" else "" end),
     hasHistory: (if ($history | length) > 0 then "1" else "" end),
     noHistory: (if ($history | length) == 0 then "Nothing yet. Every chat you start appears here." else "" end)
   },
   lists: {
+    turns: ($turns | to_entries | map(
+      .key as $index
+      | ($index == ($turns | length) - 1) as $isLast
+      | ($running and $isLast) as $arriving
+      | .value
+      | (if $arriving then $live else . end) as $answer
+      | (if $arriving or ($answer.answer // "") == "" then "" else command("copy \($index)") end) as $copy
+      | (if $isLast and ($running | not) then command("retry") else "" end) as $retry
+      | {
+        question,
+        answer: ($answer.answer // ""),
+        status: (if $arriving and ($answer.answer // "") == "" then "Thinking" else "" end),
+        thoughts: (if $arriving and ($answer.answer // "") == "" then ($answer.thinking // "" | if length > 600 then "…" + .[-600:] else . end) else "" end),
+        note: (if ($answer.error // "") != "" then "Couldn’t answer: \($answer.error)" elif .stopped == true then "Stopped." else "" end),
+        copy: $copy,
+        retry: $retry,
+        actions: (if $copy + $retry == "" then "" else "1" end)
+      })),
     agents: [
       {value: "claude", title: "Claude Code", icon: "sparkle",
        detail: (if $claudePath == "" then "Install Claude Code to ask it." else "Runs \($claudePath) without tools." end),
@@ -76,7 +78,8 @@ def chosen: select(. != null and . != "");
       (["instant", "low", "medium", "high", "xhigh", "max"] | map({group: "claude", value: ., title: efforts[.]}))
       + (($codexChosen.efforts // ["low", "medium", "high", "xhigh"]) | map({group: "codex", value: ., title: (efforts[.] // .)}))
     ),
-    history: ($history | map(.agent as $agent | {
+    stars: ($settings.stars // []),
+    history: ($history | map(((.turns | last | .agent) // .agent) as $agent | {
       title: .turns[0].question,
       detail: "\(names[$agent]) · \((.turns | last | .model // "") as $model | $modelTitles[$agent + ":" + $model] // $model) · \(.turns | length | plural(.; "question")) · \(.created | ago)",
       open: command("open \(.id | @sh)"),

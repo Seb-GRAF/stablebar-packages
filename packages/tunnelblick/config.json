@@ -1,0 +1,88 @@
+{
+  "tokens": {"surfaceRaised": {"light": "#ffffff", "dark": "#36383c"}, "textMuted": {"light": "#6e6e73", "dark": "#a1a1a6"}},
+  "widgets": [
+    {
+      "id": "tunnelblick",
+      "type": "script",
+      "position": "right",
+      "command": "\"$PACKAGE_DIR/scripts/status.sh\"",
+      "interval": 5,
+      "environment": {"QUICK_CONNECT": "@setting.quickConnect"},
+      "popup": {
+        "dismissOnAction": false,
+        "style": {"width": 280, "paddingHorizontal": 12, "paddingVertical": 12, "spacing": 6},
+        "layout": {
+          "type": "column",
+          "children": [
+            {
+              "type": "text",
+              "text": "Tunnelblick",
+              "style": {"fontWeight": "bold", "fontSize": 15, "paddingHorizontal": 8, "paddingVertical": 4}
+            },
+            {
+              "type": "row",
+              "hideWhenEmpty": "quickName",
+              "style": {"paddingHorizontal": 8, "paddingVertical": 6, "spacing": 10},
+              "children": [
+                {"type": "symbol", "source": "quickSymbol", "style": {"width": 18}},
+                {
+                  "type": "column",
+                  "alignment": "leading",
+                  "style": {"spacing": 2},
+                  "children": [
+                    {"type": "field", "field": "quickName", "style": {"fontWeight": "semibold"}},
+                    {"type": "field", "field": "quickState", "style": {"foreground": "@token.textMuted"}}
+                  ]
+                },
+                {
+                  "type": "field",
+                  "field": "quickAction",
+                  "onClickField": "quickToggle",
+                  "alignment": "center",
+                  "style": {"paddingHorizontal": 10, "paddingVertical": 5, "cornerRadius": 6, "background": "@token.surfaceRaised"}
+                }
+              ]
+            },
+            {"type": "divider", "hideWhenEmpty": "quickName"},
+            {
+              "type": "list",
+              "source": "configurations",
+              "row": {
+                "type": "row",
+                "onClickField": "toggle",
+                "style": {
+                  "paddingHorizontal": 8,
+                  "paddingVertical": 9,
+                  "spacing": 10,
+                  "cornerRadius": 8,
+                  "hoverBackground": "@token.surfaceRaised"
+                },
+                "children": [
+                  {"type": "symbol", "source": "symbol", "style": {"width": 18}},
+                  {"type": "field", "field": "name"},
+                  {"type": "field", "field": "state", "alignment": "trailing", "style": {"foreground": "@token.textMuted"}}
+                ]
+              }
+            },
+            {"type": "divider"},
+            {
+              "type": "row",
+              "openMenuBarItem": {"app": "net.tunnelblick.tunnelblick"},
+              "style": {
+                "paddingHorizontal": 8,
+                "paddingVertical": 9,
+                "spacing": 10,
+                "cornerRadius": 8,
+                "hoverBackground": "@token.surfaceRaised"
+              },
+              "children": [
+                {"type": "symbol", "name": "menubar.arrow.up.rectangle", "style": {"width": 18}},
+                {"type": "text", "text": "Open Tunnelblick"}
+              ]
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

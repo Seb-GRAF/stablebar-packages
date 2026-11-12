@@ -1,0 +1,20 @@
+{
+  "id": "tunnelblick",
+  "name": "Tunnelblick",
+  "version": "1.0.0",
+  "description": "Shows whether Tunnelblick is connected, connecting or disconnected. Click it to connect or disconnect each VPN, or open Tunnelblick's menu.",
+  "author": "Seb-GRAF",
+  "repository": "https://github.com/Seb-GRAF/stablebar-packages",
+  "entry": "config.json",
+  "screenshot": "preview.png",
+  "minimumVersion": "0.11.0",
+  "permissions": ["automation", "accessibility"],
+  "settings": {
+    "quickConnect": {
+      "type": "string",
+      "title": "Quick connect",
+      "default": "",
+      "description": "One VPN's name, exactly as Tunnelblick shows it. It comes first in the popup, with its own Connect or Disconnect button. Settings can't list your VPNs, so type its name."
+    }
+  }
+}

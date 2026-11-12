@@ -1,7 +1,7 @@
 {
   "id": "dock-badges",
   "name": "Dock badges",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Shows each running app's icon and Dock badge side by side, with a popup showing the total and opening each app.",
   "author": "Seb-GRAF",
   "repository": "https://github.com/Seb-GRAF/stablebar-packages",

@@ -36,41 +36,48 @@
             {
               "type": "row",
               "hideWhenEmpty": "stacked",
-              "style": { "spacing": 5 },
+              "style": { "spacing": 0 },
               "children": [
+                { "type": "text", "text": " ", "style": { "width": 0 } },
                 {
-                  "type": "column",
-                  "hideWhenEmpty": "meters",
-                  "style": { "spacing": 9 },
+                  "type": "row",
+                  "style": { "spacing": 5, "height": 0 },
                   "children": [
                     {
-                      "type": "progress", "source": "sessionMeter", "height": 4, "hideWhenEmpty": "sessionMeter",
-                      "style": { "width": 20, "accent": "@token.text", "background": "@token.track" }
+                      "type": "column",
+                      "hideWhenEmpty": "meters",
+                      "style": { "spacing": 8 },
+                      "children": [
+                        {
+                          "type": "progress", "source": "sessionMeter", "height": 3, "hideWhenEmpty": "sessionMeter",
+                          "style": { "width": 20, "accent": "@token.text", "background": "@token.track" }
+                        },
+                        {
+                          "type": "progress", "source": "weeklyMeter", "height": 3, "hideWhenEmpty": "weeklyMeter",
+                          "style": { "width": 20, "accent": "@token.text", "background": "@token.track" }
+                        }
+                      ]
                     },
                     {
-                      "type": "progress", "source": "weeklyMeter", "height": 4, "hideWhenEmpty": "weeklyMeter",
-                      "style": { "width": 20, "accent": "@token.text", "background": "@token.track" }
+                      "type": "column",
+                      "hideWhenEmpty": "percents",
+                      "alignment": "leading",
+                      "style": { "spacing": 0 },
+                      "children": [
+                        { "type": "field", "field": "sessionPercent", "hideWhenEmpty": "sessionPercent", "style": { "fontSize": 9.5, "fontWeight": "medium" } },
+                        { "type": "field", "field": "weeklyPercent", "hideWhenEmpty": "weeklyPercent", "style": { "fontSize": 9.5, "fontWeight": "medium" } }
+                      ]
+                    },
+                    {
+                      "type": "column",
+                      "hideWhenEmpty": "resets",
+                      "alignment": "leading",
+                      "style": { "spacing": 0 },
+                      "children": [
+                        { "type": "field", "field": "sessionReset", "hideWhenEmpty": "sessionReset", "style": { "fontSize": 9.5, "foreground": "@token.textMuted" } },
+                        { "type": "field", "field": "weeklyReset", "hideWhenEmpty": "weeklyReset", "style": { "fontSize": 9.5, "foreground": "@token.textMuted" } }
+                      ]
                     }
-                  ]
-                },
-                {
-                  "type": "column",
-                  "hideWhenEmpty": "percents",
-                  "alignment": "leading",
-                  "style": { "spacing": 1 },
-                  "children": [
-                    { "type": "field", "field": "sessionPercent", "hideWhenEmpty": "sessionPercent", "style": { "fontSize": 10.5, "fontWeight": "medium" } },
-                    { "type": "field", "field": "weeklyPercent", "hideWhenEmpty": "weeklyPercent", "style": { "fontSize": 10.5, "fontWeight": "medium" } }
-                  ]
-                },
-                {
-                  "type": "column",
-                  "hideWhenEmpty": "resets",
-                  "alignment": "leading",
-                  "style": { "spacing": 1 },
-                  "children": [
-                    { "type": "field", "field": "sessionReset", "hideWhenEmpty": "sessionReset", "style": { "fontSize": 10.5, "foreground": "@token.textMuted" } },
-                    { "type": "field", "field": "weeklyReset", "hideWhenEmpty": "weeklyReset", "style": { "fontSize": 10.5, "foreground": "@token.textMuted" } }
                   ]
                 }
               ]

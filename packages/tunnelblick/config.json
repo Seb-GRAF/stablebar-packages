@@ -1,0 +1,16 @@
+{
+  "widgets": [
+    {
+      "id": "tunnelblick",
+      "type": "script",
+      "position": "right",
+      "command": "\"$PACKAGE_DIR/scripts/status.sh\"",
+      "interval": 5,
+      "layout": {
+        "type": "symbol",
+        "source": "symbol",
+        "openMenuBarItem": { "app": "net.tunnelblick.tunnelblick" }
+      }
+    }
+  ]
+}

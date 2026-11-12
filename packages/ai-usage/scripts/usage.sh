@@ -301,7 +301,7 @@ while IFS= read -r entry; do
   case $seen in *"[$suffix]"*) continue ;; esac
   seen="${seen}[$suffix]"
   heading=${name:-$written}
-  provider="Claude $heading" app="Claude Code" host=api.anthropic.com saved="$CONFIG_DIR/ai-usage-claude$suffix.json"
+  provider="Claude $(json_escape "$heading")" app="Claude Code" host=api.anthropic.com saved="$CONFIG_DIR/ai-usage-claude$suffix.json"
   limits=$CLAUDE
   plan=""
   status=0

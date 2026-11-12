@@ -43,7 +43,15 @@ weekly_pace() {
 fetch() {
   wait_file="${saved%.json}-wait"
   if [ -f "$wait_file" ] && [ "$now" -lt "$(cat "$wait_file")" ]; then
-    use_saved "$host asked to wait until $(date -r "$(cat "$wait_file")" +%H:%M)"
+    use_saved "$host is limiting requests; trying again at $(date -r "$(cat "$wait_file")" +%H:%M)"
+    return
+  fi
+  # A setting change restarts the script at once. A response from the last minute is still current,
+  # and asking again so soon is what makes Anthropic answer 429.
+  if [ -f "$saved" ] && [ $((now - $(stat -f %m "$saved"))) -lt 60 ]; then
+    json=$(cat "$saved")
+    data_time=$(stat -f %m "$saved")
+    note=""
     return
   fi
   result=$(curl -sS --max-time 12 -o "$saved.part" -w '%{http_code} %header{retry-after}' "$@") || true
@@ -58,8 +66,10 @@ fetch() {
     429)
       wait=${result#* }
       case $wait in '' | *[!0-9]*) wait=300 ;; esac
+      # Anthropic has answered 429 with Retry-After: 0.
+      [ "$wait" -ge 60 ] || wait=60
       echo $((now + wait)) > "$wait_file"
-      reason="$host asked to wait until $(date -r $((now + wait)) +%H:%M)"
+      reason="$host is limiting requests; trying again at $(date -r $((now + wait)) +%H:%M)"
       ;;
     401 | 403) reason="$app's sign-in has expired; open $app to renew it" ;;
     *) reason="Couldn't reach $host" ;;
@@ -130,8 +140,9 @@ add_window() {
     if [ "$2" = weekly ] && [ $((604800 - ($4 - now))) -ge 18144 ]; then
       pace=$(weekly_pace "$3" $(($4 - now)))
     fi
-    # Refresh 30 seconds after the reset, when that comes before the next refresh.
-    [ $(($4 - now + 30)) -ge "$interval" ] || interval=$(($4 - now + 30))
+    # Refresh a minute after the reset, when that comes before the next refresh; a response saved before
+    # the reset is then more than a minute old, so it's fetched again.
+    [ $(($4 - now + 60)) -ge "$interval" ] || interval=$(($4 - now + 60))
   fi
   rows="$rows${rows:+,}{\"title\":\"$title\",\"fraction\":\"$fraction\",\"detail\":\"$percent% $counted\",\"trailing\":\"$reset\",\"pace\":\"$pace\"}"
   if in_bar "$2"; then

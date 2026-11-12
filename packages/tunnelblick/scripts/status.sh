@@ -5,6 +5,21 @@ json_escape() {
   printf '%s' "$1" | tr -d '\000-\037' | sed 's/\\/\\\\/g; s/"/\\"/g'
 }
 
+# A single-quoted shell word, for a name inside a command string.
+shell_quote() {
+  printf "'%s'" "$(printf '%s' "$1" | sed "s/'/'\\\\''/g")"
+}
+
+# The symbol, label and action of a state. EXITING means disconnected or disconnecting; other states
+# are steps towards a connection.
+describe() {
+  case $1 in
+    CONNECTED) symbol=lock.shield.fill label=Connected action=Disconnect ;;
+    EXITING) symbol=shield.slash label=Disconnected action=Connect ;;
+    *) symbol=shield.lefthalf.filled label=Connecting action=Disconnect ;;
+  esac
+}
+
 # Asking a Tunnelblick that isn't running would launch it.
 if [ "$(osascript -e 'application "Tunnelblick" is running')" != true ]; then
   echo '{"text":"","hidden":true}'
@@ -25,23 +40,27 @@ configurations=$(osascript -e 'tell application "Tunnelblick"' \
 
 tab=$(printf '\t')
 connected=""
-connecting=false
+overall=EXITING
+quick=""
+rows=""
 while IFS=$tab read -r state name; do
-  # EXITING means disconnected or disconnecting; other states are steps towards a connection.
-  case $state in
-    CONNECTED) connected="$connected${connected:+, }$name" ;;
-    EXITING | "") ;;
-    *) connecting=true ;;
-  esac
+  [ -n "$state" ] || continue
+  [ "$state" = CONNECTED ] && connected="$connected${connected:+, }$name"
+  # One connected configuration makes the widget connected; otherwise one connecting makes it connecting.
+  if [ "$state" = CONNECTED ] || [ "$overall" = EXITING ]; then overall=$state; fi
+  describe "$state"
+  toggle=$(json_escape "\"\$PACKAGE_DIR/scripts/control.sh\" $action $(shell_quote "$name")")
+  if [ "$name" = "$QUICK_CONNECT" ]; then
+    quick="\"quickName\":\"$(json_escape "$name")\",\"quickState\":\"$label\",\"quickSymbol\":\"$symbol\",\"quickAction\":\"$action\",\"quickToggle\":\"$toggle\""
+  else
+    rows="$rows${rows:+,}{\"name\":\"$(json_escape "$name")\",\"state\":\"$label\",\"symbol\":\"$symbol\",\"toggle\":\"$toggle\"}"
+  fi
 done <<END
 $configurations
 END
 
-if [ -n "$connected" ]; then
-  symbol=lock.shield.fill tooltip="Connected to $connected"
-elif $connecting; then
-  symbol=shield.lefthalf.filled tooltip=Connecting
-else
-  symbol=shield.slash tooltip=Disconnected
-fi
-printf '{"text":"","tooltip":"%s","fields":{"symbol":"%s"}}\n' "$(json_escape "$tooltip")" "$symbol"
+describe "$overall"
+tooltip=$label
+[ -n "$connected" ] && tooltip="Connected to $connected"
+printf '{"text":"","icon":"%s","tooltip":"%s","fields":{%s},"lists":{"configurations":[%s]}}\n' \
+  "$symbol" "$(json_escape "$tooltip")" "$quick" "$rows"

@@ -1,7 +1,7 @@
 #!/bin/bash
 set -euo pipefail
 
-# 새 macOS의 lsappinfo는 StatusLabel을 주지 않아 Dock의 AXStatusLabel로 배지를 읽는다.
+# lsappinfo on macOS 27 no longer returns StatusLabel, so the badge comes from the Dock's AXStatusLabel.
 dock_badge() {
   osascript - "$1" 2>/dev/null <<'APPLESCRIPT' || true
 on run argv

@@ -30,6 +30,7 @@
         "style": { "spacing": 10 },
         "row": {
           "type": "row",
+          "styleField": "look",
           "style": { "spacing": 5 },
           "children": [
             { "type": "symbol", "source": "symbol" },
@@ -127,13 +128,22 @@
           "children": [
             {
               "type": "column",
-              "hideWhenEmpty": "claudePlan",
+              "hideWhenEmpty": "claudeShown",
               "children": [
                 {
                   "type": "row",
                   "children": [
                     { "type": "text", "text": "Claude", "style": { "fontWeight": "bold", "fontSize": 15 } },
                     { "type": "field", "field": "claudePlan", "alignment": "trailing", "style": { "foreground": "@token.textMuted" } }
+                  ]
+                },
+                {
+                  "type": "row",
+                  "hideWhenEmpty": "claudeNote",
+                  "style": { "spacing": 6 },
+                  "children": [
+                    { "type": "symbol", "name": "exclamationmark.triangle", "style": { "width": 18, "foreground": "@token.textMuted" } },
+                    { "type": "field", "field": "claudeNote", "wrap": true, "alignment": "leading", "style": { "foreground": "@token.textMuted" } }
                   ]
                 },
                 {
@@ -161,18 +171,27 @@
                   "type": "text", "text": "Usage dashboard", "open": "https://claude.ai/settings/usage",
                   "style": { "paddingHorizontal": 6, "paddingVertical": 4, "cornerRadius": 6, "hoverBackground": "@token.surfaceRaised" }
                 },
-                { "type": "divider", "hideWhenEmpty": "codexPlan" }
+                { "type": "divider", "hideWhenEmpty": "codexShown" }
               ]
             },
             {
               "type": "column",
-              "hideWhenEmpty": "codexPlan",
+              "hideWhenEmpty": "codexShown",
               "children": [
                 {
                   "type": "row",
                   "children": [
                     { "type": "text", "text": "Codex", "style": { "fontWeight": "bold", "fontSize": 15 } },
                     { "type": "field", "field": "codexPlan", "alignment": "trailing", "style": { "foreground": "@token.textMuted" } }
+                  ]
+                },
+                {
+                  "type": "row",
+                  "hideWhenEmpty": "codexNote",
+                  "style": { "spacing": 6 },
+                  "children": [
+                    { "type": "symbol", "name": "exclamationmark.triangle", "style": { "width": 18, "foreground": "@token.textMuted" } },
+                    { "type": "field", "field": "codexNote", "wrap": true, "alignment": "leading", "style": { "foreground": "@token.textMuted" } }
                   ]
                 },
                 {

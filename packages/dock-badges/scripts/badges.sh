@@ -1,12 +1,31 @@
 #!/bin/bash
 set -euo pipefail
 
+# 새 macOS의 lsappinfo는 StatusLabel을 주지 않아 Dock의 AXStatusLabel로 배지를 읽는다.
+dock_badge() {
+  osascript - "$1" 2>/dev/null <<'APPLESCRIPT' || true
+on run argv
+  tell application "System Events" to tell process "Dock"
+    set label to value of attribute "AXStatusLabel" of UI element (item 1 of argv) of list 1
+    if label is missing value then return ""
+    return label
+  end tell
+end run
+APPLESCRIPT
+}
+
 while IFS= read -r app; do
   info=$(lsappinfo info -only StatusLabel -only bundleID -only bundlepath "$app")
   bundle=$(printf '%s\n' "$info" | sed -n 's/^"CFBundleIdentifier"="\([^"]*\)"$/\1/p')
-  [[ -n $bundle ]] || continue
-  path=$(printf '%s\n' "$info" | sed -n 's/^"LSBundlePath"="\([^"]*\)"$/\1/p')
-  badge=$(printf '%s\n' "$info" | sed -n 's/.*"label"="\([^"]*\)".*/\1/p')
+  if [[ -n $bundle ]]; then
+    path=$(printf '%s\n' "$info" | sed -n 's/^"LSBundlePath"="\([^"]*\)"$/\1/p')
+    badge=$(printf '%s\n' "$info" | sed -n 's/.*"label"="\([^"]*\)".*/\1/p')
+  else
+    bundle=$(printf '%s\n' "$info" | sed -n 's/^ *bundleID="\([^"]*\)".*/\1/p')
+    [[ -n $bundle ]] || continue
+    path=$(printf '%s\n' "$info" | sed -n 's/^ *bundle path="\([^"]*\)".*/\1/p')
+    badge=$(dock_badge "$app")
+  fi
   jq -cn --arg app "$app" --arg bundle "$bundle" --arg path "$path" --arg badge "$badge" '{app: $app, bundle: $bundle, path: $path, badge: $badge}'
 done < <(printf '%s' "$APPS" | jq -Rrs 'split(",")[] | gsub("^ +| +$"; "") | select(length > 0)') |
   jq -s '

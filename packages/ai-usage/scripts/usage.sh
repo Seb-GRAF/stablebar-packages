@@ -151,9 +151,9 @@ add_window() {
     group="$group\"${2}Label\":\"$label\","
     [ "$METERS" = Hide ] || group="$group\"${2}Meter\":\"$fraction\","
     [ "$PERCENTAGES" = Hide ] || group="$group\"${2}Percent\":\"$percent%\","
-    if [ "$RESET_TIMES" = Show ] && [ -n "$countdown" ]; then
-      group="$group\"${2}Reset\":\"$countdown\","
-    fi
+    # A window without a countdown, such as a session that hasn't started, keeps its line in the
+    # stacked layout, so the week's countdown stays on the week's line.
+    [ "$RESET_TIMES" = Hide ] || group="$group\"${2}Reset\":\"${countdown:-–}\","
   fi
 }
 
@@ -191,6 +191,10 @@ claude_usage() {
   fi
   [ -n "$json" ] || return 0
   total=$(read_json limits)
+  # Claude reports no session until one starts, so a session that hasn't started is unused.
+  i=0
+  while [ "$i" -lt "$total" ] && [ "$(read_json "limits.$i.kind")" != session ]; do i=$((i + 1)); done
+  [ "$i" -lt "$total" ] || add_window Session session 0 ""
   i=0
   while [ "$i" -lt "$total" ]; do
     used=$(read_json "limits.$i.percent")
@@ -220,6 +224,15 @@ claude_usage() {
   fi
 }
 
+# Claude Code keeps the sign-in of the folder CLAUDE_CONFIG_DIR names in "Claude Code-credentials-"
+# followed by the first 8 hex digits of the SHA-256 of that path, exactly as written, and the sign-in of
+# its default folder, used without CLAUDE_CONFIG_DIR, in "Claude Code-credentials".
+hashed() {
+  printf -- '-%s' "$(printf '%s' "$1" | shasum -a 256 | cut -c 1-8)"
+}
+main_suffix=""
+[ -z "$CLAUDE_CONFIG_DIR" ] || main_suffix=$(hashed "$CLAUDE_CONFIG_DIR")
+
 # More Claude Code accounts, as entries such as "Work=~/.claude-work": a name and the folder that
 # CLAUDE_CONFIG_DIR names for that account, or the folder alone. The Claude setting covers them too.
 extras=""
@@ -235,7 +248,7 @@ $show_claude && { $show_codex || [ -n "$extras" ]; } && both=true
 
 if $show_claude; then
   status=0
-  credentials=$(security find-generic-password -s "Claude Code-credentials" -w 2>/dev/null) || status=$?
+  credentials=$(security find-generic-password -s "Claude Code-credentials$main_suffix" -w 2>/dev/null) || status=$?
   # 44: the Keychain has no Claude Code sign-in.
   if [ "$status" = 44 ] && $both; then
     show_claude=false
@@ -262,27 +275,37 @@ if ! $show_claude && ! $show_codex && [ -z "$extras" ]; then
 fi
 
 if $show_claude; then
-  provider=Claude app="Claude Code" host=api.anthropic.com saved="$CONFIG_DIR/ai-usage-claude.json"
+  provider=Claude app="Claude Code" host=api.anthropic.com saved="$CONFIG_DIR/ai-usage-claude$main_suffix.json"
   limits=$CLAUDE
   json=$credentials
   claude_usage
   add_provider asterisk Claude https://claude.ai/settings/usage ""
 fi
 
+# The Keychain items already shown, so that a folder listed twice, or the main account's, shows once.
+seen="[$main_suffix]"
 while IFS= read -r entry; do
   entry=$(printf '%s' "$entry" | sed 's/^ *//; s/ *$//')
   [ -n "$entry" ] || continue
-  name=$(printf '%s' "${entry%%=*}" | sed 's/ *$//')
-  written=$(printf '%s' "${entry#*=}" | sed 's/^ *//')
-  # Claude Code names a folder's Keychain item after the folder's path, exactly as CLAUDE_CONFIG_DIR has it.
+  case $entry in
+    *=*)
+      name=$(printf '%s' "${entry%%=*}" | sed 's/ *$//')
+      written=$(printf '%s' "${entry#*=}" | sed 's/^ *//')
+      ;;
+    *) name="" written=$entry ;;
+  esac
   folder=$written
   case $folder in \~/*) folder="$HOME/${folder#\~/}" ;; esac
-  hash=$(printf '%s' "$folder" | shasum -a 256 | cut -c 1-8)
-  provider="Claude $name" app="Claude Code" host=api.anthropic.com saved="$CONFIG_DIR/ai-usage-claude-$hash.json"
+  suffix=""
+  [ "$folder" = "$HOME/.claude" ] || suffix=$(hashed "$folder")
+  case $seen in *"[$suffix]"*) continue ;; esac
+  seen="${seen}[$suffix]"
+  heading=${name:-$written}
+  provider="Claude $heading" app="Claude Code" host=api.anthropic.com saved="$CONFIG_DIR/ai-usage-claude$suffix.json"
   limits=$CLAUDE
   plan=""
   status=0
-  json=$(security find-generic-password -s "Claude Code-credentials-$hash" -w 2>/dev/null) || status=$?
+  json=$(security find-generic-password -s "Claude Code-credentials$suffix" -w 2>/dev/null) || status=$?
   if [ "$status" = 0 ]; then
     claude_usage
   elif [ "$status" = 44 ]; then
@@ -290,7 +313,8 @@ while IFS= read -r entry; do
   else
     json="" note="StableBar couldn't read the sign-in for $written from the Keychain."
   fi
-  add_provider asterisk "Claude · $name" https://claude.ai/settings/usage "$name"
+  # Only a name the entry gives goes on the bar; the popup and the tooltip name the folder otherwise.
+  add_provider asterisk "Claude · $heading" https://claude.ai/settings/usage "$name"
 done <<END
 $(printf '%s' "$extras" | tr ',' '\n')
 END

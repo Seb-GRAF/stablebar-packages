@@ -2,7 +2,7 @@
 set -euo pipefail
 
 while IFS= read -r app; do
-  info=$(lsappinfo info -only StatusLabel -only bundleID -only bundlepath "$app")
+  info=$(lsappinfo info -long "$app")
   bundle=$(printf '%s\n' "$info" | sed -n 's/^"CFBundleIdentifier"="\([^"]*\)"$/\1/p')
   [[ -n $bundle ]] || continue
   path=$(printf '%s\n' "$info" | sed -n 's/^"LSBundlePath"="\([^"]*\)"$/\1/p')

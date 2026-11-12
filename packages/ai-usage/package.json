@@ -1,7 +1,7 @@
 {
   "id": "ai-usage",
   "name": "AI usage",
-  "version": "1.3.1",
+  "version": "1.4.0",
   "description": "Shows your Claude Code and Codex limits in one widget, with reset countdowns and weekly pace, using the sign-ins those tools already keep.",
   "author": "Seb-GRAF",
   "repository": "https://github.com/Seb-GRAF/stablebar-packages",
@@ -12,6 +12,10 @@
     "claude": {
       "type": "string", "title": "Claude", "default": "Session and week", "choices": ["Session and week", "Session", "Week", "Off"],
       "description": "The limits the bar shows. The popup shows them all; Off hides Claude."
+    },
+    "claudeAccounts": {
+      "type": "string", "title": "More Claude accounts", "default": "",
+      "description": "Claude Code folders signed in to other accounts, separated by commas, each with a name: Work=~/.claude-work. Write each folder as CLAUDE_CONFIG_DIR has it."
     },
     "codex": {
       "type": "string", "title": "Codex", "default": "Session and week", "choices": ["Session and week", "Session", "Week", "Off"],

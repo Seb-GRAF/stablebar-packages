@@ -9,7 +9,6 @@
   "screenshot": "preview.png",
   "minimumVersion": "0.10.0-beta.20261102092627.570",
   "requires": ["jq"],
-  "permissions": ["automation", "accessibility"],
   "settings": {
     "apps": { "type": "string", "title": "App names (comma-separated)", "default": "Mail,Slack,Messages,Microsoft Teams" }
   }

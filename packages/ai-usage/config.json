@@ -15,6 +15,7 @@
       "timeout": 30,
       "environment": {
         "CLAUDE": "@setting.claude",
+        "CLAUDE_ACCOUNTS": "@setting.claudeAccounts",
         "CODEX": "@setting.codex",
         "LAYOUT": "@setting.layout",
         "METERS": "@setting.meters",
@@ -39,6 +40,7 @@
               "hideWhenEmpty": "stacked",
               "style": { "spacing": 0 },
               "children": [
+                { "type": "field", "field": "name", "hideWhenEmpty": "name", "style": { "fontSize": 11, "fontWeight": "semibold", "foreground": "@token.textMuted", "paddingTrailing": 5 } },
                 { "type": "text", "text": " ", "style": { "width": 0 } },
                 {
                   "type": "row",
@@ -88,6 +90,7 @@
               "hideWhenEmpty": "oneLine",
               "style": { "spacing": 9 },
               "children": [
+                { "type": "field", "field": "name", "hideWhenEmpty": "name", "style": { "fontSize": 11, "fontWeight": "semibold", "foreground": "@token.textMuted" } },
                 {
                   "type": "row",
                   "hideWhenEmpty": "sessionLabel",
@@ -127,31 +130,34 @@
           "type": "column",
           "children": [
             {
-              "type": "column",
-              "hideWhenEmpty": "claudeShown",
-              "children": [
-                {
-                  "type": "row",
-                  "children": [
-                    { "type": "text", "text": "Claude", "style": { "fontWeight": "bold", "fontSize": 15 } },
-                    { "type": "field", "field": "claudePlan", "alignment": "trailing", "style": { "foreground": "@token.textMuted" } }
-                  ]
-                },
-                {
-                  "type": "row",
-                  "hideWhenEmpty": "claudeNote",
-                  "style": { "spacing": 6 },
-                  "children": [
-                    { "type": "symbol", "name": "exclamationmark.triangle", "style": { "width": 18, "foreground": "@token.textMuted" } },
-                    { "type": "field", "field": "claudeNote", "wrap": true, "alignment": "leading", "style": { "foreground": "@token.textMuted" } }
-                  ]
-                },
-                {
-                  "type": "list",
-                  "source": "claude",
-                  "style": { "spacing": 14 },
-                  "row": {
+              "type": "list",
+              "source": "popup",
+              "style": { "spacing": 12 },
+              "row": {
+                "type": "column",
+                "style": { "spacing": 5 },
+                "children": [
+                  { "type": "divider", "hideWhenEmpty": "divider" },
+                  {
+                    "type": "row",
+                    "hideWhenEmpty": "header",
+                    "children": [
+                      { "type": "field", "field": "header", "style": { "fontWeight": "bold", "fontSize": 15 } },
+                      { "type": "field", "field": "plan", "alignment": "trailing", "style": { "foreground": "@token.textMuted" } }
+                    ]
+                  },
+                  {
+                    "type": "row",
+                    "hideWhenEmpty": "note",
+                    "style": { "spacing": 6 },
+                    "children": [
+                      { "type": "symbol", "name": "exclamationmark.triangle", "style": { "width": 18, "foreground": "@token.textMuted" } },
+                      { "type": "field", "field": "note", "wrap": true, "alignment": "leading", "style": { "foreground": "@token.textMuted" } }
+                    ]
+                  },
+                  {
                     "type": "column",
+                    "hideWhenEmpty": "title",
                     "style": { "spacing": 5 },
                     "children": [
                       { "type": "field", "field": "title", "style": { "fontWeight": "semibold" } },
@@ -165,61 +171,13 @@
                       },
                       { "type": "field", "field": "pace", "hideWhenEmpty": "pace", "style": { "foreground": "@token.textMuted" } }
                     ]
+                  },
+                  {
+                    "type": "text", "text": "Usage dashboard", "openField": "dashboard", "hideWhenEmpty": "dashboard",
+                    "style": { "paddingHorizontal": 6, "paddingVertical": 4, "cornerRadius": 6, "hoverBackground": "@token.surfaceRaised" }
                   }
-                },
-                {
-                  "type": "text", "text": "Usage dashboard", "open": "https://claude.ai/settings/usage",
-                  "style": { "paddingHorizontal": 6, "paddingVertical": 4, "cornerRadius": 6, "hoverBackground": "@token.surfaceRaised" }
-                },
-                { "type": "divider", "hideWhenEmpty": "codexShown" }
-              ]
-            },
-            {
-              "type": "column",
-              "hideWhenEmpty": "codexShown",
-              "children": [
-                {
-                  "type": "row",
-                  "children": [
-                    { "type": "text", "text": "Codex", "style": { "fontWeight": "bold", "fontSize": 15 } },
-                    { "type": "field", "field": "codexPlan", "alignment": "trailing", "style": { "foreground": "@token.textMuted" } }
-                  ]
-                },
-                {
-                  "type": "row",
-                  "hideWhenEmpty": "codexNote",
-                  "style": { "spacing": 6 },
-                  "children": [
-                    { "type": "symbol", "name": "exclamationmark.triangle", "style": { "width": 18, "foreground": "@token.textMuted" } },
-                    { "type": "field", "field": "codexNote", "wrap": true, "alignment": "leading", "style": { "foreground": "@token.textMuted" } }
-                  ]
-                },
-                {
-                  "type": "list",
-                  "source": "codex",
-                  "style": { "spacing": 14 },
-                  "row": {
-                    "type": "column",
-                    "style": { "spacing": 5 },
-                    "children": [
-                      { "type": "field", "field": "title", "style": { "fontWeight": "semibold" } },
-                      { "type": "progress", "source": "fraction", "height": 6, "style": { "background": "@token.track" } },
-                      {
-                        "type": "row",
-                        "children": [
-                          { "type": "field", "field": "detail" },
-                          { "type": "field", "field": "trailing", "alignment": "trailing", "style": { "foreground": "@token.textMuted" } }
-                        ]
-                      },
-                      { "type": "field", "field": "pace", "hideWhenEmpty": "pace", "style": { "foreground": "@token.textMuted" } }
-                    ]
-                  }
-                },
-                {
-                  "type": "text", "text": "Usage dashboard", "open": "https://chatgpt.com/codex/settings/usage",
-                  "style": { "paddingHorizontal": 6, "paddingVertical": 4, "cornerRadius": 6, "hoverBackground": "@token.surfaceRaised" }
-                }
-              ]
+                ]
+              }
             },
             { "type": "divider" },
             { "type": "field", "field": "updated", "style": { "foreground": "@token.textMuted" } }

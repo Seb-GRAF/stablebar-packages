@@ -43,17 +43,34 @@ summary=""
 fields=""
 lists=""
 rows=""
-text=""
-top=""
-bottom=""
+group=""
+bar=""
+
+counted=left
+[ "$PERCENTAGES_SHOW" = "What's used" ] && counted=used
+arrangement=stacked
+[ "$LAYOUT" = "One line" ] && arrangement=oneLine
+# Which of the stacked layout's columns show.
+columns=""
+[ "$METERS" = Hide ] || columns="$columns,\"meters\":\"1\""
+[ "$PERCENTAGES" = Hide ] || columns="$columns,\"percents\":\"1\""
+[ "$RESET_TIMES" = Hide ] || columns="$columns,\"resets\":\"1\""
+
+# Whether the bar shows window $1, session or weekly, of the provider whose choice is in $limits.
+in_bar() {
+  case $1:$limits in
+    session:Session | weekly:Week | session:"Session and week" | weekly:"Session and week") return 0 ;;
+  esac
+  return 1
+}
 
 add_window() {
   title=$(json_escape "$1")
   used=$(awk -v used="$3" 'BEGIN { printf "%.0f", used }')
-  if [ "$USAGE" = used ]; then
-    percent=$used counted=used
+  if [ "$counted" = used ]; then
+    percent=$used
   else
-    percent=$((100 - used)) counted=left
+    percent=$((100 - used))
   fi
   fraction=$(awk -v percent="$percent" 'BEGIN { printf "%.2f", percent / 100 }')
   reset=""
@@ -67,45 +84,41 @@ add_window() {
     fi
   fi
   rows="$rows${rows:+,}{\"title\":\"$title\",\"fraction\":\"$fraction\",\"detail\":\"$percent% $counted\",\"trailing\":\"$reset\",\"pace\":\"$pace\"}"
-  case $2:$limits in
-    session:session | session:both | weekly:weekly | weekly:both)
-      summary="$summary${summary:+ · }$provider $2 $percent% $counted"
-      text="$text${text:+ · }$percent%"
-      if [ "$RESET_IN_BAR" = on ] && [ -n "$countdown" ]; then
-        text="$text · $countdown"
-      fi
-      if [ -z "$top" ]; then top=$fraction; else bottom=$fraction; fi
-      ;;
-  esac
+  if in_bar "$2"; then
+    summary="$summary${summary:+ · }$provider $2 $percent% $counted"
+    label=W
+    [ "$2" = session ] && label=5h
+    group="$group\"${2}Label\":\"$label\","
+    [ "$METERS" = Hide ] || group="$group\"${2}Meter\":\"$fraction\","
+    [ "$PERCENTAGES" = Hide ] || group="$group\"${2}Percent\":\"$percent%\","
+    if [ "$RESET_TIMES" = Show ] && [ -n "$countdown" ]; then
+      group="$group\"${2}Reset\":\"$countdown\","
+    fi
+  fi
 }
 
 add_provider() {
   plan=$(json_escape "$(printf '%s' "$plan" | awk '{ print toupper(substr($0, 1, 1)) substr($0, 2) }')")
   fields="$fields\"${1}Plan\":\"$plan\","
-  if [ "$SHOW" != percent ]; then
-    fields="$fields\"${1}Top\":\"$top\",\"${1}Bottom\":\"$bottom\","
-  fi
-  if [ "$SHOW" != meters ]; then
-    fields="$fields\"${1}Text\":\"$text\","
-  fi
   lists="$lists${lists:+,}\"$1\":[$rows]"
+  bar="$bar${bar:+,}{$group\"symbol\":\"$2\",\"$arrangement\":\"1\"$columns}"
   rows=""
-  text=""
-  top=""
-  bottom=""
+  group=""
 }
 
-# With both providers, the widget shows the ones signed in on this Mac. A provider chosen alone must be.
-show_claude=false
-show_codex=false
-[ "$PROVIDERS" = codex ] || show_claude=true
-[ "$PROVIDERS" = claude ] || show_codex=true
+# With both providers on, the widget shows the ones signed in on this Mac. A provider on alone must be.
+show_claude=true
+show_codex=true
+[ "$CLAUDE" != Off ] || show_claude=false
+[ "$CODEX" != Off ] || show_codex=false
+both=false
+$show_claude && $show_codex && both=true
 
 if $show_claude; then
   status=0
   credentials=$(security find-generic-password -s "Claude Code-credentials" -w 2>/dev/null) || status=$?
   # 44: the Keychain has no Claude Code sign-in.
-  if [ "$status" = 44 ] && [ "$PROVIDERS" = both ]; then
+  if [ "$status" = 44 ] && $both; then
     show_claude=false
   elif [ "$status" = 44 ]; then
     echo "Claude Code isn't signed in on this Mac. Sign in to Claude Code to see its limits." >&2
@@ -117,7 +130,7 @@ if $show_claude; then
 fi
 
 if $show_codex && [ ! -f "$HOME/.codex/auth.json" ]; then
-  if [ "$PROVIDERS" != both ]; then
+  if ! $both; then
     echo "Codex isn't signed in on this Mac. Sign in to Codex to see its limits." >&2
     exit 1
   fi
@@ -131,7 +144,7 @@ fi
 
 if $show_claude; then
   provider=Claude
-  limits=$CLAUDE_LIMITS
+  limits=$CLAUDE
   json=$credentials
   token=$(read_json claudeAiOauth.accessToken)
   plan=$(read_json claudeAiOauth.subscriptionType)
@@ -171,17 +184,17 @@ if $show_claude; then
     spent=$(read_json extra_usage.used_credits)
     limit=$(read_json extra_usage.monthly_limit)
     currency=$(json_escape "$(read_json extra_usage.currency)")
-    fraction=$(awk -v spent="$spent" -v limit="$limit" -v usage="$USAGE" \
+    fraction=$(awk -v spent="$spent" -v limit="$limit" -v usage="$counted" \
       'BEGIN { used = spent / limit; if (used > 1) used = 1; if (usage != "used") used = 1 - used; printf "%.2f", used }')
     detail=$(awk -v spent="$spent" -v limit="$limit" 'BEGIN { printf "%.2f / %.2f", spent / 100, limit / 100 }')
     rows="$rows,{\"title\":\"Extra usage\",\"fraction\":\"$fraction\",\"detail\":\"$detail $currency\",\"trailing\":\"This month\"}"
   fi
-  add_provider claude
+  add_provider claude asterisk
 fi
 
 if $show_codex; then
   provider=Codex
-  limits=$CODEX_LIMITS
+  limits=$CODEX
   json=$(cat "$HOME/.codex/auth.json")
   token=$(read_json tokens.access_token)
   account=$(read_json tokens.account_id)
@@ -202,8 +215,10 @@ if $show_codex; then
       add_window Weekly weekly "$used" "$resets"
     fi
   done
-  add_provider codex
+  add_provider codex terminal
 fi
 
-printf '{"text":"%s","tooltip":"%s","fields":{%s"updated":"Updated at %s"},"lists":{%s}}\n' \
-  "$summary" "$summary" "$fields" "$(date +%H:%M)" "$lists"
+# The next refresh, in seconds, from a choice such as "Every 5 minutes".
+interval=$(($(printf '%s' "$REFRESH" | tr -cd '0-9') * 60))
+printf '{"text":"%s","tooltip":"%s","interval":%s,"fields":{%s"updated":"Updated at %s"},"lists":{%s,"bar":[%s]}}\n' \
+  "$summary" "$summary" "$interval" "$fields" "$(date +%H:%M)" "$lists" "$bar"

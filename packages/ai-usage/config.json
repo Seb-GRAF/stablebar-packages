@@ -11,63 +11,107 @@
       "type": "script",
       "position": "right",
       "command": "\"$PACKAGE_DIR/scripts/usage.sh\"",
-      "interval": "@setting.interval",
+      "interval": 300,
       "timeout": 30,
       "environment": {
-        "PROVIDERS": "@setting.providers",
-        "CLAUDE_LIMITS": "@setting.claudeLimits",
-        "CODEX_LIMITS": "@setting.codexLimits",
-        "SHOW": "@setting.show",
-        "RESET_IN_BAR": "@setting.resetInBar",
-        "USAGE": "@setting.usage"
+        "CLAUDE": "@setting.claude",
+        "CODEX": "@setting.codex",
+        "LAYOUT": "@setting.layout",
+        "METERS": "@setting.meters",
+        "PERCENTAGES": "@setting.percentages",
+        "PERCENTAGES_SHOW": "@setting.percentagesShow",
+        "RESET_TIMES": "@setting.resetTimes",
+        "REFRESH": "@setting.updates"
       },
       "layout": {
-        "type": "row",
+        "type": "list",
+        "source": "bar",
+        "orientation": "horizontal",
         "style": { "spacing": 10 },
-        "children": [
-          {
-            "type": "row",
-            "hideWhenEmpty": "claudePlan",
-            "style": { "spacing": 4 },
-            "children": [
-              { "type": "symbol", "name": "asterisk" },
-              {
-                "type": "column",
-                "hideWhenEmpty": "claudeTop",
-                "style": { "spacing": 2 },
-                "children": [
-                  { "type": "progress", "source": "claudeTop", "height": 5, "style": { "width": 20, "accent": "@token.text", "background": "@token.track" } },
-                  {
-                    "type": "progress", "source": "claudeBottom", "height": 3, "hideWhenEmpty": "claudeBottom",
-                    "style": { "width": 20, "accent": "@token.text", "background": "@token.track" }
-                  }
-                ]
-              },
-              { "type": "field", "field": "claudeText", "hideWhenEmpty": "claudeText" }
-            ]
-          },
-          {
-            "type": "row",
-            "hideWhenEmpty": "codexPlan",
-            "style": { "spacing": 4 },
-            "children": [
-              { "type": "symbol", "name": "terminal" },
-              {
-                "type": "column",
-                "hideWhenEmpty": "codexTop",
-                "style": { "spacing": 2 },
-                "children": [
-                  { "type": "progress", "source": "codexTop", "height": 5, "style": { "width": 20, "accent": "@token.text", "background": "@token.track" } },
-                  {
-                    "type": "progress", "source": "codexBottom", "height": 3, "hideWhenEmpty": "codexBottom",
-                    "style": { "width": 20, "accent": "@token.text", "background": "@token.track" }
-                  }
-                ]
-              },
-              { "type": "field", "field": "codexText", "hideWhenEmpty": "codexText" }
-            ]
-          }
-        ]
+        "row": {
+          "type": "row",
+          "style": { "spacing": 5 },
+          "children": [
+            { "type": "symbol", "source": "symbol" },
+            {
+              "type": "row",
+              "hideWhenEmpty": "stacked",
+              "style": { "spacing": 5 },
+              "children": [
+                {
+                  "type": "column",
+                  "hideWhenEmpty": "meters",
+                  "style": { "spacing": 9 },
+                  "children": [
+                    {
+                      "type": "progress", "source": "sessionMeter", "height": 4, "hideWhenEmpty": "sessionMeter",
+                      "style": { "width": 20, "accent": "@token.text", "background": "@token.track" }
+                    },
+                    {
+                      "type": "progress", "source": "weeklyMeter", "height": 4, "hideWhenEmpty": "weeklyMeter",
+                      "style": { "width": 20, "accent": "@token.text", "background": "@token.track" }
+                    }
+                  ]
+                },
+                {
+                  "type": "column",
+                  "hideWhenEmpty": "percents",
+                  "alignment": "leading",
+                  "style": { "spacing": 1 },
+                  "children": [
+                    { "type": "field", "field": "sessionPercent", "hideWhenEmpty": "sessionPercent", "style": { "fontSize": 10.5, "fontWeight": "medium" } },
+                    { "type": "field", "field": "weeklyPercent", "hideWhenEmpty": "weeklyPercent", "style": { "fontSize": 10.5, "fontWeight": "medium" } }
+                  ]
+                },
+                {
+                  "type": "column",
+                  "hideWhenEmpty": "resets",
+                  "alignment": "leading",
+                  "style": { "spacing": 1 },
+                  "children": [
+                    { "type": "field", "field": "sessionReset", "hideWhenEmpty": "sessionReset", "style": { "fontSize": 10.5, "foreground": "@token.textMuted" } },
+                    { "type": "field", "field": "weeklyReset", "hideWhenEmpty": "weeklyReset", "style": { "fontSize": 10.5, "foreground": "@token.textMuted" } }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "row",
+              "hideWhenEmpty": "oneLine",
+              "style": { "spacing": 9 },
+              "children": [
+                {
+                  "type": "row",
+                  "hideWhenEmpty": "sessionLabel",
+                  "style": { "spacing": 4 },
+                  "children": [
+                    { "type": "field", "field": "sessionLabel", "style": { "fontSize": 11, "fontWeight": "semibold", "foreground": "@token.textMuted" } },
+                    {
+                      "type": "progress", "source": "sessionMeter", "height": 5, "hideWhenEmpty": "sessionMeter",
+                      "style": { "width": 20, "accent": "@token.text", "background": "@token.track" }
+                    },
+                    { "type": "field", "field": "sessionPercent", "hideWhenEmpty": "sessionPercent" },
+                    { "type": "field", "field": "sessionReset", "hideWhenEmpty": "sessionReset", "style": { "foreground": "@token.textMuted" } }
+                  ]
+                },
+                {
+                  "type": "row",
+                  "hideWhenEmpty": "weeklyLabel",
+                  "style": { "spacing": 4 },
+                  "children": [
+                    { "type": "field", "field": "weeklyLabel", "style": { "fontSize": 11, "fontWeight": "semibold", "foreground": "@token.textMuted" } },
+                    {
+                      "type": "progress", "source": "weeklyMeter", "height": 5, "hideWhenEmpty": "weeklyMeter",
+                      "style": { "width": 20, "accent": "@token.text", "background": "@token.track" }
+                    },
+                    { "type": "field", "field": "weeklyPercent", "hideWhenEmpty": "weeklyPercent" },
+                    { "type": "field", "field": "weeklyReset", "hideWhenEmpty": "weeklyReset", "style": { "foreground": "@token.textMuted" } }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
       },
       "popup": {
         "style": { "width": 300, "paddingHorizontal": 18, "paddingVertical": 16, "spacing": 12 },

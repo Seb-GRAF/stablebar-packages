@@ -57,9 +57,11 @@ add_window() {
   fi
   fraction=$(awk -v percent="$percent" 'BEGIN { printf "%.2f", percent / 100 }')
   reset=""
+  countdown=""
   pace=""
   if [ -n "$4" ]; then
-    reset="Resets in $(duration $(($4 - now)))"
+    countdown=$(duration $(($4 - now)))
+    reset="Resets in $countdown"
     if [ "$2" = weekly ]; then
       pace=$(weekly_pace "$3" $(($4 - now)))
     fi
@@ -69,6 +71,9 @@ add_window() {
     session:session | session:both | weekly:weekly | weekly:both)
       summary="$summary${summary:+ · }$provider $2 $percent% $counted"
       text="$text${text:+ · }$percent%"
+      if [ "$RESET_IN_BAR" = on ] && [ -n "$countdown" ]; then
+        text="$text · $countdown"
+      fi
       if [ -z "$top" ]; then top=$fraction; else bottom=$fraction; fi
       ;;
   esac

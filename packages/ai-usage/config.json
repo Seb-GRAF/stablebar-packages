@@ -18,6 +18,7 @@
         "CLAUDE_LIMITS": "@setting.claudeLimits",
         "CODEX_LIMITS": "@setting.codexLimits",
         "SHOW": "@setting.show",
+        "RESET_IN_BAR": "@setting.resetInBar",
         "USAGE": "@setting.usage"
       },
       "layout": {

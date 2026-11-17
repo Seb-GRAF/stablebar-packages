@@ -21,15 +21,7 @@
       "provider": "now-playing",
       "position": "left",
       "transition": "fade",
-      "layout": {
-        "type": "row",
-        "style": { "spacing": 6 },
-        "children": [
-          { "type": "image", "source": "artwork", "fit": "fill", "style": { "width": 16, "height": 16, "cornerRadius": 3 } },
-          { "type": "field", "field": "line", "scrollSpeed": 20, "transition": "fade", "style": { "maxWidth": "@setting.barWidth" } },
-          { "type": "equalizer", "source": "playing" }
-        ]
-      },
+      "template": "@setting.barLook",
       "popup": {
         "dismissOnAction": false,
         "style": { "width": 330, "paddingHorizontal": 18, "paddingVertical": 16, "spacing": 14 },
@@ -227,5 +219,137 @@
         }
       }
     }
-  ]
+  ],
+  "templates": {
+    "compact": {
+      "layout": {
+        "type": "row",
+        "style": {
+          "spacing": 6
+        },
+        "children": [
+          {
+            "type": "image",
+            "source": "artwork",
+            "fit": "fill",
+            "style": {
+              "width": 16,
+              "height": 16,
+              "cornerRadius": 3
+            }
+          },
+          {
+            "type": "field",
+            "field": "line",
+            "scrollSpeed": 20,
+            "transition": "fade",
+            "style": {
+              "maxWidth": "@setting.barWidth"
+            }
+          },
+          {
+            "type": "equalizer",
+            "source": "playing"
+          }
+        ]
+      }
+    },
+    "player": {
+      "layout": {
+        "children": [
+          {
+            "fit": "fill",
+            "source": "artwork",
+            "style": {
+              "cornerRadius": 10,
+              "height": 20,
+              "width": 20
+            },
+            "type": "image"
+          },
+          {
+            "alignment": "leading",
+            "children": [
+              {
+                "field": "title",
+                "role": "primary",
+                "transition": "fade",
+                "type": "field"
+              },
+              {
+                "hideWhenEmpty": "artist",
+                "role": "secondary",
+                "text": " · ",
+                "type": "text"
+              },
+              {
+                "field": "artist",
+                "hideWhenEmpty": "artist",
+                "role": "secondary",
+                "transition": "fade",
+                "type": "field"
+              }
+            ],
+            "style": {
+              "spacing": 0,
+              "width": 182
+            },
+            "type": "row"
+          },
+          {
+            "alignment": "trailing",
+            "field": "elapsed",
+            "role": "secondary",
+            "style": {
+              "fontSize": 12,
+              "width": 30
+            },
+            "type": "field"
+          },
+          {
+            "alignment": "center",
+            "onClick": "\"$PACKAGE_DIR/scripts/control.sh\" playpause",
+            "role": "time",
+            "source": "control",
+            "style": {
+              "cornerRadius": 10,
+              "height": 20,
+              "iconSize": 10,
+              "paddingHorizontal": 0,
+              "width": 20
+            },
+            "type": "symbol"
+          }
+        ],
+        "style": {
+          "spacing": 8
+        },
+        "type": "row"
+      },
+      "overlay": {
+        "children": [
+          {
+            "animation": {
+              "curve": "linear",
+              "duration": 1
+            },
+            "height": 2,
+            "role": "meter",
+            "source": "progress",
+            "type": "progress"
+          }
+        ],
+        "style": {
+          "paddingBottom": 3,
+          "paddingLeading": 32,
+          "paddingTrailing": 32
+        },
+        "type": "row"
+      },
+      "style": {
+        "paddingHorizontal": 4,
+        "width": 284
+      }
+    }
+  }
 }

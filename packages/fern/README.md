@@ -17,8 +17,9 @@ no `group` of their own, and they leave the pills when you select another theme.
 StableBar 0.18 or later.
 
 For System and Disk, choose **Label, value and meter** in the widget's **Content → Display**
-settings for a label and percentage above a progress line. For the Store's Now playing, choose
-**Bar look: Player** in its package settings. These choices stay selected under other themes.
+settings for a label and percentage on one line, above a progress line. For the Store's Now
+playing, choose **Bar look: Player** in its package settings. These choices stay selected under
+other themes.
 
 | Pill | Widgets |
 | --- | --- |
@@ -49,9 +50,11 @@ While AeroSpace is in any mode other than `main`, the strip's border turns amber
 
 ## Sliders
 
-Fern styles plain sliders as lime-filled pills on the raised surface, 40 points tall in
-popups and hover tooltips. Inline controls fit the widget's content height. Sound's built-in
-hover slider follows the same style and changes the volume as you drag.
+Fern draws plain sliders as pills filled with its accent, pale lime in the dark appearance and
+olive in the light one, on the same track as its meters: 40 points tall in popups and hover
+tooltips, and as tall as the widget's content inline. Sound's built-in hover slider follows the
+same style and changes the volume as you drag. Sliders need a StableBar that knows the `slider`
+role; the Store keeps offering Fern 1.3.0 to older versions.
 
 A slider with `"filled": false` keeps macOS's control. A slider with `"filled": true` keeps
 its own style; assign it `"role": "slider"` to use Fern's slider style explicitly.

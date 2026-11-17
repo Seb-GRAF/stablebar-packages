@@ -1,0 +1,13 @@
+{
+  "id": "proton-vpn",
+  "name": "Proton VPN",
+  "version": "1.0.0",
+  "description": "Shows whether Proton VPN is connected, connecting or disconnected. Click it to open Proton VPN's menu and connect or disconnect.",
+  "author": "Shadow1363",
+  "repository": "https://github.com/Seb-GRAF/stablebar-packages",
+  "entry": "config.json",
+  "screenshot": "preview.png",
+  "minimumVersion": "0.11.0",
+  "permissions": ["accessibility"],
+  "settings": {}
+}

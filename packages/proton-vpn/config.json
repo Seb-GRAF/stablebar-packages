@@ -1,0 +1,17 @@
+{
+  "widgets": [
+    {
+      "id": "proton-vpn",
+      "type": "script",
+      "position": "right",
+      "command": "\"$PACKAGE_DIR/scripts/status.sh\"",
+      "interval": 5,
+      "style": {"states": {"muted": {"opacity": 0.5}}},
+      "layout": {
+        "type": "row",
+        "openMenuBarItem": {"app": "ch.protonvpn.mac"},
+        "children": [{"type": "symbol", "source": "symbol"}]
+      }
+    }
+  ]
+}

@@ -7,6 +7,7 @@
   "github-notifications": { "category": "developer", "symbol": "bell" },
   "homebrew-outdated": { "category": "developer", "symbol": "mug" },
   "now-playing": { "category": "utilities", "symbol": "music.note" },
+  "proton-vpn": { "category": "utilities", "symbol": "checkmark.shield" },
   "quick-ask": { "category": "developer", "symbol": "sparkles" },
   "status-ring": { "category": "system", "symbol": "gauge.open.with.lines.needle.33percent" },
   "tunnelblick": { "category": "utilities", "symbol": "lock.shield" },

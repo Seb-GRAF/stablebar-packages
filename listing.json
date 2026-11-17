@@ -10,6 +10,7 @@
   "proton-vpn": { "category": "utilities", "symbol": "checkmark.shield" },
   "quick-ask": { "category": "developer", "symbol": "sparkles" },
   "status-ring": { "category": "system", "symbol": "gauge.open.with.lines.needle.33percent" },
+  "tailscale": { "category": "utilities", "symbol": "circle.grid.3x3" },
   "tunnelblick": { "category": "utilities", "symbol": "lock.shield" },
   "weather": { "category": "utilities", "symbol": "cloud.sun" }
 }

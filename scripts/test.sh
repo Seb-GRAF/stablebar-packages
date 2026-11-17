@@ -166,6 +166,64 @@ package weather 1.0.0 changed
 check "fail:weather-1.0.0.tar.gz is already on the store release with other files" \
   "index: an archive already published holds other files" index "" published
 
+# StableBar keeps the first entry it reads for an ID, so a package's entries go from the oldest
+# requirement to the newest, and older releases keep a version they can run.
+requires() {
+  jq --arg version "$2" '.minimumVersion = $version' "packages/$1/package.json" > "$scratch/manifest"
+  mv "$scratch/manifest" "packages/$1/package.json"
+}
+
+# Writes previous/index.json with one weather entry for each "version:minimumVersion" argument.
+previously() {
+  local item version minimum
+  for item in "$@"; do
+    version=${item%%:*} minimum=${item#*:}
+    jq -n --arg version "$version" --arg minimum "$minimum" '
+      {id: "weather", version: $version, minimumVersion: $minimum, archive: "weather-\($version).tar.gz", sha256: "kept"}
+      | if $minimum == "" then del(.minimumVersion) else . end'
+  done | jq -s '{packages: .}' > previous/index.json
+}
+
+lists_versions() {
+  index previous/index.json || return
+  local listed
+  listed=$(jq -r '[.packages[] | select(.id == "weather") | .version] | join(" ")' dist/index.json)
+  [[ $listed == "$1" ]] || { echo "listed: $listed"; return 1; }
+}
+
+repository
+package weather 1.1.0 second
+requires weather 0.18.0
+echo '[]' > suggestions.json
+echo '{}' > listing.json
+mkdir previous
+
+previously 1.0.0:
+check pass "index: a version that needs a newer StableBar keeps the previous one listed first" lists_versions "1.0.0 1.1.0"
+
+previously 1.0.0:0.18.0
+check pass "index: a version with the same requirement replaces the previous one" lists_versions "1.1.0"
+
+previously 1.0.0:0.9.0
+requires weather 0.10.0
+check pass "index: requirements compare as versions, not as text" lists_versions "1.0.0 1.1.0"
+
+previously 1.0.0:0.10.0-beta.20261101132945.557
+check pass "index: a beta's requirement comes before its release's" lists_versions "1.0.0 1.1.0"
+
+previously 0.9.0: 1.0.0:0.18.0
+package weather 1.1.0 second
+check pass "index: a version with a lower requirement drops the older ones it outranks" lists_versions "1.1.0"
+
+previously 1.0.0: 1.0.5:0.12.0
+requires weather 0.18.0
+check pass "index: each requirement keeps its newest version" lists_versions "1.0.0 1.0.5 1.1.0"
+
+rm -rf packages/weather
+package clock 1.0.0 tick
+previously 1.0.0:
+check pass "index: a retired package's versions leave the index" lists_versions ""
+
 # check-one-package.sh: a pull request changes one package, and README.md's package list and
 # listing.json with it.
 repository

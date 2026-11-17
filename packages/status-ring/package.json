@@ -1,14 +1,14 @@
 {
   "id": "status-ring",
   "name": "Status ring",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "kind": "widgets",
   "description": "Shows the battery, network and volume in one ring open at the bottom, after the design of DuoBar (github.com/Mikeli7666/DuoBar). Its popup has cards for Wi-Fi and network speed, the volume and output device, the battery with your Bluetooth devices' charge, and a System card with CPU, memory and the apps using the most.",
   "author": "Seb-GRAF",
   "repository": "https://github.com/Seb-GRAF/stablebar-packages",
   "entry": "config.json",
   "screenshot": "preview.png",
-  "minimumVersion": "0.17.0-beta.20261116153113.1185",
+  "minimumVersion": "0.17.0",
   "permissions": ["location"],
   "settings": {
     "color": {
@@ -125,13 +125,13 @@
     "cpuWarning": {
       "type": "number",
       "title": "Under load at CPU use",
-      "description": "The CPU use, from 0 to 1, that puts the load dot on the ring and a warning on the System card. Above 1 turns it off; memory pressure and heat still count.",
+      "description": "The CPU use, from 0 to 1, that puts the load dot on the ring. Above 1 turns it off; memory pressure and heat still count.",
       "default": 0.9
     },
     "memoryWarning": {
       "type": "number",
       "title": "Under load at memory use",
-      "description": "The memory use, from 0 to 1, that puts the load dot on the ring and a warning on the System card. Above 1 turns it off.",
+      "description": "The memory use, from 0 to 1, that puts the load dot on the ring. Above 1 turns it off.",
       "default": 0.9
     },
     "processes": {

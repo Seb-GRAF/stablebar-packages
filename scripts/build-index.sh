@@ -65,7 +65,27 @@ for dir in packages/*/; do
       } | with_entries(select(.value != null))' "$dir/package.json")
   fi
   echo "$entry"
+  # The package's earlier versions stay listed for StableBar releases that can't run this one.
+  if [[ -n $previous ]]; then
+    jq -c --arg id "$id" --arg version "$version" '.packages[] | select(.id == $id and .version != $version)' "$previous"
+  fi
 # StableBar's setup reads "suggestions" to offer packages for tools and apps it finds on the Mac, and its
 # Store groups packages by their "category" and shows their "symbol". Versions that don't know the keys ignore them.
+#
+# Each package keeps its newest version for each minimumVersion, oldest requirement first, minus any version
+# that one needing no newer StableBar outranks. StableBar 0.17 and earlier keep the first entry for an ID.
 done | jq -s --slurpfile suggestions suggestions.json --slurpfile listing listing.json '
-  {packages: map(del(.category, .symbol) + ($listing[0][.id] // {})) | sort_by(.id), suggestions: $suggestions[0]}' > dist/index.json
+  # Orders versions as Semantic Versioning does: numbers as numbers, and a prerelease before its release.
+  def precedence:
+    if . == null then [] else
+      capture("^(?<core>[^-+]*)(-(?<pre>[^+]*))?")
+      | [(.core | split(".") | map(tonumber? // .)), (if .pre then 0 else 1 end), ((.pre // "") | split(".") | map(tonumber? // .))]
+    end;
+  def staircase:
+    group_by(.minimumVersion | precedence) | map(max_by(.version | precedence))
+    | reduce .[] as $entry ({newest: null, kept: []};
+        ($entry.version | precedence) as $version
+        | if $version > .newest then .newest = $version | .kept += [$entry] else . end)
+    | .kept;
+  {packages: map(del(.category, .symbol) + ($listing[0][.id] // {})) | group_by(.id) | map(staircase) | add // [],
+   suggestions: $suggestions[0]}' > dist/index.json

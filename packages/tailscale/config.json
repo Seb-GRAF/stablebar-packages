@@ -1,0 +1,14 @@
+{
+  "widgets": [
+    {
+      "id": "tailscale",
+      "type": "script",
+      "position": "right",
+      "command": "\"$PACKAGE_DIR/scripts/status.sh\"",
+      "interval": 5,
+      "events": ["wake", "wifiChange"],
+      "timeout": 15,
+      "style": {"states": {"muted": {"opacity": 0.5}}}
+    }
+  ]
+}

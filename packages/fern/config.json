@@ -40,22 +40,28 @@
   },
   "groups": {
     "workspaces": {
-      "style": { "background": "@token.surfaceRaised", "cornerRadius": 14, "paddingHorizontal": 2, "paddingVertical": 0, "spacing": 2 }
+      "style": { "background": "@token.surfaceRaised", "cornerRadius": 14, "paddingHorizontal": 2, "paddingVertical": 0, "spacing": 2 },
+      "members": [{ "type": "workspaces" }]
     },
     "clock": {
-      "style": { "background": "@token.accentContainer", "cornerRadius": 14, "paddingHorizontal": 0, "paddingVertical": 0, "spacing": 0 }
+      "style": { "background": "@token.accentContainer", "cornerRadius": 14, "paddingHorizontal": 0, "paddingVertical": 0, "spacing": 0 },
+      "members": [{ "type": "clock" }]
     },
     "media": {
-      "style": { "background": "@token.surfaceRaised", "cornerRadius": 14, "paddingHorizontal": 0, "paddingVertical": 0, "spacing": 0 }
+      "style": { "background": "@token.surfaceRaised", "cornerRadius": 14, "paddingHorizontal": 0, "paddingVertical": 0, "spacing": 0 },
+      "members": [{ "id": "now-playing" }]
     },
     "system": {
-      "style": { "background": "@token.surfaceRaised", "cornerRadius": 14, "paddingHorizontal": 0, "paddingVertical": 0, "spacing": 0 }
+      "style": { "background": "@token.surfaceRaised", "cornerRadius": 14, "paddingHorizontal": 0, "paddingVertical": 0, "spacing": 0 },
+      "members": [{ "type": "system" }]
     },
     "disk": {
-      "style": { "background": "@token.surfaceRaised", "cornerRadius": 14, "paddingHorizontal": 0, "paddingVertical": 0, "spacing": 0 }
+      "style": { "background": "@token.surfaceRaised", "cornerRadius": 14, "paddingHorizontal": 0, "paddingVertical": 0, "spacing": 0 },
+      "members": [{ "type": "disk" }]
     },
     "status": {
-      "style": { "background": "@token.surfaceRaised", "cornerRadius": 14, "paddingHorizontal": 0, "paddingVertical": 0, "spacing": 0 }
+      "style": { "background": "@token.surfaceRaised", "cornerRadius": 14, "paddingHorizontal": 0, "paddingVertical": 0, "spacing": 0 },
+      "members": [{ "type": "audio" }, { "type": "wifi" }, { "type": "network" }, { "type": "bluetooth" }, { "type": "battery" }]
     }
   },
   "defaults": {

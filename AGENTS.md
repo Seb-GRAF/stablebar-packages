@@ -12,7 +12,7 @@ This repository is the store for [StableBar](https://github.com/Seb-GRAF/StableB
 
 - Any change needs a higher `version` than the package ever had, a revert too; published versions are never replaced.
 - Declare what the code uses. Every tool beyond what macOS ships goes in `requires`, every host it contacts in `hosts`, every macOS permission in `permissions`.
-- CI validates against StableBar `main` and its latest release. If the package uses a StableBar feature that the latest release lacks, set `minimumVersion` above that release; CI fails until you do.
+- CI validates against StableBar `main` and its latest release. If the package uses a StableBar feature that the latest release lacks, set `minimumVersion` above that release; CI fails until you do. Publishing it doesn't wait for the release: the index keeps the previous version for StableBar releases below `minimumVersion`.
 - Settings reach scripts through `environment` and are quoted in the script, never pasted into a command string.
 - Run `./scripts/update-readme.sh` after changing a name, description, preview or what a package declares, and commit `README.md`.
 - Replace the preview when what the package shows in the bar changes.

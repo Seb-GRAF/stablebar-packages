@@ -333,36 +333,41 @@
                     { "type": "text", "text": "System", "style": { "fontWeight": "semibold", "fontSize": 14 } },
                     {
                       "type": "row",
-                      "style": { "spacing": 4, "foreground": "@token.textMuted", "fontSize": 12 },
+                      "style": { "spacing": 16, "foreground": "@token.textMuted", "fontSize": 12 },
                       "children": [
-                        { "type": "text", "text": "CPU", "style": { "width": 24 } },
                         {
                           "type": "row",
-                          "style": { "spacing": 0, "width": 36 },
+                          "style": { "spacing": 4 },
                           "children": [
-                            { "type": "field", "field": "ringSystem.cpu", "alignment": "trailing" },
-                            { "type": "text", "text": "%", "style": { "width": 12 } }
+                            { "type": "text", "text": "CPU" },
+                            {
+                              "type": "row",
+                              "style": { "spacing": 0, "width": 36 },
+                              "children": [
+                                { "type": "field", "field": "ringSystem.cpu", "alignment": "trailing" },
+                                { "type": "text", "text": "%", "style": { "width": 12 } }
+                              ]
+                            }
                           ]
                         },
-                        { "type": "text", "text": "Memory", "style": { "width": 46 } },
                         {
                           "type": "row",
-                          "style": { "spacing": 0, "width": 36 },
+                          "style": { "spacing": 4 },
                           "children": [
-                            { "type": "field", "field": "ringSystem.memory", "alignment": "trailing" },
-                            { "type": "text", "text": "%", "style": { "width": 12 } }
+                            { "type": "text", "text": "Memory" },
+                            {
+                              "type": "row",
+                              "style": { "spacing": 0, "width": 36 },
+                              "children": [
+                                { "type": "field", "field": "ringSystem.memory", "alignment": "trailing" },
+                                { "type": "text", "text": "%", "style": { "width": 12 } }
+                              ]
+                            }
                           ]
                         }
                       ]
                     }
                   ]
-                },
-                {
-                  "type": "symbol",
-                  "source": "ringSystem.strainIcon",
-                  "hideWhenEmpty": "ringSystem.strainIcon",
-                  "alignment": "center",
-                  "style": { "iconSize": 13, "foreground": "@token.warning", "width": 18 }
                 },
                 {
                   "type": "symbol",

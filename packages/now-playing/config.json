@@ -221,7 +221,7 @@
     }
   ],
   "templates": {
-    "compact": {
+    "Compact": {
       "layout": {
         "type": "row",
         "style": {
@@ -254,7 +254,7 @@
         ]
       }
     },
-    "player": {
+    "Player": {
       "layout": {
         "children": [
           {

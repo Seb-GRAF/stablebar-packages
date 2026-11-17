@@ -9,7 +9,7 @@ case $services in
     exit 0
     ;;
   *"(Connected)"*) symbol=checkmark.shield.fill state=active tooltip="Proton VPN connected" ;;
-  *"(Connecting)"* | *"(Reasserting)"*) symbol=shield.lefthalf.filled state="" tooltip="Proton VPN connecting…" ;;
+  *"(Connecting)"*) symbol=shield.lefthalf.filled state="" tooltip="Proton VPN connecting…" ;;
   *"(Disconnecting)"*) symbol=shield.lefthalf.filled state="" tooltip="Proton VPN disconnecting…" ;;
   *) symbol=shield state=muted tooltip="Proton VPN disconnected" ;;
 esac

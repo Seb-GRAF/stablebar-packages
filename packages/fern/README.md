@@ -16,6 +16,10 @@ Fern puts your widgets in pills on the raised surface, and your clocks in a lime
 no `group` of their own, and they leave the pills when you select another theme. This needs
 StableBar 0.18 or later.
 
+For System and Disk, choose **Label, value and meter** in the widget's **Content → Display**
+settings for a label and percentage above a progress line. For the Store's Now playing, choose
+**Bar look: Player** in its package settings. These choices stay selected under other themes.
+
 | Pill | Widgets |
 | --- | --- |
 | `workspaces` | `workspaces` |
@@ -42,3 +46,12 @@ styles the `heading`, `key`, `value`, `button` and `meter` roles for popups.
 ## AeroSpace modes
 
 While AeroSpace is in any mode other than `main`, the strip's border turns amber.
+
+## Sliders
+
+Fern styles plain sliders as lime-filled pills on the raised surface, 40 points tall in
+popups and hover tooltips. Inline controls fit the widget's content height. Sound's built-in
+hover slider follows the same style and changes the volume as you drag.
+
+A slider with `"filled": false` keeps macOS's control. A slider with `"filled": true` keeps
+its own style; assign it `"role": "slider"` to use Fern's slider style explicitly.

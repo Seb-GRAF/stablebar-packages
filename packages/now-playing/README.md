@@ -8,7 +8,7 @@ In the package's settings, **Bar look** chooses between **Compact** and **Player
   progress line. Its width is 284 points. Presentation roles let your theme style its text,
   button and progress line, which hides when the track has no duration, such as a radio stream.
 
-The Store preview shows Player; Compact remains the default.
+The Store preview shows Compact above Player.
 
 Both looks use the same popup and Music or Spotify controls. Choosing a different theme keeps
 your selected bar look. A layout in your own configuration overrides the package's bar layout.

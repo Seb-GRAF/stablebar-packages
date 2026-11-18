@@ -3,9 +3,11 @@ set -e
 
 # OpenVPN Connect keeps its profiles in this file and rewrites it when they change.
 store="$HOME/Library/Application Support/OpenVPN Connect/config.json"
-# Its own menu bar icons, black for a light bar and white for a dark one. Without them, the widget
-# shows SF Symbols.
-icons="/Applications/OpenVPN Connect/OpenVPN Connect.app/Contents/Resources/app.asar.unpacked"
+# The app, whose icon the popup shows beside Open OpenVPN Connect, and its own menu bar icons, black
+# for a light bar and white for a dark one. Without them, the widget shows SF Symbols.
+app="/Applications/OpenVPN Connect/OpenVPN Connect.app"
+icons="$app/Contents/Resources/app.asar.unpacked"
+[ -d "$app" ] || app=""
 [ -f "$icons/black_connected.ico" ] && [ -f "$icons/white_connected.ico" ] || icons=""
 # The tunnel's last byte counts and speeds, for the speeds and the graph.
 traffic="${TMPDIR:-/tmp}/stablebar-openvpn-connect-traffic.json"
@@ -48,7 +50,7 @@ previous=$(cat "$traffic" 2> /dev/null || true)
 # The app stores its state as JSON strings inside JSON. Profiles show by name; the command that
 # toggles one passes its ID, quoted by @sh.
 result=$(jq -n -c --arg state "$state" --arg active "$profile" --arg quick "${QUICK_CONNECT:-}" \
-  --arg bar "${BAR_SHOWS:-Logo}" --arg icons "$icons" --arg interface "$interface" \
+  --arg bar "${BAR_SHOWS:-Logo}" --arg app "$app" --arg icons "$icons" --arg interface "$interface" \
   --arg counters "$counters" --arg previous "$previous" '
   def describe:
     if . == "Connected" then {state: "Connected", action: "Disconnect", look: "connected"}
@@ -74,8 +76,9 @@ result=$(jq -n -c --arg state "$state" --arg active "$profile" --arg quick "${QU
       else "\(.value | round) \($unit)"
       end;
 
-  # The graph draws 0 to 1, so speeds scale to the fastest one shown, or 10 KiB/s while idle.
-  def scaled: ((. + [10240]) | max) as $top | map(. / $top);
+  # The graph draws 0 to 1, so speeds scale to the fastest one shown, or 10 KiB/s while idle. It
+  # draws the samples it has from the right, so a new connection starts from a line of zeros.
+  def scaled: ((. + [10240]) | max) as $top | ([range(60 - length)] | map(0)) + map(. / $top);
 
   def valid: type == "object" and (.rx | type) == "number" and (.tx | type) == "number"
     and (.time | type) == "number" and (.download | type) == "array" and (.upload | type) == "array";
@@ -117,6 +120,7 @@ result=$(jq -n -c --arg state "$state" --arg active "$profile" --arg quick "${QU
         (if $showSpeeds then {logo: "", logoDark: "", symbol: "", speeds: "↓\($rates.downRate) ↑\($rates.upRate)"}
           else ($overall.look | art) + {speeds: ""} end)
         + $rates
+        + {app: $app, appSymbol: (if $app == "" then "arrow.up.forward.app" else "" end)}
         + (if $quickRow then {
             quickName: $quickRow.name,
             quickState: $quickRow.state,
@@ -129,7 +133,7 @@ result=$(jq -n -c --arg state "$state" --arg active "$profile" --arg quick "${QU
           } else {} end)),
       series: (if $traffic then {download: ($traffic.download | scaled), upload: ($traffic.upload | scaled)} else {} end),
       lists: {profiles: map(select(.id != $quickRow.id)
-        | {name, state, toggle, logo, logoDark, symbol, downRate: (.downRate // ""), upRate: (.upRate // "")})}
+        | {name, state, action, toggle, logo, logoDark, symbol, downRate: (.downRate // ""), upRate: (.upRate // "")})}
     } + (if $traffic then {interval: 2} else {} end))
 ' "$store")
 

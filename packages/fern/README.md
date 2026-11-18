@@ -29,6 +29,7 @@ other themes.
 | `disk` | `disk`, which turns amber as the disk nears full and red when it's almost full |
 | `status` | `audio`, `wifi`, `network`, `bluetooth` and `battery` |
 | `clock` | `clock` |
+| `meeting` | The widget whose `id` is `meeting`, such as the meetings widget that setup adds |
 
 Widgets in the same pill sit together where the first one is, in the order of your widget list.
 

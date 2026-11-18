@@ -1,11 +1,13 @@
 {
   "id": "tailscale",
   "name": "Tailscale",
-  "version": "1.0.0",
-  "description": "Shows whether Tailscale is connected, with your Tailscale IP in its tooltip. Click it to connect or disconnect.",
+  "version": "1.1.0",
+  "description": "Shows whether Tailscale is connected, with your Tailscale IP in its tooltip. Click it to connect or disconnect, pick an exit node, copy a device's IP, change settings, switch accounts or open Tailscale's menu.",
   "author": "Shadow1363",
   "repository": "https://github.com/Seb-GRAF/stablebar-packages",
   "entry": "config.json",
   "screenshot": "preview.png",
+  "minimumVersion": "0.17.0",
+  "permissions": ["accessibility"],
   "settings": {}
 }

@@ -1,14 +1,254 @@
 {
+  "tokens": {"surfaceRaised": {"light": "#ffffff", "dark": "#36383c"}, "textMuted": {"light": "#6e6e73", "dark": "#a1a1a6"}},
   "widgets": [
     {
       "id": "tailscale",
       "type": "script",
       "position": "right",
-      "command": "\"$PACKAGE_DIR/scripts/status.sh\"",
+      "command": "osascript -l JavaScript \"$PACKAGE_DIR/scripts/status.js\"",
       "interval": 5,
       "events": ["wake", "wifiChange"],
       "timeout": 15,
-      "style": {"states": {"muted": {"opacity": 0.5}}}
+      "style": {"states": {"muted": {"opacity": 0.5}}},
+      "popup": {
+        "dismissOnAction": false,
+        "style": {"width": 300, "paddingHorizontal": 12, "paddingVertical": 12, "spacing": 6},
+        "layout": {
+          "type": "column",
+          "children": [
+            {
+              "type": "text",
+              "text": "Tailscale",
+              "style": {"fontWeight": "bold", "fontSize": 15, "paddingHorizontal": 8, "paddingVertical": 4}
+            },
+            {
+              "type": "row",
+              "style": {"paddingHorizontal": 8, "paddingVertical": 6, "spacing": 10},
+              "children": [
+                {"type": "symbol", "source": "symbol", "style": {"width": 18}},
+                {
+                  "type": "column",
+                  "alignment": "leading",
+                  "style": {"spacing": 2},
+                  "children": [
+                    {"type": "field", "field": "status", "style": {"fontWeight": "semibold"}},
+                    {"type": "field", "field": "ip", "hideWhenEmpty": "ip", "style": {"foreground": "@token.textMuted"}}
+                  ]
+                },
+                {
+                  "type": "field",
+                  "field": "action",
+                  "onClickField": "toggle",
+                  "alignment": "center",
+                  "style": {"width": 96, "paddingHorizontal": 10, "paddingVertical": 5, "cornerRadius": 6, "background": "@token.surfaceRaised"}
+                }
+              ]
+            },
+            {"type": "divider", "hideWhenEmpty": "exitNode"},
+            {
+              "type": "text",
+              "text": "Exit node",
+              "hideWhenEmpty": "exitNode",
+              "style": {"foreground": "@token.textMuted", "paddingHorizontal": 8, "paddingVertical": 4}
+            },
+            {
+              "type": "list",
+              "source": "exitNodes",
+              "row": {
+                "type": "row",
+                "onClickField": "select",
+                "style": {
+                  "paddingHorizontal": 8,
+                  "paddingVertical": 9,
+                  "spacing": 10,
+                  "cornerRadius": 8,
+                  "hoverBackground": "@token.surfaceRaised"
+                },
+                "children": [
+                  {"type": "symbol", "source": "symbol", "style": {"width": 18}},
+                  {"type": "field", "field": "name"}
+                ]
+              }
+            },
+            {"type": "divider"},
+            {
+              "type": "row",
+              "view": "devices",
+              "hideWhenEmpty": "devices",
+              "style": {
+                "paddingHorizontal": 8,
+                "paddingVertical": 9,
+                "spacing": 10,
+                "cornerRadius": 8,
+                "hoverBackground": "@token.surfaceRaised"
+              },
+              "children": [
+                {"type": "symbol", "name": "laptopcomputer.and.iphone", "style": {"width": 18}},
+                {"type": "text", "text": "Network devices"},
+                {"type": "field", "field": "devices", "alignment": "trailing", "style": {"width": 28, "foreground": "@token.textMuted"}},
+                {"type": "symbol", "name": "chevron.right", "style": {"width": 12, "foreground": "@token.textMuted"}}
+              ]
+            },
+            {
+              "type": "row",
+              "view": "settings",
+              "hideWhenEmpty": "dns",
+              "style": {
+                "paddingHorizontal": 8,
+                "paddingVertical": 9,
+                "spacing": 10,
+                "cornerRadius": 8,
+                "hoverBackground": "@token.surfaceRaised"
+              },
+              "children": [
+                {"type": "symbol", "name": "gearshape", "style": {"width": 18}},
+                {"type": "text", "text": "Settings"},
+                {"type": "symbol", "name": "chevron.right", "style": {"width": 12, "foreground": "@token.textMuted"}}
+              ]
+            },
+            {
+              "type": "row",
+              "view": "accounts",
+              "hideWhenEmpty": "account",
+              "style": {
+                "paddingHorizontal": 8,
+                "paddingVertical": 9,
+                "spacing": 10,
+                "cornerRadius": 8,
+                "hoverBackground": "@token.surfaceRaised"
+              },
+              "children": [
+                {"type": "symbol", "name": "person.crop.circle", "style": {"width": 18}},
+                {"type": "field", "field": "account"},
+                {"type": "symbol", "name": "chevron.right", "style": {"width": 12, "foreground": "@token.textMuted"}}
+              ]
+            },
+            {
+              "type": "row",
+              "openMenuBarItem": {"app": "Tailscale"},
+              "style": {
+                "paddingHorizontal": 8,
+                "paddingVertical": 9,
+                "spacing": 10,
+                "cornerRadius": 8,
+                "hoverBackground": "@token.surfaceRaised"
+              },
+              "children": [
+                {"type": "symbol", "name": "menubar.arrow.up.rectangle", "style": {"width": 18}},
+                {"type": "text", "text": "Open Tailscale"}
+              ]
+            }
+          ]
+        },
+        "views": {
+          "devices": {
+            "type": "column",
+            "children": [
+              {
+                "type": "text",
+                "text": "Network devices",
+                "style": {"fontWeight": "bold", "fontSize": 15, "paddingHorizontal": 8, "paddingVertical": 4}
+              },
+              {
+                "type": "list",
+                "source": "devices",
+                "row": {
+                  "type": "row",
+                  "onClickField": "copy",
+                  "style": {
+                    "paddingHorizontal": 8,
+                    "paddingVertical": 9,
+                    "spacing": 10,
+                    "cornerRadius": 8,
+                    "hoverBackground": "@token.surfaceRaised"
+                  },
+                  "children": [
+                    {"type": "symbol", "source": "symbol", "style": {"width": 18, "iconSize": 8}},
+                    {"type": "field", "field": "name"},
+                    {"type": "field", "field": "ip", "alignment": "trailing", "style": {"foreground": "@token.textMuted"}}
+                  ]
+                }
+              }
+            ]
+          },
+          "settings": {
+            "type": "column",
+            "children": [
+              {
+                "type": "text",
+                "text": "Settings",
+                "style": {"fontWeight": "bold", "fontSize": 15, "paddingHorizontal": 8, "paddingVertical": 4}
+              },
+              {
+                "type": "toggle",
+                "title": "Use Tailscale DNS",
+                "source": "dns",
+                "onChange": "\"$PACKAGE_DIR/scripts/tailscale.sh\" set --accept-dns=\"$VALUE\"",
+                "style": {"paddingHorizontal": 8, "paddingVertical": 6}
+              },
+              {
+                "type": "toggle",
+                "title": "Use Tailscale subnets",
+                "source": "routes",
+                "onChange": "\"$PACKAGE_DIR/scripts/tailscale.sh\" set --accept-routes=\"$VALUE\"",
+                "style": {"paddingHorizontal": 8, "paddingVertical": 6}
+              },
+              {
+                "type": "toggle",
+                "title": "Allow incoming connections",
+                "source": "incoming",
+                "onChange": "\"$PACKAGE_DIR/scripts/tailscale.sh\" set --shields-up=$([ \"$VALUE\" = true ] && echo false || echo true)",
+                "style": {"paddingHorizontal": 8, "paddingVertical": 6}
+              },
+              {
+                "type": "toggle",
+                "title": "Allow local network access",
+                "source": "lanAccess",
+                "hideWhenEmpty": "lanAccess",
+                "onChange": "\"$PACKAGE_DIR/scripts/tailscale.sh\" set --exit-node-allow-lan-access=\"$VALUE\"",
+                "style": {"paddingHorizontal": 8, "paddingVertical": 6}
+              }
+            ]
+          },
+          "accounts": {
+            "type": "column",
+            "children": [
+              {
+                "type": "text",
+                "text": "Accounts",
+                "style": {"fontWeight": "bold", "fontSize": 15, "paddingHorizontal": 8, "paddingVertical": 4}
+              },
+              {
+                "type": "list",
+                "source": "accounts",
+                "row": {
+                  "type": "row",
+                  "onClickField": "switch",
+                  "style": {
+                    "paddingHorizontal": 8,
+                    "paddingVertical": 9,
+                    "spacing": 10,
+                    "cornerRadius": 8,
+                    "hoverBackground": "@token.surfaceRaised"
+                  },
+                  "children": [
+                    {"type": "symbol", "source": "symbol", "style": {"width": 18}},
+                    {
+                      "type": "column",
+                      "alignment": "leading",
+                      "style": {"spacing": 2},
+                      "children": [
+                        {"type": "field", "field": "name"},
+                        {"type": "field", "field": "tailnet", "style": {"foreground": "@token.textMuted"}}
+                      ]
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      }
     }
   ]
 }

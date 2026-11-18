@@ -62,6 +62,10 @@
     "status": {
       "style": { "background": "@token.surfaceRaised", "cornerRadius": 14, "paddingHorizontal": 0, "paddingVertical": 0, "spacing": 0 },
       "members": [{ "type": "audio" }, { "type": "wifi" }, { "type": "network" }, { "type": "bluetooth" }, { "type": "battery" }]
+    },
+    "meeting": {
+      "style": { "background": "@token.surfaceRaised", "cornerRadius": 14, "paddingHorizontal": 0, "paddingVertical": 0, "spacing": 0 },
+      "members": [{ "id": "meeting" }]
     }
   },
   "defaults": {

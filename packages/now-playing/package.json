@@ -12,6 +12,6 @@
   "hosts": ["i.scdn.co"],
   "settings": {
     "barLook": { "type": "string", "title": "Bar look", "default": "Compact", "choices": ["Compact", "Player"] },
-    "barWidth": { "type": "number", "title": "Maximum title width in the bar", "default": 160 }
+    "barWidth": { "type": "number", "title": "Compact: maximum title width", "default": 160 }
   }
 }

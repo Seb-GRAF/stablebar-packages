@@ -3,10 +3,10 @@
 In the package's settings, **Bar look** chooses between **Compact** and **Player**.
 
 - **Compact**, the default, shows a small cover, the track and artist, and bouncing bars.
-  **Maximum title width in the bar** sets its scrolling text's maximum width.
+  **Compact: maximum title width** sets its scrolling text's maximum width.
 - **Player** shows a round cover, title and artist, elapsed time, a play/pause button and a
   progress line. Its width is 284 points. Presentation roles let your theme style its text,
-  button and progress line.
+  button and progress line, which hides when the track has no duration, such as a radio stream.
 
 The Store preview shows Player; Compact remains the default.
 

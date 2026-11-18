@@ -63,22 +63,23 @@
             "children": [
               {
                 "type": "column",
-                "style": { "spacing": 1.5 },
+                "style": { "spacing": 2, "offsetY": 1.5 },
                 "children": [
                   {
                     "type": "symbol",
                     "source": "ringNetwork.connectionIcon",
-                    "style": { "iconSize": "@setting.symbolSize", "fontWeight": "bold" }
+                    "alignment": "center",
+                    "style": { "width": 9, "iconSize": "@setting.symbolSize", "fontWeight": "bold" }
                   },
                   {
                     "type": "progress",
                     "source": "ringAudio.volume",
                     "hideWhenEmpty": "ringAudio.volume",
-                    "height": 1.6,
+                    "height": 1.8,
                     "segments": "@setting.volumeDots",
                     "style": {
                       "width": 9,
-                      "spacing": 1,
+                      "spacing": 0.7,
                       "cornerRadius": 1,
                       "accent": "@setting.color",
                       "background": "@token.track",
@@ -96,7 +97,7 @@
                 "type": "symbol",
                 "name": "circle.fill",
                 "hideWhenEmpty": "ringSystem.strainIcon",
-                "style": { "iconSize": 4, "foreground": "@token.warning", "offsetX": 7, "offsetY": -6.5 }
+                "style": { "iconSize": 4, "foreground": "@token.warning", "offsetX": 7, "offsetY": -7 }
               }
             ]
           },
@@ -339,7 +340,7 @@
                           "type": "row",
                           "style": { "spacing": 4 },
                           "children": [
-                            { "type": "text", "text": "CPU" },
+                            { "type": "text", "text": "CPU", "style": { "width": 27 } },
                             {
                               "type": "row",
                               "style": { "spacing": 0, "width": 36 },
@@ -354,7 +355,7 @@
                           "type": "row",
                           "style": { "spacing": 4 },
                           "children": [
-                            { "type": "text", "text": "Memory" },
+                            { "type": "text", "text": "Memory", "style": { "width": 49 } },
                             {
                               "type": "row",
                               "style": { "spacing": 0, "width": 36 },

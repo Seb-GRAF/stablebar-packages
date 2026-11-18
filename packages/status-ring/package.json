@@ -1,7 +1,7 @@
 {
   "id": "status-ring",
   "name": "Status ring",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "kind": "widgets",
   "description": "Shows the battery, network and volume in one ring open at the bottom, after the design of DuoBar (github.com/Mikeli7666/DuoBar). Its popup has cards for Wi-Fi and network speed, the volume and output device, the battery with your Bluetooth devices' charge, and a System card with CPU, memory and the apps using the most.",
   "author": "Seb-GRAF",
@@ -59,7 +59,7 @@
     "symbolSize": {
       "type": "number",
       "title": "Connection symbol size",
-      "default": 7
+      "default": 8.5
     },
     "ringGap": {
       "type": "number",
@@ -70,7 +70,7 @@
     "ringStroke": {
       "type": "number",
       "title": "Ring thickness",
-      "default": 1.6
+      "default": 1.8
     },
     "volumeDots": {
       "type": "number",

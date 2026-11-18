@@ -22,4 +22,4 @@ Install and open the Amphetamine app before using this package. Allow StableBar 
 
 Starting a session replaces the current session, including a trigger session. Ending a trigger session does not disable its trigger, so it may restart.
 
-The widget checks the session every five seconds and remembers the slider selection in `amphetamine-duration` beside your configuration. Hover backgrounds follow the theme, and animations respect Reduce Motion. Closed-display settings remain controlled by Amphetamine.
+The widget checks the session every five seconds and remembers the slider selection in `amphetamine-duration` beside your configuration. Hover backgrounds and the slider's look follow the theme, and animations respect Reduce Motion. Closed-display settings remain controlled by Amphetamine.

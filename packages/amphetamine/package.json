@@ -1,7 +1,7 @@
 {
   "id": "amphetamine",
   "name": "Amphetamine",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "Toggle Amphetamine from the bar, set its timer or keep the Mac awake indefinitely with an inline hover slider, and see the time remaining.",
   "author": "Seb-GRAF",
   "repository": "https://github.com/Seb-GRAF/stablebar-packages",

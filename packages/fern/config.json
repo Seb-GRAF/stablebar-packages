@@ -151,6 +151,7 @@
       "height": 36
     },
     "meter": { "accent": "@token.accent", "background": "@token.track", "cornerRadius": 4 },
+    "slider": { "height": 40, "cornerRadius": 20, "background": "@token.track" },
     "separator": { "foreground": "#00000000", "background": "@token.hairline", "height": 1 }
   },
   "workspaceDefaults": {

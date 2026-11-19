@@ -1,6 +1,6 @@
 # StableBar store
 
-This repository is the store for [StableBar](https://github.com/Seb-GRAF/StableBar). Each folder in `packages/` is a package, and CI publishes them to the `store` release that StableBar installs from. The [README](README.md) is the store's front page for people choosing packages; [CONTRIBUTING.md](CONTRIBUTING.md) covers the package rules, testing, review and publishing. StableBar's [Packages and the store](https://github.com/Seb-GRAF/StableBar/blob/main/docs/packages.md) documents the manifest and what a package can contain.
+This repository is the store for [StableBar](https://github.com/stablebox/StableBar). Each folder in `packages/` is a package, and CI publishes them to the `store` release that StableBar installs from. The [README](README.md) is the store's front page for people choosing packages; [CONTRIBUTING.md](CONTRIBUTING.md) covers the package rules, testing, review and publishing. StableBar's [Packages and the store](https://github.com/stablebox/StableBar/blob/main/docs/packages.md) documents the manifest and what a package can contain.
 
 ## Protect the developer's setup
 

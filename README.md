@@ -2,13 +2,13 @@
 
 # StableBar store
 
-Widgets and themes for [StableBar](https://github.com/Seb-GRAF/StableBar), the native macOS bar.<br>
+Widgets and themes for [StableBar](https://github.com/stablebox/StableBar), the native macOS bar.<br>
 Every package is open source, checked here and published by this repository's CI, not by its author.
 
-[![CI](https://github.com/Seb-GRAF/stablebar-packages/actions/workflows/ci.yml/badge.svg)](https://github.com/Seb-GRAF/stablebar-packages/actions/workflows/ci.yml)
+[![CI](https://github.com/stablebox/stablebar-packages/actions/workflows/ci.yml/badge.svg)](https://github.com/stablebox/stablebar-packages/actions/workflows/ci.yml)
 [![MIT license](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 
-[**Packages**](#packages) · [Request a package](https://github.com/Seb-GRAF/stablebar-packages/issues/new?template=package_request.yml) · [Add your own](CONTRIBUTING.md) · [StableBar guide](https://github.com/Seb-GRAF/StableBar/blob/main/docs/packages.md)
+[**Packages**](#packages) · [Request a package](https://github.com/stablebox/stablebar-packages/issues/new?template=package_request.yml) · [Add your own](CONTRIBUTING.md) · [StableBar guide](https://github.com/stablebox/StableBar/blob/main/docs/packages.md)
 
 </div>
 
@@ -22,7 +22,7 @@ From the command line, `StableBar --install-package weather` installs a package 
 
 ## Packages
 
-Clock & date, Battery, System monitor, Network and Calendar now ship with StableBar Essentials. [Update StableBar](https://github.com/Seb-GRAF/StableBar/releases/latest) to turn existing Store versions into built-in widgets automatically, keeping your settings and placement.
+Clock & date, Battery, System monitor, Network and Calendar now ship with StableBar Essentials. [Update StableBar](https://github.com/stablebox/StableBar/releases/latest) to turn existing Store versions into built-in widgets automatically, keeping your settings and placement.
 
 <!-- packages -->
 | Preview | Package | Access |
@@ -65,9 +65,9 @@ A published version never changes and its archive is never deleted. A version yo
 
 ## Report a problem
 
-- A package doesn't work: [report a package bug](https://github.com/Seb-GRAF/stablebar-packages/issues/new?template=package_bug.yml).
+- A package doesn't work: [report a package bug](https://github.com/stablebox/stablebar-packages/issues/new?template=package_bug.yml).
 - A package does something it doesn't declare, or puts your data at risk: report it privately, as described in [SECURITY.md](.github/SECURITY.md).
-- StableBar itself: [StableBar's issues](https://github.com/Seb-GRAF/StableBar/issues).
+- StableBar itself: [StableBar's issues](https://github.com/stablebox/StableBar/issues).
 
 ## Add a package
 

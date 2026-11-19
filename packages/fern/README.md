@@ -16,6 +16,13 @@ Fern puts your widgets in pills on the raised surface, and your clocks in a lime
 no `group` of their own, and they leave the pills when you select another theme. This needs
 StableBar 0.18 or later.
 
+Every group starts from Fern's pill look, set once in `groupDefaults`: the raised surface, 14-point
+corners and no gap between widgets, which keep their own padding. That includes the groups you
+make, such as with **Group With** in Settings. A group's own style wins, property by property, so a
+color you gave one of your groups stays; remove it from the group's `style`, or set it to `null`,
+and the group follows Fern. Fern 1.6.0 needs a StableBar that knows `groupDefaults`; the Store keeps
+offering Fern 1.5.0 to older versions.
+
 For System and Disk, choose **Label, value and meter** in the widget's **Content → Display**
 settings for a label and percentage on one line, above a progress line. For the Store's Now
 playing, choose **Bar look: Player** in its package settings. These choices stay selected under

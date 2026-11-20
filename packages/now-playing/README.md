@@ -10,7 +10,7 @@ In the package's settings, **Bar look** chooses between **Compact** and **Player
 
 The Store preview shows Compact above Player.
 
-Both looks use the same popup and Music or Spotify controls. Choosing a different theme keeps
+Both looks use the same popup, which controls what plays in any app. Choosing a different theme keeps
 your selected bar look. A layout in your own configuration overrides the package's bar layout.
 The looks are the package's `Compact` and `Player` templates, so a template of yours with one of
 those names changes them too.

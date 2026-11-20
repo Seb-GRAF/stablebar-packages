@@ -77,7 +77,6 @@
       },
       "hoverLayout": {
         "type": "row",
-        "style": {"height": 16, "spacing": 6},
         "children": [
           {
             "type": "slider",
@@ -88,7 +87,7 @@
             "step": 15,
             "endStop": {"value": 0, "label": "∞"},
             "onChange": "\"$PACKAGE_DIR/scripts/control.sh\" duration",
-            "style": {"width": 104}
+            "style": {"width": 160}
           },
           {"type": "field", "field": "durationLabel", "alignment": "center", "style": {"width": 38}}
         ]

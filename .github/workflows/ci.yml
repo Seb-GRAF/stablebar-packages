@@ -63,7 +63,7 @@ jobs:
           persist-credentials: false
       - uses: actions/checkout@v7
         with:
-          repository: Seb-GRAF/StableBar
+          repository: stablebox/StableBar
           ref: main
           path: stablebar
           persist-credentials: false
@@ -71,7 +71,7 @@ jobs:
         run: ./stablebar/scripts/build.sh
       - name: Download the latest StableBar release
         run: |
-          curl -fsSL --retry 3 -o "$RUNNER_TEMP/StableBar.dmg" https://github.com/Seb-GRAF/StableBar/releases/latest/download/StableBar.dmg
+          curl -fsSL --retry 3 -o "$RUNNER_TEMP/StableBar.dmg" https://github.com/stablebox/StableBar/releases/latest/download/StableBar.dmg
           mkdir "$RUNNER_TEMP/release"
           hdiutil attach -nobrowse -readonly -mountpoint "$RUNNER_TEMP/release" "$RUNNER_TEMP/StableBar.dmg"
       - name: Check packages

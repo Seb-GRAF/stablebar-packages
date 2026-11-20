@@ -1,6 +1,6 @@
 # Contributing
 
-Packages come in through pull requests. A package is a folder in `packages/`. StableBar's user guide explains what goes inside it: [Packages and the store](https://github.com/Seb-GRAF/StableBar/blob/main/docs/packages.md) covers the manifest, settings, secrets and `"kind": "widgets"`, and [Themes](https://github.com/Seb-GRAF/StableBar/blob/main/docs/themes.md) covers making a theme.
+Packages come in through pull requests. A package is a folder in `packages/`. StableBar's user guide explains what goes inside it: [Packages and the store](https://github.com/stablebox/StableBar/blob/main/docs/packages.md) covers the manifest, settings, secrets and `"kind": "widgets"`, and [Themes](https://github.com/stablebox/StableBar/blob/main/docs/themes.md) covers making a theme.
 
 ## A package
 
@@ -68,7 +68,7 @@ CI copies both into the package's entry in `index.json`; `scripts/check-listing.
 
 ## Suggestions in setup
 
-[`suggestions.json`](suggestions.json) lists the packages StableBar's setup suggests when it finds a tool or an app on the Mac. CI copies it into `index.json` as `suggestions`. Setup's side is tracked in [StableBar#405](https://github.com/Seb-GRAF/StableBar/issues/405).
+[`suggestions.json`](suggestions.json) lists the packages StableBar's setup suggests when it finds a tool or an app on the Mac. CI copies it into `index.json` as `suggestions`. Setup's side is tracked in [StableBar#405](https://github.com/stablebox/StableBar/issues/405).
 
 ```json
 [
@@ -99,7 +99,7 @@ To try the package on your own bar, install it from its folder in **Settings →
 4. **Wait for CI.** `Lint` and `Validate` must pass.
 5. **Review.** Themes and widget packages merge once CI passes. A package that runs commands waits for a maintainer to read every script and command string and check them against `requires`, `permissions` and `hosts`. This holds for every new version, however small the change.
 
-Package ideas and bugs in a package go in [issues](https://github.com/Seb-GRAF/stablebar-packages/issues/new/choose). Bugs in StableBar itself go to [StableBar's issues](https://github.com/Seb-GRAF/StableBar/issues).
+Package ideas and bugs in a package go in [issues](https://github.com/stablebox/stablebar-packages/issues/new/choose). Bugs in StableBar itself go to [StableBar's issues](https://github.com/stablebox/StableBar/issues).
 
 ## What CI checks
 
@@ -107,7 +107,7 @@ On every pull request and push to `main`:
 
 - **Lint:** ShellCheck on every `.sh` file, the package list in the README, `scripts/check-suggestions.sh`, `scripts/check-listing.sh`, `scripts/test.sh`, which tests the scripts on scratch repositories and packages, and on pull requests `scripts/check-versions.sh`, which requires every package that changed to raise its version above every version it had, and `scripts/check-one-package.sh`, which allows one package per pull request.
 - **Validate:** builds the current StableBar `main`, downloads its latest release, and runs `scripts/check-package.sh` on every package: the folder name matches the `id`, the file rules and the preview above, then `--inspect-package`, `--install-package` into a scratch configuration, and `--validate` with the package enabled, with `main` and with the release. The release may refuse a package whose `minimumVersion` is above it.
-- **Publish:** on `main` only, after both. `scripts/build-index.sh` writes `index.json`, with the suggestions from `suggestions.json` and each package's category and symbol from `listing.json`, and a `<id>-<version>.tar.gz` archive for each new version, and uploads them to the `store` prerelease. A version already in the index keeps its archive and checksum. Each package lists its newest version for each `minimumVersion`, oldest requirement first, so a StableBar that can't run the newest keeps getting a version it can: StableBar 0.17 and earlier take the first entry for a package, and later releases the newest one they can run. A version that another needing no newer StableBar outranks leaves the index. A version whose archive is already on the release but not in the index, because a publish failed halfway, is listed with that archive when it holds the same files; a publish that fails can be re-run. StableBar reads the index at `https://github.com/Seb-GRAF/stablebar-packages/releases/download/store/index.json`.
+- **Publish:** on `main` only, after both. `scripts/build-index.sh` writes `index.json`, with the suggestions from `suggestions.json` and each package's category and symbol from `listing.json`, and a `<id>-<version>.tar.gz` archive for each new version, and uploads them to the `store` prerelease. A version already in the index keeps its archive and checksum. Each package lists its newest version for each `minimumVersion`, oldest requirement first, so a StableBar that can't run the newest keeps getting a version it can: StableBar 0.17 and earlier take the first entry for a package, and later releases the newest one they can run. A version that another needing no newer StableBar outranks leaves the index. A version whose archive is already on the release but not in the index, because a publish failed halfway, is listed with that archive when it holds the same files; a publish that fails can be re-run. StableBar reads the index at `https://github.com/stablebox/stablebar-packages/releases/download/store/index.json`.
 
 ## Agent skills
 

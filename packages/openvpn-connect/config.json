@@ -1,0 +1,188 @@
+{
+  "tokens": {
+    "surfaceRaised": {"light": "#ffffff", "dark": "#36383c"},
+    "textMuted": {"light": "#6e6e73", "dark": "#a1a1a6"},
+    "openvpnConnectDownload": {"light": "#007aff", "dark": "#0a84ff"},
+    "openvpnConnectUpload": {"light": "#ff9500", "dark": "#ff9f0a"},
+    "openvpnConnectLogo": "logo",
+    "openvpnConnectQuickLogo": "quickLogo",
+    "openvpnConnectTraffic": {
+      "type": "row",
+      "style": {"paddingHorizontal": 8, "paddingVertical": 6, "spacing": 12},
+      "children": [
+        {
+          "type": "column",
+          "alignment": "leading",
+          "style": {"spacing": 4},
+          "children": [
+            {
+              "type": "row",
+              "style": {"spacing": 4},
+              "children": [
+                {"type": "symbol", "name": "arrow.down", "style": {"width": 12, "iconSize": 10, "foreground": "@token.openvpnConnectDownload"}},
+                {"type": "field", "field": "downRate", "alignment": "leading", "style": {"fontSize": 11}}
+              ]
+            },
+            {"type": "graph", "source": "download", "height": 28, "lineWidth": 1.5, "style": {"accent": "@token.openvpnConnectDownload"}}
+          ]
+        },
+        {
+          "type": "column",
+          "alignment": "leading",
+          "style": {"spacing": 4},
+          "children": [
+            {
+              "type": "row",
+              "style": {"spacing": 4},
+              "children": [
+                {"type": "symbol", "name": "arrow.up", "style": {"width": 12, "iconSize": 10, "foreground": "@token.openvpnConnectUpload"}},
+                {"type": "field", "field": "upRate", "alignment": "leading", "style": {"fontSize": 11}}
+              ]
+            },
+            {"type": "graph", "source": "upload", "height": 28, "lineWidth": 1.5, "style": {"accent": "@token.openvpnConnectUpload"}}
+          ]
+        }
+      ]
+    }
+  },
+  "profiles": [
+    {
+      "name": "OpenVPN Connect in dark mode",
+      "when": {"appearance": "dark"},
+      "configuration": {"tokens": {"openvpnConnectLogo": "logoDark", "openvpnConnectQuickLogo": "quickLogoDark"}}
+    }
+  ],
+  "widgets": [
+    {
+      "id": "openvpn-connect",
+      "type": "script",
+      "position": "right",
+      "command": "\"$PACKAGE_DIR/scripts/status.sh\"",
+      "interval": 5,
+      "environment": {"QUICK_CONNECT": "@setting.quickConnect", "BAR_SHOWS": "@setting.barShows"},
+      "layout": {
+        "type": "row",
+        "children": [
+          {
+            "type": "image",
+            "source": "@token.openvpnConnectLogo",
+            "hideWhenEmpty": "@token.openvpnConnectLogo",
+            "style": {"width": 16, "height": 16, "cornerRadius": 0}
+          },
+          {"type": "symbol", "source": "symbol", "hideWhenEmpty": "symbol"},
+          {"type": "field", "field": "speeds", "hideWhenEmpty": "speeds"}
+        ]
+      },
+      "popup": {
+        "dismissOnAction": false,
+        "style": {"width": 300, "paddingHorizontal": 12, "paddingVertical": 12, "spacing": 6},
+        "layout": {
+          "type": "column",
+          "children": [
+            {
+              "type": "text",
+              "text": "OpenVPN Connect",
+              "style": {"fontWeight": "bold", "fontSize": 15, "paddingHorizontal": 8, "paddingVertical": 4}
+            },
+            {
+              "type": "row",
+              "hideWhenEmpty": "quickName",
+              "style": {"paddingHorizontal": 8, "paddingVertical": 6, "spacing": 10},
+              "children": [
+                {
+                  "type": "image",
+                  "source": "@token.openvpnConnectQuickLogo",
+                  "hideWhenEmpty": "@token.openvpnConnectQuickLogo",
+                  "style": {"width": 18, "height": 18, "cornerRadius": 0}
+                },
+                {"type": "symbol", "source": "quickSymbol", "hideWhenEmpty": "quickSymbol", "style": {"width": 18}},
+                {
+                  "type": "column",
+                  "alignment": "leading",
+                  "style": {"spacing": 2},
+                  "children": [
+                    {"type": "field", "field": "quickName", "style": {"fontWeight": "semibold"}},
+                    {"type": "field", "field": "quickState", "style": {"foreground": "@token.textMuted"}}
+                  ]
+                },
+                {
+                  "type": "field",
+                  "field": "quickAction",
+                  "onClickField": "quickToggle",
+                  "alignment": "center",
+                  "style": {"width": 96, "paddingHorizontal": 10, "paddingVertical": 5, "cornerRadius": 6, "background": "@token.surfaceRaised"}
+                }
+              ]
+            },
+            {
+              "type": "column",
+              "hideWhenEmpty": "quickTraffic",
+              "children": ["@token.openvpnConnectTraffic"]
+            },
+            {"type": "divider", "hideWhenEmpty": "quickName"},
+            {
+              "type": "list",
+              "source": "profiles",
+              "row": {
+                "type": "column",
+                "children": [
+                  {
+                    "type": "row",
+                    "style": {"paddingHorizontal": 8, "paddingVertical": 6, "spacing": 10},
+                    "children": [
+                      {
+                        "type": "image",
+                        "source": "@token.openvpnConnectLogo",
+                        "hideWhenEmpty": "@token.openvpnConnectLogo",
+                        "style": {"width": 18, "height": 18, "cornerRadius": 0}
+                      },
+                      {"type": "symbol", "source": "symbol", "hideWhenEmpty": "symbol", "style": {"width": 18}},
+                      {
+                        "type": "column",
+                        "alignment": "leading",
+                        "style": {"spacing": 2},
+                        "children": [
+                          {"type": "field", "field": "name"},
+                          {"type": "field", "field": "state", "style": {"foreground": "@token.textMuted"}}
+                        ]
+                      },
+                      {
+                        "type": "field",
+                        "field": "action",
+                        "onClickField": "toggle",
+                        "alignment": "center",
+                        "style": {"width": 96, "paddingHorizontal": 10, "paddingVertical": 5, "cornerRadius": 6, "background": "@token.surfaceRaised"}
+                      }
+                    ]
+                  },
+                  {
+                    "type": "column",
+                    "hideWhenEmpty": "downRate",
+                    "children": ["@token.openvpnConnectTraffic"]
+                  }
+                ]
+              }
+            },
+            {"type": "divider"},
+            {
+              "type": "row",
+              "open": "org.openvpn.client.app",
+              "style": {
+                "paddingHorizontal": 8,
+                "paddingVertical": 9,
+                "spacing": 10,
+                "cornerRadius": 8,
+                "hoverBackground": "@token.surfaceRaised"
+              },
+              "children": [
+                {"type": "image", "source": "app", "hideWhenEmpty": "app", "style": {"width": 18, "height": 18, "cornerRadius": 0}},
+                {"type": "symbol", "source": "appSymbol", "hideWhenEmpty": "appSymbol", "style": {"width": 18}},
+                {"type": "text", "text": "Open OpenVPN Connect"}
+              ]
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

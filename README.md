@@ -2,13 +2,13 @@
 
 # StableBar store
 
-Widgets and themes for [StableBar](https://github.com/Seb-GRAF/StableBar), the native macOS bar.<br>
+Widgets and themes for [StableBar](https://github.com/stablebox/StableBar), the native macOS bar.<br>
 Every package is open source, checked here and published by this repository's CI, not by its author.
 
-[![CI](https://github.com/Seb-GRAF/stablebar-packages/actions/workflows/ci.yml/badge.svg)](https://github.com/Seb-GRAF/stablebar-packages/actions/workflows/ci.yml)
+[![CI](https://github.com/stablebox/stablebar-packages/actions/workflows/ci.yml/badge.svg)](https://github.com/stablebox/stablebar-packages/actions/workflows/ci.yml)
 [![MIT license](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 
-[**Packages**](#packages) · [Request a package](https://github.com/Seb-GRAF/stablebar-packages/issues/new?template=package_request.yml) · [Add your own](CONTRIBUTING.md) · [StableBar guide](https://github.com/Seb-GRAF/StableBar/blob/main/docs/packages.md)
+[**Packages**](#packages) · [Request a package](https://github.com/stablebox/stablebar-packages/issues/new?template=package_request.yml) · [Add your own](CONTRIBUTING.md) · [StableBar guide](https://github.com/stablebox/StableBar/blob/main/docs/packages.md)
 
 </div>
 
@@ -22,7 +22,7 @@ From the command line, `StableBar --install-package weather` installs a package 
 
 ## Packages
 
-Clock & date, Battery, System monitor, Network and Calendar now ship with StableBar Essentials. [Update StableBar](https://github.com/Seb-GRAF/StableBar/releases/latest) to turn existing Store versions into built-in widgets automatically, keeping your settings and placement.
+Clock & date, Battery, System monitor, Network and Calendar now ship with StableBar Essentials. [Update StableBar](https://github.com/stablebox/StableBar/releases/latest) to turn existing Store versions into built-in widgets automatically, keeping your settings and placement.
 
 <!-- packages -->
 | Preview | Package | Access |
@@ -36,10 +36,11 @@ Clock & date, Battery, System monitor, Network and Calendar now ship with Stable
 | <img src="packages/github-notifications/preview.png" width="260" alt=""> | **[GitHub notifications](packages/github-notifications)**<br>Shows your unread GitHub notification count and lists the latest ones, each opening on GitHub. | Runs commands<br>Contacts api.github.com |
 | <img src="packages/homebrew-outdated/preview.png" width="260" alt=""> | **[Homebrew outdated](packages/homebrew-outdated)**<br>Shows how many Homebrew formulae and casks are outdated, and lists them. | Runs commands<br>Needs brew |
 | <img src="packages/now-playing/preview.png" width="260" alt=""> | **[Now playing](packages/now-playing)**<br>Shows the playing or paused track from Music or Spotify with its artwork, as a compact strip with bouncing bars or a player with elapsed time, play/pause and a progress line, and a popup with seeking, volume, shuffle, repeat and favorites. | Runs commands<br>Permissions: automation<br>Contacts i.scdn.co |
+| <img src="packages/openvpn-connect/preview.png" width="260" alt=""> | **[OpenVPN Connect](packages/openvpn-connect)**<br>Shows whether OpenVPN Connect is connected with its own icon, or the VPN's speeds. Click it to connect or disconnect each profile, follow the connected one's traffic, or open OpenVPN Connect. | Runs commands<br>Needs jq |
 | <img src="packages/proton-vpn/preview.png" width="260" alt=""> | **[Proton VPN](packages/proton-vpn)**<br>Shows whether Proton VPN is connected, connecting or disconnected. Click it to open Proton VPN's menu and connect or disconnect. | Runs commands<br>Permissions: accessibility |
 | <img src="packages/quick-ask/preview.png" width="260" alt=""> | **[Quick ask](packages/quick-ask)**<br>Ask Claude Code or Codex from the bar in a quick chat. Choose the model and effort, follow up, copy or retry an answer, and drag the chat anywhere to keep it on screen. Needs claude or codex signed in. | Runs commands<br>Needs jq<br>Contacts api.anthropic.com, chatgpt.com, api.openai.com |
 | <img src="packages/status-ring/preview.png" width="260" alt=""> | **[Status ring](packages/status-ring)**<br>Shows the battery, network and volume in one ring open at the bottom, after the design of DuoBar (github.com/Mikeli7666/DuoBar). Its popup has cards for Wi-Fi and network speed, the volume and output device, the battery with your Bluetooth devices' charge, and a System card with CPU, memory and the apps using the most. | No commands<br>Permissions: location |
-| <img src="packages/tailscale/preview.png" width="260" alt=""> | **[Tailscale](packages/tailscale)**<br>Shows whether Tailscale is connected, with your Tailscale IP in its tooltip. Click it to connect or disconnect. | Runs commands |
+| <img src="packages/tailscale/preview.png" width="260" alt=""> | **[Tailscale](packages/tailscale)**<br>Shows whether Tailscale is connected, with your Tailscale IP in its tooltip. Click it to connect or disconnect, pick an exit node, copy a device's IP, change settings, switch accounts or open Tailscale's menu. | Runs commands<br>Permissions: accessibility |
 | <img src="packages/tunnelblick/preview.png" width="260" alt=""> | **[Tunnelblick](packages/tunnelblick)**<br>Shows whether Tunnelblick is connected, connecting or disconnected. Click it to connect or disconnect each VPN, or open Tunnelblick's menu. | Runs commands<br>Permissions: automation, accessibility |
 | <img src="packages/weather/preview.png" width="260" alt=""> | **[Weather](packages/weather)**<br>Shows the current temperature and conditions from wttr.in, with feels-like, humidity, wind and today's high and low. | Runs commands<br>Contacts wttr.in |
 <!-- /packages -->
@@ -64,9 +65,9 @@ A published version never changes and its archive is never deleted. A version yo
 
 ## Report a problem
 
-- A package doesn't work: [report a package bug](https://github.com/Seb-GRAF/stablebar-packages/issues/new?template=package_bug.yml).
+- A package doesn't work: [report a package bug](https://github.com/stablebox/stablebar-packages/issues/new?template=package_bug.yml).
 - A package does something it doesn't declare, or puts your data at risk: report it privately, as described in [SECURITY.md](.github/SECURITY.md).
-- StableBar itself: [StableBar's issues](https://github.com/Seb-GRAF/StableBar/issues).
+- StableBar itself: [StableBar's issues](https://github.com/stablebox/StableBar/issues).
 
 ## Add a package
 

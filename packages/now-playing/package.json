@@ -3,7 +3,7 @@
   "name": "Now playing",
   "version": "2.0.0",
   "kind": "widgets",
-  "description": "Shows what plays in any app, from Music and Spotify to a video in a browser, with its artwork, as a compact strip with bouncing bars or a player with elapsed time, play/pause and a progress line, and a popup with the timeline, previous, play/pause, next and 15-second skips.",
+  "description": "Shows what plays in Control Center's Now Playing, from Music and Spotify to a video in a browser, with its artwork, as a compact strip with bouncing bars or a player with elapsed time, play/pause and a progress line, and a popup with the timeline, play/pause, and the previous, next and 15-second skips the app offers.",
   "author": "Seb-GRAF",
   "repository": "https://github.com/stablebox/stablebar-packages",
   "minimumVersion": "0.19.0-beta.20261120150056.1507",

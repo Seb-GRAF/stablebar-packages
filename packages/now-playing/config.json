@@ -21,15 +21,7 @@
       "provider": "now-playing",
       "position": "left",
       "transition": "fade",
-      "layout": {
-        "type": "row",
-        "style": { "spacing": 6 },
-        "children": [
-          { "type": "image", "source": "artwork", "fit": "fill", "style": { "width": 16, "height": 16, "cornerRadius": 3 } },
-          { "type": "field", "field": "line", "scrollSpeed": 20, "transition": "fade", "style": { "maxWidth": "@setting.barWidth" } },
-          { "type": "equalizer", "source": "playing" }
-        ]
-      },
+      "template": "@setting.barLook",
       "popup": {
         "dismissOnAction": false,
         "style": { "width": 330, "paddingHorizontal": 18, "paddingVertical": 16, "spacing": 14 },
@@ -227,5 +219,55 @@
         }
       }
     }
-  ]
+  ],
+  "templates": {
+    "Compact": {
+      "layout": {
+        "type": "row",
+        "style": { "spacing": 6 },
+        "children": [
+          { "type": "image", "source": "artwork", "fit": "fill", "style": { "width": 16, "height": 16, "cornerRadius": 3 } },
+          { "type": "field", "field": "line", "scrollSpeed": 20, "transition": "fade", "style": { "maxWidth": "@setting.barWidth" } },
+          { "type": "equalizer", "source": "playing" }
+        ]
+      }
+    },
+    "Player": {
+      "style": { "width": 284, "paddingHorizontal": 4 },
+      "layout": {
+        "type": "row",
+        "style": { "spacing": 8 },
+        "children": [
+          { "type": "image", "source": "artwork", "fit": "fill", "style": { "width": 20, "height": 20, "cornerRadius": 10 } },
+          {
+            "type": "row",
+            "alignment": "leading",
+            "style": { "maxWidth": 182, "spacing": 0 },
+            "children": [
+              { "type": "field", "field": "title", "role": "primary", "transition": "fade" },
+              { "type": "text", "text": " · ", "role": "secondary", "hideWhenEmpty": "artist" },
+              { "type": "field", "field": "artist", "role": "secondary", "transition": "fade", "hideWhenEmpty": "artist" }
+            ]
+          },
+          { "type": "field", "field": "elapsed", "role": "secondary", "alignment": "trailing", "style": { "minWidth": 30, "fontSize": 12 } },
+          {
+            "type": "symbol",
+            "source": "control",
+            "role": "time",
+            "alignment": "center",
+            "onClick": "\"$PACKAGE_DIR/scripts/control.sh\" playpause",
+            "style": { "width": 20, "height": 20, "cornerRadius": 10, "iconSize": 10, "paddingHorizontal": 0 }
+          }
+        ]
+      },
+      "overlay": {
+        "type": "row",
+        "hideWhenEmpty": "duration",
+        "style": { "paddingLeading": 32, "paddingTrailing": 32, "paddingBottom": 3 },
+        "children": [
+          { "type": "progress", "source": "progress", "height": 2, "role": "meter", "animation": { "duration": 1, "curve": "linear" } }
+        ]
+      }
+    }
+  }
 }

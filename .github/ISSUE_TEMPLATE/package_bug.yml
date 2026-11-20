@@ -6,7 +6,7 @@ body:
   - type: markdown
     attributes:
       value: |
-        Search [open and closed issues](https://github.com/Seb-GRAF/stablebar-packages/issues?q=is%3Aissue) first, and keep the report to one problem. Redact tokens, keys and personal details from output and logs. If the problem is in StableBar rather than one package, report it in [StableBar's issues](https://github.com/Seb-GRAF/StableBar/issues).
+        Search [open and closed issues](https://github.com/stablebox/stablebar-packages/issues?q=is%3Aissue) first, and keep the report to one problem. Redact tokens, keys and personal details from output and logs. If the problem is in StableBar rather than one package, report it in [StableBar's issues](https://github.com/stablebox/StableBar/issues).
 
   - type: input
     id: package

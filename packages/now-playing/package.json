@@ -4,7 +4,7 @@
   "version": "1.3.0",
   "description": "Shows the playing or paused track from Music or Spotify with its artwork, as a compact strip with bouncing bars or a player with elapsed time, play/pause and a progress line, and a popup with seeking, volume, shuffle, repeat and favorites.",
   "author": "Seb-GRAF",
-  "repository": "https://github.com/Seb-GRAF/stablebar-packages",
+  "repository": "https://github.com/stablebox/stablebar-packages",
   "minimumVersion": "0.5.0",
   "entry": "config.json",
   "screenshot": "preview.png",

@@ -4,8 +4,7 @@
     "textMuted": {"light": "#6e6e73", "dark": "#a1a1a6"},
     "openvpnConnectDownload": {"light": "#007aff", "dark": "#0a84ff"},
     "openvpnConnectUpload": {"light": "#ff9500", "dark": "#ff9f0a"},
-    "openvpnConnectLogo": "logo",
-    "openvpnConnectQuickLogo": "quickLogo",
+    "openvpnConnectBarShade": "",
     "openvpnConnectTraffic": {
       "type": "row",
       "style": {"paddingHorizontal": 8, "paddingVertical": 6, "spacing": 12},
@@ -47,9 +46,9 @@
   },
   "profiles": [
     {
-      "name": "OpenVPN Connect in dark mode",
-      "when": {"appearance": "dark"},
-      "configuration": {"tokens": {"openvpnConnectLogo": "logoDark", "openvpnConnectQuickLogo": "quickLogoDark"}}
+      "name": "OpenVPN Connect on Notch",
+      "when": {"theme": "notch"},
+      "configuration": {"tokens": {"openvpnConnectBarShade": "dark"}}
     }
   ],
   "widgets": [
@@ -59,14 +58,21 @@
       "position": "right",
       "command": "\"$PACKAGE_DIR/scripts/status.sh\"",
       "interval": 5,
-      "environment": {"QUICK_CONNECT": "@setting.quickConnect", "BAR_SHOWS": "@setting.barShows"},
+      "events": ["AppleInterfaceThemeChangedNotification"],
+      "environment": {
+        "QUICK_CONNECT": "@setting.quickConnect",
+        "BAR_SHOWS": "@setting.barShows",
+        "LOGO_COLOR": "@setting.logoColor",
+        "BAR_SHADE": "@token.openvpnConnectBarShade"
+      },
+      "style": {"states": {"muted": {"opacity": 0.5}}},
       "layout": {
         "type": "row",
         "children": [
           {
             "type": "image",
-            "source": "@token.openvpnConnectLogo",
-            "hideWhenEmpty": "@token.openvpnConnectLogo",
+            "source": "logo",
+            "hideWhenEmpty": "logo",
             "style": {"width": 16, "height": 16, "cornerRadius": 0}
           },
           {"type": "symbol", "source": "symbol", "hideWhenEmpty": "symbol"},
@@ -91,8 +97,8 @@
               "children": [
                 {
                   "type": "image",
-                  "source": "@token.openvpnConnectQuickLogo",
-                  "hideWhenEmpty": "@token.openvpnConnectQuickLogo",
+                  "source": "quickLogo",
+                  "hideWhenEmpty": "quickLogo",
                   "style": {"width": 18, "height": 18, "cornerRadius": 0}
                 },
                 {"type": "symbol", "source": "quickSymbol", "hideWhenEmpty": "quickSymbol", "style": {"width": 18}},
@@ -132,8 +138,8 @@
                     "children": [
                       {
                         "type": "image",
-                        "source": "@token.openvpnConnectLogo",
-                        "hideWhenEmpty": "@token.openvpnConnectLogo",
+                        "source": "logo",
+                        "hideWhenEmpty": "logo",
                         "style": {"width": 18, "height": 18, "cornerRadius": 0}
                       },
                       {"type": "symbol", "source": "symbol", "hideWhenEmpty": "symbol", "style": {"width": 18}},

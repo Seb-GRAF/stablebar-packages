@@ -1,13 +1,13 @@
 {
   "id": "openvpn-connect",
   "name": "OpenVPN Connect",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Shows whether OpenVPN Connect is connected with its own icon, or the VPN's speeds. Click it to connect or disconnect each profile, follow the connected one's traffic, or open OpenVPN Connect.",
   "author": "M4n0x",
-  "repository": "https://github.com/Seb-GRAF/stablebar-packages",
+  "repository": "https://github.com/stablebox/stablebar-packages",
   "entry": "config.json",
   "screenshot": "preview.png",
-  "minimumVersion": "0.11.0",
+  "minimumVersion": "0.16.0",
   "requires": ["jq"],
   "settings": {
     "quickConnect": {
@@ -21,7 +21,14 @@
       "title": "In the bar",
       "default": "Logo",
       "choices": ["Logo", "Speeds"],
-      "description": "Logo shows OpenVPN Connect's icon for the connection's state. Speeds shows the VPN's download and upload speeds while it's connected, and the icon otherwise."
+      "description": "Logo shows OpenVPN Connect's icon, faded while disconnected. Speeds shows the VPN's download and upload speeds while it's connected, and the icon otherwise."
+    },
+    "logoColor": {
+      "type": "string",
+      "title": "Logo color",
+      "default": "Automatic",
+      "choices": ["Automatic", "Black", "White"],
+      "description": "Automatic shows OpenVPN Connect's black icons while macOS is in light mode and its white ones in dark mode, and its white ones on the Notch theme, whose bar stays black. Choose Black or White when your bar keeps one color in both modes."
     }
   }
 }

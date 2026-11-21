@@ -191,10 +191,8 @@ claude_usage() {
   fi
   [ -n "$json" ] || return 0
   total=$(read_json limits)
-  # Claude reports no session until one starts, so a session that hasn't started is unused.
-  i=0
-  while [ "$i" -lt "$total" ] && [ "$(read_json "limits.$i.kind")" != session ]; do i=$((i + 1)); done
-  [ "$i" -lt "$total" ] || add_window Session session 0 ""
+  # Only the limits Claude reports: without a session entry, Claude Code's /usage shows no session
+  # either, so a made-up "Session 0%" would misread a session that is running.
   i=0
   while [ "$i" -lt "$total" ]; do
     used=$(read_json "limits.$i.percent")

@@ -191,10 +191,8 @@ claude_usage() {
   fi
   [ -n "$json" ] || return 0
   total=$(read_json limits)
-  # Claude reports no session until one starts, so a session that hasn't started is unused.
-  i=0
-  while [ "$i" -lt "$total" ] && [ "$(read_json "limits.$i.kind")" != session ]; do i=$((i + 1)); done
-  [ "$i" -lt "$total" ] || add_window Session session 0 ""
+  # Only the limits Claude reports: without a session entry, Claude Code's /usage shows no session
+  # either, so a made-up "Session 0%" would misread a session that is running.
   i=0
   while [ "$i" -lt "$total" ]; do
     used=$(read_json "limits.$i.percent")
@@ -219,7 +217,7 @@ claude_usage() {
       fraction=$(awk -v spent="$spent" -v limit="$limit" -v usage="$counted" \
         'BEGIN { used = spent / limit; if (used > 1) used = 1; if (usage != "used") used = 1 - used; printf "%.2f", used }')
       detail=$(awk -v spent="$spent" -v limit="$limit" 'BEGIN { printf "%.2f / %.2f", spent / 100, limit / 100 }')
-      rows="$rows,{\"title\":\"Extra usage\",\"fraction\":\"$fraction\",\"detail\":\"$detail $currency\",\"trailing\":\"This month\"}"
+      rows="$rows${rows:+,}{\"title\":\"Extra usage\",\"fraction\":\"$fraction\",\"detail\":\"$detail $currency\",\"trailing\":\"This month\"}"
     fi
   fi
 }
